@@ -1,0 +1,27 @@
+h1
+
+p {
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+body {
+    background-color: #cdbb93;
+    margin: 0;
+    text-align: center;
+}
+
+div.container {
+    text-align: center;
+}
+
+ul.list {
+    display: inline-block;
+    text-align: left;
+}
+
+button {
+    background-color: beige;
+    border-radius: 10px;
+    padding: 30px;
+    font-size: 40px;
+}
