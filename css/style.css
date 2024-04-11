@@ -4,9 +4,9 @@ p {
 }
 
 body {
-    background-color: white;
+    background-color: #262c49a9;
     margin: 0;
-    color: #F20746;
+    color: #ffffff;
 }
 
 .navbar {
@@ -35,6 +35,11 @@ body {
 
 }
 
+.homepage img {
+    display: block;
+    margin: 0 auto 20px auto
+}
+
 .navbar>ul {
     list-style-type: none;
     padding: 0;
@@ -46,12 +51,27 @@ body {
 }
 
 .navbar {
-    background-color: #1a233d;
+    background-color: #1a233f;
     position: flex;
+    display: flex;
 }
 
 .navbar>ul>li {
     margin-right: 10px;
+    display: inline;
+}
+
+.navbar>ul>li:after {
+    content: "|";
+    padding: 0 10px;
+}
+
+.homebutton {
+    size: 20px;
+}
+
+.navbar>ul>li:last-child:after {
+    content: "";
 }
 
 .navbar>ul>li>a {
@@ -64,9 +84,16 @@ body {
 }
 
 
-button {
-    background-color: beige;
-    border-radius: 10px;
-    padding: 30px;
-    font-size: 40px;
+.videoRegras {
+    display: flex;
+    margin: 0 auto;
+}   
+
+footer {
+    background-color: #1A233D;
+    display: flex;
+}
+
+footer > ul {
+    list-style-type: none;
 }
