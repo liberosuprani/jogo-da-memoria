@@ -4,40 +4,55 @@ p {
 }
 
 body {
-    background-color: #262c49a9;
+    background-color: #007aff;
     margin: 0;
-    color: #ffffff;
-}
-
-.navbar {
-    display: flex;
-    justify-content: center;
+    color: #000000;
 }
 
 .content {
-    margin: 10px 20px;
-}
-
-.lista-ordenada {
-    font-size: 25px;
-    text-align: justify;
-
-}
-
-.lista-ordenada>li {
-    margin: 20px 0;
+    width: 800px ;
+    margin: auto;
 }
 
 .homepage {
     text-align: center;
     display: flex;
     flex-direction: column;
-
+    height: 90vh;
 }
 
 .homepage img {
     display: block;
-    margin: 0 auto 20px auto
+    margin: 0 auto 20px auto;
+}
+
+.homebutton {
+    width: 40px;
+}
+
+.homebutton:hover {
+    content: url('/img/buttonhome-orange.svg');
+}
+
+.lista-ordenada {
+    font-size: 25px;
+    text-align: justify;
+    list-style-type: none;
+}
+
+.lista-ordenada>li {
+    margin: 20px 0;
+}
+
+.lista-ordenada> li > h2 {
+    margin-bottom: 5px;
+}
+
+.navbar {
+    background-color: black;
+    position: flex;
+    display: flex;
+    justify-content: center;
 }
 
 .navbar>ul {
@@ -45,33 +60,16 @@ body {
     padding: 0;
     display: flex;
     flex-direction: row;
-    flex-wrap: wrap;
+    flex-wrap: wrap; /** responsividade , quebra de linha **/
     font-size: 25px;
     align-items: center;
 }
 
-.navbar {
-    background-color: #1a233f;
-    position: flex;
-    display: flex;
-}
-
 .navbar>ul>li {
     margin-right: 10px;
+    color: white;
     display: inline;
-}
-
-.navbar>ul>li:after {
-    content: "|";
-    padding: 0 10px;
-}
-
-.homebutton {
-    size: 20px;
-}
-
-.navbar>ul>li:last-child:after {
-    content: "";
+    padding: 5px
 }
 
 .navbar>ul>li>a {
@@ -79,21 +77,24 @@ body {
     color: white;
 }
 
-.navbar>ul>li:hover {
-    background-color: #FF9805;
+.navbar>ul>li>a:hover {
+    color: #FF9805;
 }
-
 
 .videoRegras {
     display: flex;
     margin: 0 auto;
 }   
 
+
 footer {
-    background-color: #1A233D;
+    background-color: black;
     display: flex;
+    color: #ffffff;
 }
 
-footer > ul {
+footer>ul {
     list-style-type: none;
 }
+
+

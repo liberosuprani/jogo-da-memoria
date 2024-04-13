@@ -12,21 +12,21 @@
     font-size:36px;
     text-align: center;
     text-decoration:none;
-    background-color:#a7321c;
+    background-color:#FF9805;
     display:block;
     position:relative;
     padding:20px 40px;
     
     text-shadow: 0px 1px 0px #000;
     
-    box-shadow:inset 0 1px 0 #FFE5C4, 0 10px 0 #572e27;
+    box-shadow:inset 0 1px 0 #FFE5C4, 0 10px 0 #b06905; 
     
     border-radius: 5px;
   }
   
   .button a:active{
     top:10px;
-    background-color:#c05542;
+    background-color:#c98f3c;
     
     box-shadow:inset 0 1px 0 #FFE5C4, inset 0 -3px 0 #000000;
   }
