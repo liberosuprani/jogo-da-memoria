@@ -10,6 +10,22 @@ body {
     color: #E3FEF7;
 }
 
+@media only screen and (min-width: 1501px){
+    main {
+        flex: 1;
+        margin: 0 300px 0 300px;
+        max-width: 80vw;
+    }
+}
+
+@media only screen and (max-width: 1500px){
+    main {
+        flex: 1;
+        margin: 0 20px 0 20px;
+        max-width: 80vw;
+    }
+}
+
 p {
     font-size: 20px;
     margin-top: 25px;
@@ -26,19 +42,19 @@ h2, h3 {
     font-size: 27.5px;
 }
 
-main {
-    margin: 0 300px 0 300px;
-    flex: 1;
-}
-
 #homepage {
     text-align: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
 }
 
 #homepage img {
     display: block;
-    margin: 20px auto 20px auto;
+    margin: 20px auto;
     width: 300px;
+    max-width: 100%;
+    min-width: 300px;
 }
 
 .pageContainer { 
@@ -47,12 +63,22 @@ main {
     min-height: 100vh;
 } 
 
+.pageContainer ol {
+    padding: 0;
+}
+
+#loginPage {
+    justify-content: center;
+
+}
+
 .navbar {
     background-color: #003C43;
     display: flex;
     position: sticky;
     justify-content: center;
     top: 0;
+    z-index: 1;
 }
 
 .navbar > ul {
@@ -62,7 +88,7 @@ main {
     flex-direction: row;
     flex-wrap: wrap; /** responsividade , quebra de linha **/
     align-items: center;
-    font-size: 25px;
+    font-size: 1.5vw;
 }
 
 .navbar > ul > li {
@@ -85,9 +111,9 @@ main {
     width: 40px;
 }
 
-/* .homebutton:hover {
-    content: url('/img/buttonhome-orange.svg');
-} */
+.homebutton:hover {
+    content: url('https://cdn.discordapp.com/attachments/1217788976815931527/1230462384431169566/home-1-svgrepo-com_2.png?ex=66336865&is=6620f365&hm=184b8c20a10ffc0d6e51d1735b248f30ef466d5d6115244d933d52314f9246f1&');
+} 
 
 .listaOrdenada {
     font-size: 20px;
@@ -99,10 +125,10 @@ main {
     margin: 20px 0;
 }
 
-
 .videoRegras {
     display: flex;
     margin: 0 auto 20px auto;
+    max-width: 100%;
 }   
 
 footer {
@@ -110,12 +136,12 @@ footer {
     color: #E3FEF7;
     padding: 20px 0 20px 0;
     position: relative;
+    margin-top: 30px;
     bottom: 0;
 }
 
 footer > ul {
     list-style-type: none; 
-  
 }
 
 footer > ul > li {
