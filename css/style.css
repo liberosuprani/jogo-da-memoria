@@ -46,12 +46,12 @@ h2, h3 {
     text-align: center;
     display: flex;
     flex-direction: column;
-    justify-content: space-evenly;
+    justify-content: space-between;
 }
 
 #homepage img {
     display: block;
-    margin: 20px auto;
+    margin: 0 auto 0 auto;
     width: 300px;
     max-width: 100%;
     min-width: 300px;
@@ -60,6 +60,7 @@ h2, h3 {
 .pageContainer { 
     display: flex;
     flex-direction: column;
+    justify-content: space-between;
     min-height: 100vh;
 } 
 
@@ -68,8 +69,23 @@ h2, h3 {
 }
 
 #loginPage {
-    justify-content: center;
+    width: 500px;
+    margin: 30px auto 0px auto;
+    text-align: center;
+    border-radius: 20px;
+    box-shadow: 0 0 5px 0px black;
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
 
+#loginPage input {
+    display: block;
+    margin: 40px auto 40px auto;
+    padding: 5px 20px;
+}
+
+#loginPage a {
+    color: white;
 }
 
 .navbar {
