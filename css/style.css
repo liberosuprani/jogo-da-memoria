@@ -4,26 +4,16 @@
 }
 
 body {
-    font-family: Roboto, Arial;
-    background-color: #135D66;
+    font-family: Roboto, Arial; 
+    background: rgb(2,0,36);
+    background: linear-gradient(90deg, rgba(2,0,36,1) 0%, rgba(0,121,146,1) 100%);  
     margin: 0;
     color: #E3FEF7;
 }
 
-@media only screen and (min-width: 1501px){
-    main {
-        flex: 1;
-        margin: 0 300px 0 300px;
-        max-width: 80vw;
-    }
-}
-
-@media only screen and (max-width: 1500px){
-    main {
-        flex: 1;
-        margin: 0 auto 0 auto;
-        max-width: 80vw;
-    }
+main {
+    flex: 1;
+    margin: 0 20vw 5vh 20vw;;
 }
 
 p {
@@ -46,12 +36,11 @@ h2, h3 {
     text-align: center;
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
 }
 
 #homepage img {
     display: block;
-    margin: 0 auto 0 auto;
+    margin: 0 auto 60px auto;
     width: 300px;
     max-width: 100%;
     min-width: 200px;
@@ -60,7 +49,6 @@ h2, h3 {
 .pageContainer { 
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
     min-height: 100vh;
 } 
 
@@ -69,19 +57,21 @@ h2, h3 {
 }
 
 #loginPage {
-    width: 500px;
-    margin: 30px auto 0px auto;
     text-align: center;
+    flex-grow: 0;
+    width: 30vw;
+    margin: 50px auto;
     border-radius: 20px;
     box-shadow: 0 0 5px 0px black;
-    padding-top: 10px;
-    padding-bottom: 10px;
+    padding: 50px 30px 50px 30px;
 }
 
 #loginPage input {
-    display: block;
-    margin: 40px auto 40px auto;
-    padding: 5px 20px;
+    box-sizing: border-box;
+    display: inline-block;
+    width: 30vw;
+    margin-bottom: 20px;
+    padding: 10px 10px;
 }
 
 #loginPage a {
@@ -89,7 +79,9 @@ h2, h3 {
 }
 
 .navbar {
-    background-color: #003C43;
+    background: rgb(2,0,36);
+    background: linear-gradient(90deg, rgba(2,0,36,1) 0%, rgba(0,121,146,1) 100%); 
+    box-shadow: 0 0 5px 0px black;
     display: flex;
     position: sticky;
     justify-content: center;
@@ -97,7 +89,7 @@ h2, h3 {
     z-index: 1;
 }
 
-.navbar > ul {
+.navbar ul {
     list-style-type: none;
     padding: 0 30px 0 30px;
     display: flex;
@@ -107,19 +99,19 @@ h2, h3 {
     font-size: 1.5vw;
 }
 
-.navbar > ul > li {
+.navbar ul li {
     display: block;
     color: #E3FEF7;
     padding: 5px;
     margin-right: 30px;
 }
 
-.navbar > ul > li > a {
+.navbar ul li a {
     text-decoration: none;
     color: white;
 }
 
-.navbar > ul > li > a:hover {
+.navbar ul li a:hover {
     color: #7bc7d1;
 }
 
@@ -137,30 +129,30 @@ h2, h3 {
     list-style-type: none;
 }
 
-.listaOrdenada > li {
+.listaOrdenada li {
     margin: 20px 0;
 }
 
 .videoRegras {
     display: flex;
-    margin: 0 auto 20px auto;
+    margin: 0 auto 0 auto;
     max-width: 100%;
 }   
 
 footer {
-    background-color: #003C43;
+    background: rgb(2,0,36);
+    background: linear-gradient(90deg, rgb(2,0,36) 0%, rgb(0, 74, 88) 100%); 
     color: #E3FEF7;
     padding: 20px 0 20px 0;
     position: relative;
-    margin-top: 30px;
     bottom: 0;
 }
 
-footer > ul {
+footer ul {
     list-style-type: none; 
 }
 
-footer > ul > li {
+footer ul li {
     margin-bottom: 10px;
 }
 

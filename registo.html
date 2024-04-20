@@ -25,24 +25,25 @@
     <div class="pageContainer">
         <main id="loginPage">
             <h2>Registro</h2>
-            <label for="email">E-mail:</label>
-            <input type="text" id="email" name="email" required><br>
+            <form id="registerForm"></form>
+                <label for="email">E-mail:</label>
+                <input type="text" id="email" name="email" required><br>
 
-            <label for="password">Senha:</label>
-            <input type="password" id="password" name="password" required><br>
+                <label for="password">Senha:</label>
+                <input type="password" id="password" name="password" required><br>
 
-            <label for="age">Idade:</label>
-            <input type="number" id="age" name="age" required><br>
+                <label for="age">Idade:</label>
+                <input type="number" id="age" name="age" required><br>
 
-            <label for="gender">Gênero:</label>
-            <select id="gender" name="gender">
-                <option value="male">Masculino</option>
-                <option value="female">Feminino</option>
-                <option value="other">Outro</option>
-            </select>
+                <label for="gender">Gênero:</label>
+                <select id="gender" name="gender">
+                    <option value="male">Masculino</option>
+                    <option value="female">Feminino</option>
+                    <option value="other">Outro</option>
+                <input id="botaoRegisto" type="submit" value="Registar-se">
+            </form>
         </main>
     </div>
-
     <footer>
         <ul>
             <li>
@@ -56,6 +57,7 @@
             </li>
         </ul>
     </footer>
+
 </body>
 
 </html>
