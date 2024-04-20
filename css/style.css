@@ -13,7 +13,7 @@ body {
 
 main {
     flex: 1;
-    margin: 0 20vw 5vh 20vw;;
+    margin: 0 20vw 6vh 20vw;
 }
 
 p {
@@ -66,7 +66,6 @@ h2, h3 {
     padding: 50px 30px 50px 30px;
 }
 
-
 #loginPage input {
     box-sizing: border-box;
     display: block;
@@ -79,7 +78,7 @@ h2, h3 {
     color: white;
 }
 
-.navbar {
+#navbar {
     background: rgb(2,0,36);
     background: linear-gradient(90deg, rgba(2,0,36,1) 0%, rgba(0,121,146,1) 100%); 
     box-shadow: 0 0 5px 0px black;
@@ -90,11 +89,11 @@ h2, h3 {
 }
 
 @media only screen and (min-width: 650px) {
-    .navbar {
+    #navbar {
         justify-content: space-evenly;
         align-items: center;
     }
-    .navList1 {
+    #navList1 {
         list-style-type: none;
         padding: 0 30px 0 30px;
         display: flex;
@@ -103,17 +102,17 @@ h2, h3 {
         align-items: center;
         font-size: 20px;
     }
-    .navList2 {
+    #navList2 {
         display: none;
     }
 }
 
 @media only screen and (max-width: 649px) {
-    .navbar {
+    #navbar {
         justify-content: flex-start;
         align-items: center;
     }
-    .navList2 {
+    #navList2 {
         list-style-type: none;
         padding: 0 40px 0 40px;
         display: flex;
@@ -122,29 +121,34 @@ h2, h3 {
         justify-content: left;
         font-size: 20px;
     }
-    .navList1 {
+    #navList1 {
         display: none;
     }
 }
 
-.navbar ul li {
+#navbar ul li {
     color: #E3FEF7;
     padding: 5px;
     margin-right: 30px;
 }
 
-.navbar ul li a {
+#navbar ul li a {
     text-decoration: none;
     color: white;
 }
 
-.navbar ul li a:hover {
+#navbar ul li a:hover {
     color: #7bc7d1;
 }
 
-.hamburgerButton {
+#hamburgerButton {
     width: 30px;
 }
+
+#hamburgerButton:hover {
+    content: url('../img/hamburger-svgrepo-com-hover.svg');
+}
+
 
 #mobileNavbar {
     background-color: rgb(2,0,36);
@@ -174,12 +178,11 @@ h2, h3 {
     color: #7bc7d1;
 }
 
-
-.homebutton {
+#homebutton {
     width: 40px;
 }
 
-.homebutton:hover {
+#homebutton:hover {
     content: url('https://cdn.discordapp.com/attachments/1217788976815931527/1230462384431169566/home-1-svgrepo-com_2.png?ex=66336865&is=6620f365&hm=184b8c20a10ffc0d6e51d1735b248f30ef466d5d6115244d933d52314f9246f1&');
 } 
 
