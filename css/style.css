@@ -59,7 +59,7 @@ h2, h3 {
 #loginPage {
     text-align: center;
     flex-grow: 0;
-    width: 40vw;
+    width: 35vw;
     margin: 50px auto;
     border-radius: 20px;
     box-shadow: 0 0 5px 0px black;
@@ -69,7 +69,7 @@ h2, h3 {
 #loginPage input {
     box-sizing: border-box;
     display: block;
-    width: 30vw;
+    width: 80%;
     margin: 0 auto 20px auto;
     padding: 10px 10px;
 }
