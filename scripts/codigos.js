@@ -1,3 +1,9 @@
+/* Grupo nº28 PL23
+Duarte Alberto - 62235
+Libero Suprani - 62220
+Ravi Mughal - 62504 
+*/
+
 function showMobileNavbar() {
     let x = document.getElementById("mobileNavbar");
     let y = document.getElementById("hamburgerButton");
