@@ -19,6 +19,8 @@ p {
     font-size: 20px;
     margin-top: 25px;
     text-align: justify-all;
+    -webkit-text-stroke: 1px;
+    -webkit-text-stroke-color: black;
 }
 
 h1 {
@@ -121,6 +123,10 @@ h2, h3 {
         font-size: 20px;
     }
     #navList1 {
+        display: none;
+    }
+
+    .backgroundImage {
         display: none;
     }
 
@@ -233,5 +239,6 @@ footer ul li {
     width: 100%;
     height: 100%;
     opacity: 0.4;
+    
 }
 
