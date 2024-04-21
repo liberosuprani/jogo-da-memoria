@@ -4,7 +4,8 @@
 }
 
 body {
-    font-family: Roboto, Arial; 
+    font-family: "Roboto", sans-serif;
+
     background: rgb(2,0,36);
     background: linear-gradient(90deg, rgba(2,0,36,1) 0%, rgba(0,121,146,1) 100%);  
     margin: 0;
