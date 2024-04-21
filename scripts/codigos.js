@@ -10,3 +10,4 @@ function showMobileNavbar() {
         y.src = "./img/hamburger-svgrepo-com-active.svg";
     }
 }
+

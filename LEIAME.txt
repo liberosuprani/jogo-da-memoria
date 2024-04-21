@@ -1,9 +1,9 @@
-Introdução às Tecnologias Web reporte de projeto do grupo Nº28
-Os membros são:
+Introduï¿½ï¿½o ï¿½s Tecnologias Web reporte de projeto do grupo Nï¿½28
+Os membros sï¿½o:
 
 Libero Suprani - 62220
-Duarte Alberto – 62235 
-Ravi Mughal – 62504
+Duarte Alberto ï¿½ 62235 
+Ravi Mughal ï¿½ 62504
 
 
 Este projeto foi feito 35% pelo Libero, 35% pelo Ravi e 30% pelo Duarte
@@ -11,29 +11,30 @@ Este projeto foi feito 35% pelo Libero, 35% pelo Ravi e 30% pelo Duarte
 
 O que foi implementado pelo Libero foi:
 
-•	Navbar;
+ï¿½	Navbar;
 
-•	Login;
+ï¿½	Login;
 
-•	Ficha Técnica,
-•	Index;
-•	Home button;
-•	Footer.
+ï¿½	Ficha Tï¿½cnica,
+ï¿½	Index;
+ï¿½	Home button;
+ï¿½	Footer.
 
 O que foi implementado pelo Duarte foi:
 
-•	Configurações;
-•	Curiosidades e história;
-•	Regras;
-•	Desenhos dos membros e mascote;
-•	Media.
+ï¿½	Configuraï¿½ï¿½es;
+ï¿½	Curiosidades e histï¿½ria;
+ï¿½	Regras;
+ï¿½	Desenhos dos membros e mascote;
+ï¿½	Media.
 O que foi implementado pelo Ravi foi:
 
-•	MobileNavbar, incluído o código em Javascript;
-•	Registo;
-•	O código button.css;
-•	Pontuação;
-•	Game Modes.
+ï¿½	MobileNavbar, incluï¿½do o cï¿½digo em Javascript;
+ï¿½	Registo;
+ï¿½	O cï¿½digo button.css;
+ï¿½	Pontuaï¿½ï¿½o;
+ï¿½	Game Modes.
+ï¿½	Google Fonts.
 
 
 
@@ -44,10 +45,10 @@ O que foi implementado pelo Ravi foi:
 
 O que foi implementado por todos: 
 
-      O código no style.css foi criado e alterado por todos os 
+      O cï¿½digo no style.css foi criado e alterado por todos os 
 membros do grupo para o site chegar a um estrutura e design 
 desejada. Os fundos foram escolhidos em conjunto e cada um 
-implementou na página que estava responsável.
+implementou na pï¿½gina que estava responsï¿½vel.
       
       
 
@@ -56,8 +57,9 @@ Funcionamento do site
       O site funciona sem qualquer tipo de problema nos 
 browsers testados (Microsoft Edge, Chrome, Opera Gx e 
 FireFox) e em qualquer tipo de dispositivo (computador ou 
-telemóvel/tablet) ajustando o texto, as imagens/vídeos e 
-subtituido o navbar original por um no estilo hambúrguer. 
+telemï¿½vel/tablet) ajustando o texto, as imagens/vï¿½deos e 
+subtituido o navbar original por um no estilo hambï¿½rguer. 
 
 
-
+AtenÃ§Ã£o: 
+Imagens estÃ£o *hospedadas em um servidor web*, Ã© necessÃ¡rio a conexÃ£o com a internet para o funcionamento adequado.

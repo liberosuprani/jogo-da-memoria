@@ -1,3 +1,8 @@
+/* Grupo nº28
+Duarte Alberto - 62235
+Libero Suprani - 62220
+Ravi Mughal - 62504 */
+
 @font-face {
     font-family: Roboto;
     src: url("../fonts/Roboto-Regular.ttf");
@@ -128,7 +133,6 @@ h2, h3 {
     .backgroundImage {
         display: none;
     }
-
 }
 
 #navbar ul li {
@@ -214,6 +218,7 @@ h2, h3 {
 
 footer {
     background: rgb(2,0,36);
+    box-shadow: 0 -5px 3px -5px black;
     background: linear-gradient(90deg, rgb(2,0,36) 0%, rgb(0, 74, 88) 100%); 
     color: #E3FEF7;
     padding: 20px 0 20px 0;
@@ -237,7 +242,11 @@ footer ul li {
     left: 0;
     width: 100%;
     height: 100%;
-    opacity: 0.4;
+    opacity: 0.2;
     
 }
 
+.aboutUs {
+    display: flex;
+    max-width: 250px;
+}
