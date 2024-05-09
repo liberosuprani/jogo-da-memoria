@@ -236,7 +236,6 @@ footer ul li {
 }
 
 .backgroundImage {
-    
     z-index: -1;
     position: fixed;
     top: 0;
@@ -251,3 +250,11 @@ footer ul li {
     display: flex;
     max-width: 250px;
 }
+
+
+#tabuleiroContainer {
+    display: grid;
+    justify-content: center;
+    grid-gap: 40px;
+}
+

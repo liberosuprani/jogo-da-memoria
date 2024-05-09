@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="scripts/script.js"></script>
+    <title>Jogo Easy</title>
+    <link rel="stylesheet" href="css/style.css">
+
+
+</head>
+
+<img class="backgroundImage" src="./img/imagens para o fundo/aldeia_easy.jpg">
+
+<body>
+
+    <div id="navbar">
+        <ul id="navList1">
+            <li><a href="index.html"><img id="homebutton" src="img/buttonhome.svg" alt=""></a></li>
+            <li><a href="curiosidades_e_historia.html">Curiosidades</a></li>
+            <li><a href="game_modes.html">Game Modes</a></li>
+            <li><a href="regras.html">Regras</a></li>
+            <li><a href="pontuacao.html">Tabela e Pontuações</a></li>
+            <li><a href="ficha_técnica.html">Ficha técnica</a></li>
+            <li><a href="configuracoes.html">Configurações</a></li>
+        </ul>
+        <ul id="navList2">
+            <li><a href="index.html"><img id="homebutton" src="img/buttonhome.svg" alt=""></a></li>
+            <li><a href="javascript:void(0);" onclick="showMobileNavbar()"><img id="hamburgerButton"
+                        src="img/hamburger-svgrepo-com.svg" alt=""></a></li>
+        </ul>
+    </div>
+
+    <div id="mobileNavbar">
+        <ul>
+            <li><a href="curiosidades_e_historia.html">Curiosidades</a></li>
+            <li><a href="game_modes.html">Game modes</a></li>
+            <li><a href="regras.html">Regras</a></li>
+            <li><a href="pontuacao.html">Tabela e Pontuações</a></li>
+            <li><a href="ficha_técnica.html">Ficha técnica</a></li>
+            <li><a href="configuracoes.html">Configurações</a></li>
+        </ul>
+    </div>
+
+    <div class="tabuleiroContainer">
+
+    </div>
+
+
+    <button type="button" id="iniciarJogo" onclick="iniciarTemporizador(); pontuacao();">
+        Iniciar Jogo
+    </button>
+    <button type="button" id="encerrarJogo" onclick="encerrarJogo(); pararPontuacao()" disabled>
+        Encerrar Jogo
+    </button>
+    <p>
+        Passou <span id="segPassados">0</span> segundos e sua pontuação atual é <span id="pontuacaoAtual">0</span>
+    </p>
+    <script src="scripts/temporizador.js"></script>
+</body>
+
+</html>
