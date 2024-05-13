@@ -4,11 +4,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <script src="scripts/script.js"></script>
+    <script src="scripts/codigos.js"></script>
+    <script src="scripts/scripts_jogo.js"></script>
     <title>Jogo Easy</title>
     <link rel="stylesheet" href="css/style.css">
-
-
 </head>
 
 <img class="backgroundImage" src="./img/imagens para o fundo/aldeia_easy.jpg">
@@ -43,11 +42,6 @@
         </ul>
     </div>
 
-    <div class="tabuleiroContainer">
-
-    </div>
-
-
     <button type="button" id="iniciarJogo" onclick="iniciarTemporizador(); pontuacao();">
         Iniciar Jogo
     </button>
@@ -58,6 +52,11 @@
         Passou <span id="segPassados">0</span> segundos e sua pontuação atual é <span id="pontuacaoAtual">0</span>
     </p>
     <script src="scripts/temporizador.js"></script>
+
+    <div id="divTabuleiro">
+
+    </div>
+
 </body>
 
 </html>

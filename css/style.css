@@ -251,10 +251,21 @@ footer ul li {
     max-width: 250px;
 }
 
+/**     --------------------     ESTILOS REFERENTES AO JOGO EM SI     --------------------     **/
 
-#tabuleiroContainer {
+#divTabuleiro {
     display: grid;
-    justify-content: center;
-    grid-gap: 40px;
+    gap: 20px;
+    height: 600px;
+    width: 500px;
+    margin: 0 auto;
+    padding: 20px;
+    box-shadow: 0 0 5px 0px black;
+    background: rgb(7, 69, 82);
+}
+
+.carta {
+    background-color: red;
+    text-align: center;
 }
 

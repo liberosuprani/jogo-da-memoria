@@ -1,3 +1,9 @@
+/* Grupo nº28 PL23
+Duarte Alberto - 62235
+Libero Suprani - 62220
+Ravi Mughal - 62504 
+*/
+
 const SPAN_TEMPO_PASSADO = 'segPassados';
 const BOTAO_INICIAR_JOGO = 'iniciarJogo';
 const BOTAO_ENCERRAR_JOGO = 'encerrarJogo';
@@ -23,14 +29,14 @@ let configuração = {
 let segundos = 0;
 
 function iniciarTemporizador() {
-    segundos = 0
+    segundos = 0;
     temporizadorTempoJogo = setInterval(atualizarCronometro, 1000);
-    document.getElementById(BOTAO_INICIAR_JOGO).disabled = true
+    document.getElementById(BOTAO_INICIAR_JOGO).disabled = true;
     document.getElementById(BOTAO_ENCERRAR_JOGO).disabled = false;
 }
 
 function encerrarJogo() {
-    console.log("encerrado")
+    console.log("encerrado");
     jogo_iniciado = false;
     clearInterval(temporizadorTempoJogo);
     document.getElementById(BOTAO_INICIAR_JOGO).disabled = false;
@@ -63,5 +69,4 @@ function atualizarCronometro() {
 
 function restart() {
     document.getElementById(BOTAO_FAZ_RESTART).disabled = true;
-
 }
