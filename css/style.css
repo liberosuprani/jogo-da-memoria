@@ -91,6 +91,7 @@ h2, h3 {
     display: flex;
     position: sticky;
     top: 0;
+    width: 100%;
     z-index: 1;
 }
 
