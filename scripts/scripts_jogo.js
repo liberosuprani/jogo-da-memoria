@@ -86,6 +86,7 @@ function cartaClicada(event) {
 
     // MESMA CARTA CLICADA MAIS DE UMA VEZ
     if(cartasClicadas.cartas.length > 0 && event.target == cartasClicadas.cartas[cartasClicadas.cartas.length-1]) {
+        cartasClicadas.cartas[0].style.border = "";
         console.log("MESMA CARTA CLICADA NOVAMENTE");
         cartasClicadas.quantidade = 0;
         cartasClicadas.cartas = [];
@@ -93,7 +94,7 @@ function cartaClicada(event) {
     else {
         cartasClicadas.quantidade += 1;
         cartasClicadas.cartas.push(event.target);
-
+        event.target.style.border = "solid blue";
         // CASO SEJA A SEGUNDA CARTA A SER CLICADA
         if (cartasClicadas.quantidade == 2) {
             let acertou = true;
@@ -117,9 +118,13 @@ function cartaClicada(event) {
 
             // VERIFICA SE ALGUMA DAS CARTAS CLICADAS TEM O ATRIBUTO ID (DO OBJETO) DIFERENTE (I.E. NÃO ACERTOU O PAR)
             let primeiroId = cartasClicadasObjetos[0].id;
-            for (let cartaClicada of cartasClicadasObjetos) {
-                if(cartaClicada.id != primeiroId)
+            for (let cartaClicadaObj of cartasClicadasObjetos) {
+                if(cartaClicadaObj.id != primeiroId){
                     acertou = false;
+                    for (let cartaClicada of cartasClicadas.cartas) 
+                        cartaClicada.style.border = "";
+                }
+
             } 
 
             // RESETA AS CARTAS CLICADAS

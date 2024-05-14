@@ -194,7 +194,7 @@ h2, h3 {
 }
 
 #homebutton:hover {
-    content: url('https://cdn.discordapp.com/attachments/1217788976815931527/1230462384431169566/home-1-svgrepo-com_2.png?ex=66336865&is=6620f365&hm=184b8c20a10ffc0d6e51d1735b248f30ef466d5d6115244d933d52314f9246f1&');
+    content: url('../img/buttonhome-hover.svg');
 } 
 
 .listaOrdenada {
