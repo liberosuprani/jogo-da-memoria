@@ -209,7 +209,7 @@ h2, h3 {
 
 .videoRegras {
     display: flex;
-    margin: 0 auto 0 auto;
+    margin: 0 auto;
     max-width: 100%;
 }   
 
@@ -254,13 +254,16 @@ footer ul li {
 
 /**     --------------------     ESTILOS REFERENTES AO JOGO EM SI     --------------------     **/
 
-#divTabuleiro {
-    display: grid;
-    gap: 20px;
-    height: 665px;
-    width: 700px;
+#wrapperDivTabuleiro {
+    display: flex;
     margin: 0 auto;
-    padding: 20px;
+}
+
+#divTabuleiro {
+    display: inline-grid;
+    gap: 15px;
+    margin: 5px auto 35px auto;
+    padding: 10px;
     box-shadow: 0 0 5px 0px black;
     background: rgb(7, 69, 82);
 }
@@ -268,12 +271,12 @@ footer ul li {
 .carta {
     background-color: rgb(61, 67, 237);
     text-align: center;
-    width:100px;
-    height:calc(100px / 2 * 3) ;
+    width:75px;
+    height:calc(75px / 2 * 3) ;
     border-radius: 5px;
     position: relative;
     transform-style: preserve-3d;
-    transition: all 0.4s ease-in-out;
+    transition: all 0.2s ease-in-out;
 
 }
 

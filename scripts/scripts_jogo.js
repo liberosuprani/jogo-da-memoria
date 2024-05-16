@@ -4,98 +4,115 @@ Libero Suprani - 62220
 Ravi Mughal - 62504 
 */
 
-window.addEventListener("load", iniciaJogo);
-
-/* Grupo nº28 PL23
-Duarte Alberto - 62235
-Libero Suprani - 62220
-Ravi Mughal - 62504 
-*/
-
+// CONSTANTES
 const SPAN_TEMPO_PASSADO = 'segPassados';
-const BOTAO_INICIAR_JOGO = 'iniciarJogo';
-const BOTAO_ENCERRAR_JOGO = 'encerrarJogo';
+const BOTAO_INICIA_JOGO = 'iniciaJogo';
+const BOTAO_ENCERRA_JOGO = 'encerraJogo';
 const SPAN_TEMPO_RESTANTE = 'segRestantes';
 const BOTAO_FAZ_RESTART = 'restartJogo';
 const SPAN_PONTUACAO_ATUAL =  'pontuacaoAtual';
 const DURACAO_MAXIMA_OMISSAO = 10;
 const DURACAO_MINIMA_OMISSAO = 10;
 
+// VARIÁVEIS
+let botaoIniciaJogo;
+let botaoEncerraJogo;
 
-let jogo_iniciado = false;
-let temporizadorTempoJogo;
-let pontuacaoJogo;
-let pont = 0
+let timerTempoJogo;
+let timerPontuacaoJogo;
+let pontuacao = 0
 let segundos = 0;
 
+let totalDeCartas;
+let matrizTabuleiro = [];
+let acertos = 0
+let cartasAcertadas = [];
+let cartasClicadas = {
+    quantidade: 0,
+    cartas: [],
+};
 
 let configuração = {
     duracaoMaxima: DURACAO_MAXIMA_OMISSAO 
 }
 
 
-function iniciarTemporizador() {
-    segundos = 0;
-    temporizadorTempoJogo = setInterval(atualizarCronometro, 1000);
-    document.getElementById(BOTAO_INICIAR_JOGO).disabled = true;
-    document.getElementById(BOTAO_ENCERRAR_JOGO).disabled = false;
+window.addEventListener("load", carregaPagina);
+
+
+function carregaPagina() {
+
+    botaoIniciaJogo = document.getElementById(BOTAO_INICIA_JOGO);
+    botaoEncerraJogo = document.getElementById(BOTAO_ENCERRA_JOGO);
+    
+    embaralhaCartas();
+    carregaTabuleiro(4, 5);
+    defineEventListeners();
 }
-
-
-function encerrarJogo() {
-    console.log("encerrado");
-    atualizarPontuacao(-1*pont);
-    jogo_iniciado = false;
-    clearInterval(temporizadorTempoJogo);
-    document.getElementById(BOTAO_INICIAR_JOGO).disabled = false;
-    document.getElementById(BOTAO_ENCERRAR_JOGO).disabled = true
-    console.log("tempo total de jogo: " + segundos);
-
-}
-
-
-function iniciarPontuacao() {
-    pont = 0;
-    pontuacaoJogo = setInterval(function() {atualizarPontuacao(0);}, 10000);
-}
-
-
-function atualizarPontuacao(incrementar=0) {
-    if (incrementar == 0)
-        pont -= 2;
-    else
-        pont += incrementar;
-    document.getElementById(SPAN_PONTUACAO_ATUAL).innerHTML = pont;
-}
-
-
-function pararPontuacao() {
-    clearInterval(pontuacaoJogo);
-    console.log("Pontuação total: "+ pont)
-}
-
-
-function atualizarCronometro() {
-    segundos++;
-    document.getElementById(SPAN_TEMPO_PASSADO).innerHTML = segundos;
-}
-
-
-function restart() {
-    document.getElementById(BOTAO_FAZ_RESTART).disabled = true;
-}
-
-
-let totalDeCartas;
-let matrizTabuleiro = [];
-let acertos = 0
-let cartasAcertadas = [];
 
 function iniciaJogo() {
-    iniciarTemporizador();
-    iniciarPontuacao();
-    embaralhaCartas();
-    iniciaTabuleiro(4, 5);
+    botaoIniciaJogo.disabled = true;
+    botaoEncerraJogo.disabled = false;
+
+    iniciaTimerTempo();
+    iniciaTimerPontuacao();
+    iniciaTabuleiro();
+}
+
+function encerraJogo() {
+
+    encerraTabuleiro();
+
+    console.log("encerrado");
+    encerraTimerPontuacao();
+    jogoIniciado = false;
+
+    clearInterval(timerTempoJogo);
+    botaoIniciaJogo.disabled = false;
+    botaoEncerraJogo.disabled = true
+    console.log("tempo total de jogo: " + segundos);
+}
+
+function defineEventListeners() {
+    botaoIniciaJogo.addEventListener("click", iniciaJogo);
+    botaoEncerraJogo.addEventListener("click", encerraJogo);
+
+}
+
+function iniciaTimerTempo() {
+    segundos = 0;
+    document.getElementById(SPAN_TEMPO_PASSADO).innerHTML = segundos;
+    timerTempoJogo = setInterval(atualizaCronometro, 1000);
+    document.getElementById(BOTAO_INICIA_JOGO).disabled = true;
+    document.getElementById(BOTAO_ENCERRA_JOGO).disabled = false;
+}
+
+
+function iniciaTimerPontuacao() {
+    pontuacao = 0;
+    document.getElementById(SPAN_PONTUACAO_ATUAL).innerHTML = pontuacao;
+    timerPontuacaoJogo = setInterval(function() {atualizaPontuacao(null);}, 10000);
+}
+
+
+function atualizaPontuacao(incrementar=null) {
+    if (incrementar == null)
+        pontuacao -= 2;
+    else
+        pontuacao += incrementar;
+    document.getElementById(SPAN_PONTUACAO_ATUAL).innerHTML = pontuacao;
+}
+
+
+function encerraTimerPontuacao() {
+    clearInterval(timerPontuacaoJogo);
+    console.log("Pontuação total: "+ pontuacao);
+}
+
+
+function atualizaCronometro() {
+    segundos++;
+    document.getElementById(SPAN_TEMPO_PASSADO).innerHTML = segundos;
 }
 
 
@@ -134,7 +151,25 @@ function embaralhaCartas() {
     }
 }
 
-function iniciaTabuleiro(linhas = 5, colunas = 4) {
+function iniciaTabuleiro() {
+    for (let linha = 0; linha < matrizTabuleiro.length; linha++) {
+        for (let coluna = 0; coluna < matrizTabuleiro[linha].length; coluna++) {
+            let divCarta = document.getElementById(`carta${linha}-${coluna}`);
+            divCarta.addEventListener("click", cartaClicada);
+        }
+    }
+}
+
+function encerraTabuleiro() {
+    for (let linha = 0; linha < matrizTabuleiro.length; linha++) {
+        for (let coluna = 0; coluna < matrizTabuleiro[linha].length; coluna++) {
+            let divCarta = document.getElementById(`carta${linha}-${coluna}`);
+            divCarta.removeEventListener("click", cartaClicada);
+        }
+    }
+}
+
+function carregaTabuleiro(linhas = 5, colunas = 4) {
     let divTabuleiro = document.getElementById("divTabuleiro");
 
     // ATRIBUI N-LINHAS E K-COLUNAS À DIV DO TABULEIRO, DE ACORDO COM OS ARGUMENTOS PASSADOS À FUNÇÃO
@@ -157,16 +192,11 @@ function iniciaTabuleiro(linhas = 5, colunas = 4) {
                 `${totalDeCartas[posicaoLista].id} - ${totalDeCartas[posicaoLista].name}`
 
             );
-            divCarta.addEventListener("click", cartaClicada);
         }
     }
     //console.log(matrizTabuleiro);
 }
 
-let cartasClicadas = {
-    quantidade: 0,
-    cartas: [],
-};
 
 function cartaClicada(event) {
 
@@ -185,7 +215,7 @@ function cartaClicada(event) {
     else {
         cartasClicadas.quantidade += 1;
         cartasClicadas.cartas.push(event.target);
-        event.target.style.border = "solid blue";
+        event.target.style.border = "solid red 2px";
         // CASO SEJA A SEGUNDA CARTA A SER CLICADA
         if (cartasClicadas.quantidade == 2) {
             let acertou = true;
@@ -225,7 +255,7 @@ function cartaClicada(event) {
             if(acertou) {
                 console.log("ACERTOU!!!!!!!!");
                 cartasAcertadas.push(event.target);
-                atualizarPontuacao(10);
+                atualizaPontuacao(10);
             }
             else
                 console.log("ERROU!!!!!!!!");
