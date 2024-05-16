@@ -10,13 +10,7 @@ const AGE_ID = "age";
 let formulario = null
 let dados = [];
 
-// export class User {
-//     constructor (email, senha, idade=null) {
-//         this.email = email;
-//         this.senha = senha;
-//         this.idade = idade;  
-//     }
-// }
+
 class User {
     constructor (email, senha, idade=null) {
         this.email = email;

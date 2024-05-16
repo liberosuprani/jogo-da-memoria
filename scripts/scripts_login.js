@@ -1,6 +1,7 @@
 // import User from "./scripts_registo"; 
 
 const ITEM_DADOS_USUARIO = "dados";
+const ITEM_DADOS_USUARIO_LOGADO = "usuarioLogado"
 const FORMULARIO_LOGIN = "loginForm";
 const EMAIL_ID = "email";
 const PASSWORD_ID = "password";
@@ -8,6 +9,7 @@ const BOTAO_LOGIN = "botaoLogin";
 
 let formulario = null;
 let dados = [];
+let usuarioLogado;
 
 class User {
     constructor (email, senha, idade=null) {
@@ -20,6 +22,7 @@ class User {
 window.addEventListener("load", principal);
 
 function principal() {
+    localStorage.removeItem(ITEM_DADOS_USUARIO_LOGADO);
     obtemDadosUsuario();
     formulario = document.forms[FORMULARIO_LOGIN];
     defineEventListeners();
@@ -40,13 +43,14 @@ function tentaLogin() {
     let password = formulario.elements[PASSWORD_ID].value;
     let user = new User(email, password);
     
-    loginValido = validaLogin(user);
+    let loginValido = validaLogin(user);
 
     if (loginValido) {
-        console.log("USUARIO LOGADO");
+        localStorage.setItem(ITEM_DADOS_USUARIO_LOGADO, JSON.stringify(usuarioLogado));
+        window.location.href = "game_modes.html";
     }
     else {
-        console.log("USUARIO NAO EXISTE");
+        alert("Usuário não existe");
     }
 }
 
@@ -54,8 +58,10 @@ function validaLogin(user) {
     let achou = false;
 
     for (i = 0; i<dados.length; i++) {
-        if (user.email == dados[i].email && user.senha == dados[i].senha)
+        if (user.email == dados[i].email && user.senha == dados[i].senha) {
             achou = true;
+            usuarioLogado = dados[i];
+        }
     }
 
     return achou;
