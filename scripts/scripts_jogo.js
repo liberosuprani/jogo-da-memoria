@@ -6,10 +6,98 @@ Ravi Mughal - 62504
 
 window.addEventListener("load", iniciaJogo);
 
-function iniciaJogo() {
-    embaralhaCartas();
-    iniciaTabuleiro(5, 4);
+/* Grupo nº28 PL23
+Duarte Alberto - 62235
+Libero Suprani - 62220
+Ravi Mughal - 62504 
+*/
+
+const SPAN_TEMPO_PASSADO = 'segPassados';
+const BOTAO_INICIAR_JOGO = 'iniciarJogo';
+const BOTAO_ENCERRAR_JOGO = 'encerrarJogo';
+const SPAN_TEMPO_RESTANTE = 'segRestantes';
+const BOTAO_FAZ_RESTART = 'restartJogo';
+const SPAN_PONTUACAO_ATUAL =  'pontuacaoAtual';
+const DURACAO_MAXIMA_OMISSAO = 10;
+const DURACAO_MINIMA_OMISSAO = 10;
+
+
+let jogo_iniciado = false;
+let temporizadorTempoJogo;
+let pontuacaoJogo;
+let pont = 0
+let segundos = 0;
+
+
+let configuração = {
+    duracaoMaxima: DURACAO_MAXIMA_OMISSAO 
 }
+
+
+function iniciarTemporizador() {
+    segundos = 0;
+    temporizadorTempoJogo = setInterval(atualizarCronometro, 1000);
+    document.getElementById(BOTAO_INICIAR_JOGO).disabled = true;
+    document.getElementById(BOTAO_ENCERRAR_JOGO).disabled = false;
+}
+
+
+function encerrarJogo() {
+    console.log("encerrado");
+    atualizarPontuacao(-1*pont);
+    jogo_iniciado = false;
+    clearInterval(temporizadorTempoJogo);
+    document.getElementById(BOTAO_INICIAR_JOGO).disabled = false;
+    document.getElementById(BOTAO_ENCERRAR_JOGO).disabled = true
+    console.log("tempo total de jogo: " + segundos);
+
+}
+
+
+function iniciarPontuacao() {
+    pont = 0;
+    pontuacaoJogo = setInterval(function() {atualizarPontuacao(0);}, 10000);
+}
+
+
+function atualizarPontuacao(incrementar=0) {
+    if (incrementar == 0)
+        pont -= 2;
+    else
+        pont += incrementar;
+    document.getElementById(SPAN_PONTUACAO_ATUAL).innerHTML = pont;
+}
+
+
+function pararPontuacao() {
+    clearInterval(pontuacaoJogo);
+    console.log("Pontuação total: "+ pont)
+}
+
+
+function atualizarCronometro() {
+    segundos++;
+    document.getElementById(SPAN_TEMPO_PASSADO).innerHTML = segundos;
+}
+
+
+function restart() {
+    document.getElementById(BOTAO_FAZ_RESTART).disabled = true;
+}
+
+
+let totalDeCartas;
+let matrizTabuleiro = [];
+let acertos = 0
+let cartasAcertadas = [];
+
+function iniciaJogo() {
+    iniciarTemporizador();
+    iniciarPontuacao();
+    embaralhaCartas();
+    iniciaTabuleiro(4, 5);
+}
+
 
 class Carta {
     constructor(id, name) {
@@ -31,8 +119,6 @@ let listaDeCartas1 = [
     new Carta(9, "Tênis"),
 ];
 
-let totalDeCartas;
-let matrizTabuleiro = [];
 
 function embaralhaCartas() {
     totalDeCartas = listaDeCartas1.concat(listaDeCartas1);
@@ -84,8 +170,13 @@ let cartasClicadas = {
 
 function cartaClicada(event) {
 
+    if (cartasAcertadas.includes(event.target)) {
+        console.log("CARTAS JA FORAM ACERTADAS");
+        cartasClicadas.quantidade = 0;
+        cartasClicadas.cartas = [];
+    }
     // MESMA CARTA CLICADA MAIS DE UMA VEZ
-    if(cartasClicadas.cartas.length > 0 && event.target == cartasClicadas.cartas[cartasClicadas.cartas.length-1]) {
+    else if(cartasClicadas.cartas.length > 0 && event.target == cartasClicadas.cartas[cartasClicadas.cartas.length-1]) {
         cartasClicadas.cartas[0].style.border = "";
         console.log("MESMA CARTA CLICADA NOVAMENTE");
         cartasClicadas.quantidade = 0;
@@ -131,10 +222,17 @@ function cartaClicada(event) {
             cartasClicadas.quantidade = 0;
             cartasClicadas.cartas = [];
 
-            if(acertou)
+            if(acertou) {
                 console.log("ACERTOU!!!!!!!!");
+                cartasAcertadas.push(event.target);
+                atualizarPontuacao(10);
+            }
             else
                 console.log("ERROU!!!!!!!!");
         }
     }
 }
+
+
+
+    
