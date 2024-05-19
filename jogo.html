@@ -41,21 +41,27 @@
             <li><a href="configuracoes.html">Configurações</a></li>
         </ul>
     </div>
+    <div class="pageContainer">
+        <main>
+            <button type="button" id="iniciaJogo">
+                Iniciar Jogo
+            </button>
+            <button type="button" id="encerraJogo" disabled>
+                Encerrar Jogo
+            </button>
+            <button type="button" id="configuraTabuleiro">
+                Configurar tabuleiro
+            </button>
+            <p>
+                Passou <span id="segPassados">0</span> segundos e sua pontuação atual é <span id="pontuacaoAtual">0</span>
+            </p>
 
-    <button type="button" id="iniciaJogo">
-        Iniciar Jogo
-    </button>
-    <button type="button" id="encerraJogo" disabled>
-        Encerrar Jogo
-    </button>
-    <p>
-        Passou <span id="segPassados">0</span> segundos e sua pontuação atual é <span id="pontuacaoAtual">0</span>
-    </p>
+            <div id="wrapperDivTabuleiro">
+                <div id="divTabuleiro">
 
-    <div id="wrapperDivTabuleiro">
-        <div id="divTabuleiro">
-
-        </div>
+                </div>
+            </div>
+        </main>
     </div>
 
     <footer>

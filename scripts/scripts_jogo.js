@@ -8,6 +8,7 @@ Ravi Mughal - 62504
 const SPAN_TEMPO_PASSADO = 'segPassados';
 const BOTAO_INICIA_JOGO = 'iniciaJogo';
 const BOTAO_ENCERRA_JOGO = 'encerraJogo';
+const BOTAO_CONFIGURA_TABULEIRO = "configuraTabuleiro";
 const SPAN_TEMPO_RESTANTE = 'segRestantes';
 const BOTAO_FAZ_RESTART = 'restartJogo';
 const SPAN_PONTUACAO_ATUAL =  'pontuacaoAtual';
@@ -17,13 +18,14 @@ const DURACAO_MINIMA_OMISSAO = 10;
 // VARIÁVEIS
 let botaoIniciaJogo;
 let botaoEncerraJogo;
+let botaoConfiguraTabuleiro;
 
 let timerTempoJogo;
 let timerPontuacaoJogo;
 let pontuacao = 0
 let segundos = 0;
 
-let totalDeCartas;
+let totalDeCartas = [];
 let matrizTabuleiro = [];
 let acertos = 0
 let cartasAcertadas = [];
@@ -32,8 +34,10 @@ let cartasClicadas = {
     cartas: [],
 };
 
-let configuração = {
-    duracaoMaxima: DURACAO_MAXIMA_OMISSAO 
+let configuracao = {
+    duracaoMaxima: DURACAO_MAXIMA_OMISSAO,
+    qtdLinhasPadrao: 5,
+    qtdColunasPadrao: 6,
 }
 
 
@@ -44,15 +48,17 @@ function carregaPagina() {
 
     botaoIniciaJogo = document.getElementById(BOTAO_INICIA_JOGO);
     botaoEncerraJogo = document.getElementById(BOTAO_ENCERRA_JOGO);
+    botaoConfiguraTabuleiro = document.getElementById(BOTAO_CONFIGURA_TABULEIRO);
+
     
-    embaralhaCartas();
-    carregaTabuleiro(4, 5);
+    carregaTabuleiro(configuracao.qtdLinhasPadrao, configuracao.qtdColunasPadrao);
     defineEventListeners();
 }
 
 function iniciaJogo() {
     botaoIniciaJogo.disabled = true;
     botaoEncerraJogo.disabled = false;
+    botaoConfiguraTabuleiro.disabled = true;
 
     iniciaTimerTempo();
     iniciaTimerPontuacao();
@@ -69,14 +75,15 @@ function encerraJogo() {
 
     clearInterval(timerTempoJogo);
     botaoIniciaJogo.disabled = false;
-    botaoEncerraJogo.disabled = true
+    botaoEncerraJogo.disabled = true;
+    botaoConfiguraTabuleiro.disabled = false;
     console.log("tempo total de jogo: " + segundos);
 }
 
 function defineEventListeners() {
     botaoIniciaJogo.addEventListener("click", iniciaJogo);
     botaoEncerraJogo.addEventListener("click", encerraJogo);
-
+    botaoConfiguraTabuleiro.addEventListener("click", configuraTabuleiro);
 }
 
 function iniciaTimerTempo() {
@@ -134,12 +141,24 @@ let listaDeCartas1 = [
     new Carta(7, "Baseball"),
     new Carta(8, "Capoeira"),
     new Carta(9, "Tênis"),
+    new Carta(10, "Skate"),
+    new Carta(11, "Cricket"),
+    new Carta(12, "Ping-pong"),
+    new Carta(13, "Atletismo"),
+    new Carta(14, "Arco e flecha"),
 ];
 
 
-function embaralhaCartas() {
-    totalDeCartas = listaDeCartas1.concat(listaDeCartas1);
-
+function embaralhaCartas(linhas = configuracao.qtdLinhasPadrao, colunas = configuracao.qtdColunasPadrao) {
+    totalDeCartas = [];
+    if (linhas * colunas < listaDeCartas1.length*2) {
+        for (let i = 0; i < (linhas*colunas)/2; i++) 
+            totalDeCartas.push(listaDeCartas1[i]); 
+        totalDeCartas = totalDeCartas.concat(totalDeCartas);   
+    }
+    else {
+        totalDeCartas = listaDeCartas1.concat(listaDeCartas1);
+    }
     for (let i = 0; i < totalDeCartas.length; i++) {
         // PEGA UMA POSICAO ALEATORIA 
         let posicaoAleatoria = Math.floor(Math.random() * totalDeCartas.length);
@@ -169,9 +188,36 @@ function encerraTabuleiro() {
     }
 }
 
-function carregaTabuleiro(linhas = 5, colunas = 4) {
-    let divTabuleiro = document.getElementById("divTabuleiro");
+function configuraTabuleiro () {
+    matrizTabuleiro = [];
+    
+    //TODO falta verificar se o numero digitado pelo usuario é inteiro
 
+    while (true) {
+        let largura = prompt("Largura (entre 2 e 15):");
+        if (!isNaN(largura)){
+            largura = parseInt(largura)
+            if (largura >= 2 && largura <= 15) {
+                if (Math.floor(listaDeCartas1.length*2 / largura) % 2 == 0 || largura == 2)
+                    carregaTabuleiro(Math.floor(listaDeCartas1.length*2 / largura), largura);
+                else
+                    carregaTabuleiro(Math.floor(listaDeCartas1.length*2 / largura)-1, largura);
+                break;
+            }
+            else
+                alert("Valor deve estar entre 2 e 15");
+        }
+        else {
+            alert("Valor inválido");
+        }
+    }
+}
+
+function carregaTabuleiro(linhas = configuracao.qtdLinhasPadrao, colunas = configuracao.qtdColunasPadrao) {
+    embaralhaCartas(linhas, colunas);
+
+    let divTabuleiro = document.getElementById("divTabuleiro");
+    divTabuleiro.innerHTML = "";
     // ATRIBUI N-LINHAS E K-COLUNAS À DIV DO TABULEIRO, DE ACORDO COM OS ARGUMENTOS PASSADOS À FUNÇÃO
     divTabuleiro.style.gridTemplateRows = `repeat(${linhas}, 1fr)`;
     divTabuleiro.style.gridTemplateColumns = `repeat(${colunas}, 1fr)`;
@@ -182,7 +228,7 @@ function carregaTabuleiro(linhas = 5, colunas = 4) {
             matrizTabuleiro[linha].push(totalDeCartas[posicaoLista]);
             
             // CRIA UMA DIV PRA CARTA, CUJO ID É "cartaN-K", EM QUE N==Nª DA LINHA E K==Nª DA COLUNA
-            divCarta = document.createElement("div");
+            let divCarta = document.createElement("div");
             divCarta.id = `carta${linha}-${coluna}`;
             divTabuleiro.append(divCarta);
             divCarta.classList.add("carta");
@@ -190,13 +236,24 @@ function carregaTabuleiro(linhas = 5, colunas = 4) {
             // POR ENQUANTO, SÓ PARA MOSTRAR O NOME E ID DO OBJETO CARTA NA DIV (#TODO)
             divCarta.append(
                 `${totalDeCartas[posicaoLista].id} - ${totalDeCartas[posicaoLista].name}`
-
             );
         }
     }
-    //console.log(matrizTabuleiro);
 }
 
+function resetarCartas() {
+    
+
+    for (let k = 0; k < cartasAcertadas.length; k++) {
+        carta_id = cartasAcertadas[k].id
+        let carta_modificada = document.getElementById(carta_id)
+        carta_modificada.style.border = 'solid yellow 3px'
+    }  
+
+    
+    cartasAcertadas = []
+}
+                
 
 function cartaClicada(event) {
 
@@ -226,7 +283,7 @@ function cartaClicada(event) {
                 let idAtual = cartaClicada.id;
 
                 // DÁ A POSICÃO (LINHA E COLUNA) DA CARTA CLICADA, NA MATRIZ QUE REPRESENTA O TABULEIRO 
-                let posicaoNaMatriz = idAtual.slice(5);
+                let posicaoNaMatriz = idAtual.slice(5); // retira a substring "carta" do id
                 posicaoNaMatriz = posicaoNaMatriz.split("-");
                 let linha = parseInt(posicaoNaMatriz[0]);
                 let coluna = parseInt(posicaoNaMatriz[1]);
@@ -236,6 +293,9 @@ function cartaClicada(event) {
                     matrizTabuleiro[linha][coluna]
                 );
             }
+            //
+            console.log(cartasClicadasObjetos, matrizTabuleiro)
+            //
 
             // VERIFICA SE ALGUMA DAS CARTAS CLICADAS TEM O ATRIBUTO ID (DO OBJETO) DIFERENTE (I.E. NÃO ACERTOU O PAR)
             let primeiroId = cartasClicadasObjetos[0].id;
@@ -264,5 +324,16 @@ function cartaClicada(event) {
 }
 
 
+function pegarId() {
+    for (let cartaClicada of cartasClicadas.cartas) {
+        let idAtual = cartaClicada.id;
 
+        // DÁ A POSICÃO (LINHA E COLUNA) DA CARTA CLICADA, NA MATRIZ QUE REPRESENTA O TABULEIRO 
+        let posicaoNaMatriz = idAtual.slice(5); // retira a substring "carta" do id
+        posicaoNaMatriz = posicaoNaMatriz.split("-");
+        let linha = parseInt(posicaoNaMatriz[0]);
+        let coluna = parseInt(posicaoNaMatriz[1]);
+    }
+    return [linha, coluna]
+}
     

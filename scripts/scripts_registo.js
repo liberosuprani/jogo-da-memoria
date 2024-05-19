@@ -10,7 +10,6 @@ const AGE_ID = "age";
 let formulario = null
 let dados = [];
 
-
 class User {
     constructor (email, senha, idade=null) {
         this.email = email;
@@ -33,20 +32,30 @@ function principal() {
 }
 
 function obtemDadosUsuario() {
-    console.log("DADOS REFRESHING");
-    console.log(dados);
     dados = JSON.parse(localStorage.getItem(ITEM_DADOS_USUARIO)) || [];
 }
 
 
 function gravaDadosUser() {
+    let errorMsg = document.getElementById("errorMsg");
+    let usuarioJaExiste = false;
     let email = formulario.elements[EMAIL_ID].value;
-    console.log(email);
-    let password = formulario.elements[PASSWORD_ID].value;
-    console.log(password);
-    let age = formulario.elements[AGE_ID].value;
-    console.log(age);
-    dados.push(new User(email, password, age));
-    console.log(dados);
-    localStorage.setItem(ITEM_DADOS_USUARIO, JSON.stringify(dados));
+
+    for (let i = 0; i<dados.length; i++) {
+        if (email == dados[i].email) {
+            usuarioJaExiste = true;
+            break;
+        }
+    }
+    if (usuarioJaExiste) {
+        errorMsg.style.visibility = "visible";
+    }
+    else {
+        errorMsg.style.visibility = "hidden";
+        let password = formulario.elements[PASSWORD_ID].value;
+        console.log(password);
+        let age = formulario.elements[AGE_ID].value;
+        dados.push(new User(email, password, age));
+        localStorage.setItem(ITEM_DADOS_USUARIO, JSON.stringify(dados));
+    }
 }

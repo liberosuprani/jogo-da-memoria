@@ -280,6 +280,11 @@ footer ul li {
 
 }
 
+#errorMsg {
+    visibility: hidden;
+    color: red;
+}
+
 
 
 

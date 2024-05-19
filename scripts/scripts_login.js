@@ -1,4 +1,3 @@
-// import User from "./scripts_registo"; 
 
 const ITEM_DADOS_USUARIO = "dados";
 const ITEM_DADOS_USUARIO_LOGADO = "usuarioLogado"
@@ -33,12 +32,11 @@ function defineEventListeners() {
 }
 
 function obtemDadosUsuario() {
-    console.log("DADOS REFRESHING");
     dados = JSON.parse(localStorage.getItem(ITEM_DADOS_USUARIO));
-    console.log(dados);
 }
 
 function tentaLogin() {
+    let errorMsg = document.getElementById("errorMsg");
     let email = formulario.elements[EMAIL_ID].value;
     let password = formulario.elements[PASSWORD_ID].value;
     let user = new User(email, password);
@@ -46,11 +44,12 @@ function tentaLogin() {
     let loginValido = validaLogin(user);
 
     if (loginValido) {
+        errorMsg.style.visibility = "hidden";
         localStorage.setItem(ITEM_DADOS_USUARIO_LOGADO, JSON.stringify(usuarioLogado));
         window.location.href = "game_modes.html";
     }
     else {
-        alert("Usuário não existe");
+        errorMsg.style.visibility = "visible";
     }
 }
 
