@@ -33,11 +33,12 @@ let cartasClicadas = {
     quantidade: 0,
     cartas: [],
 };
+let cartasListeners = [];
 
 let configuracao = {
     duracaoMaxima: DURACAO_MAXIMA_OMISSAO,
-    qtdLinhasPadrao: 5,
-    qtdColunasPadrao: 6,
+    altura: 5,
+    largura: 6,
 }
 
 
@@ -50,8 +51,11 @@ function carregaPagina() {
     botaoEncerraJogo = document.getElementById(BOTAO_ENCERRA_JOGO);
     botaoConfiguraTabuleiro = document.getElementById(BOTAO_CONFIGURA_TABULEIRO);
 
-    
-    carregaTabuleiro(configuracao.qtdLinhasPadrao, configuracao.qtdColunasPadrao);
+    botaoIniciaJogo.disabled = false;
+    botaoEncerraJogo.disabled = true;
+    botaoConfiguraTabuleiro.disabled = false;
+
+    carregaTabuleiro();
     defineEventListeners();
 }
 
@@ -60,9 +64,16 @@ function iniciaJogo() {
     botaoEncerraJogo.disabled = false;
     botaoConfiguraTabuleiro.disabled = true;
 
+    cartasAcertadas = [];
+    acertos = 0;
+    cartasClicadas.cartas = [];
+    cartasClicadas.quantidade = 0;
+    
+    carregaTabuleiro();
+    iniciaTabuleiro();
+
     iniciaTimerTempo();
     iniciaTimerPontuacao();
-    iniciaTabuleiro();
 }
 
 function encerraJogo() {
@@ -74,6 +85,7 @@ function encerraJogo() {
     jogoIniciado = false;
 
     clearInterval(timerTempoJogo);
+
     botaoIniciaJogo.disabled = false;
     botaoEncerraJogo.disabled = true;
     botaoConfiguraTabuleiro.disabled = false;
@@ -149,7 +161,7 @@ let listaDeCartas1 = [
 ];
 
 
-function embaralhaCartas(linhas = configuracao.qtdLinhasPadrao, colunas = configuracao.qtdColunasPadrao) {
+function embaralhaCartas(linhas = configuracao.altura, colunas = configuracao.largura) {
     totalDeCartas = [];
     if (linhas * colunas < listaDeCartas1.length*2) {
         for (let i = 0; i < (linhas*colunas)/2; i++) 
@@ -174,6 +186,7 @@ function iniciaTabuleiro() {
     for (let linha = 0; linha < matrizTabuleiro.length; linha++) {
         for (let coluna = 0; coluna < matrizTabuleiro[linha].length; coluna++) {
             let divCarta = document.getElementById(`carta${linha}-${coluna}`);
+            console.log(divCarta);
             divCarta.addEventListener("click", cartaClicada);
         }
     }
@@ -189,19 +202,21 @@ function encerraTabuleiro() {
 }
 
 function configuraTabuleiro () {
-    matrizTabuleiro = [];
-    
     //TODO falta verificar se o numero digitado pelo usuario é inteiro
 
     while (true) {
-        let largura = prompt("Largura (entre 2 e 15):");
-        if (!isNaN(largura)){
-            largura = parseInt(largura)
-            if (largura >= 2 && largura <= 15) {
-                if (Math.floor(listaDeCartas1.length*2 / largura) % 2 == 0 || largura == 2)
-                    carregaTabuleiro(Math.floor(listaDeCartas1.length*2 / largura), largura);
-                else
-                    carregaTabuleiro(Math.floor(listaDeCartas1.length*2 / largura)-1, largura);
+        configuracao.largura = prompt("Largura (entre 2 e 15):");
+
+        if (!isNaN(configuracao.largura)){
+            configuracao.largura = parseInt(configuracao.largura);
+
+            if (configuracao.largura >= 2 && configuracao.largura <= 15) {
+                if (listaDeCartas1.length*2 % configuracao.largura == 0 || Math.floor(listaDeCartas1.length*2 / configuracao.largura) % 2 == 0 || configuracao.largura == 2) 
+                    configuracao.altura = Math.floor(listaDeCartas1.length*2 / configuracao.largura);
+                else 
+                    configuracao.altura = Math.floor(listaDeCartas1.length*2 / configuracao.largura) - 1;
+
+                carregaTabuleiro();
                 break;
             }
             else
@@ -213,7 +228,8 @@ function configuraTabuleiro () {
     }
 }
 
-function carregaTabuleiro(linhas = configuracao.qtdLinhasPadrao, colunas = configuracao.qtdColunasPadrao) {
+function carregaTabuleiro(linhas = configuracao.altura, colunas = configuracao.largura) {
+    matrizTabuleiro = [];
     embaralhaCartas(linhas, colunas);
 
     let divTabuleiro = document.getElementById("divTabuleiro");
@@ -293,9 +309,6 @@ function cartaClicada(event) {
                     matrizTabuleiro[linha][coluna]
                 );
             }
-            //
-            console.log(cartasClicadasObjetos, matrizTabuleiro)
-            //
 
             // VERIFICA SE ALGUMA DAS CARTAS CLICADAS TEM O ATRIBUTO ID (DO OBJETO) DIFERENTE (I.E. NÃO ACERTOU O PAR)
             let primeiroId = cartasClicadasObjetos[0].id;
@@ -307,18 +320,19 @@ function cartaClicada(event) {
                 }
 
             } 
-
-            // RESETA AS CARTAS CLICADAS
-            cartasClicadas.quantidade = 0;
-            cartasClicadas.cartas = [];
-
+            
             if(acertou) {
                 console.log("ACERTOU!!!!!!!!");
-                cartasAcertadas.push(event.target);
+                for (let cartaClicadaAtual of cartasClicadas.cartas) 
+                    cartasAcertadas.push(cartaClicadaAtual);
+                
                 atualizaPontuacao(10);
             }
-            else
+            else{
                 console.log("ERROU!!!!!!!!");
+            }
+            cartasClicadas.quantidade = 0;
+            cartasClicadas.cartas = [];
         }
     }
 }
