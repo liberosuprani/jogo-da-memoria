@@ -256,13 +256,15 @@ footer ul li {
 
 #wrapperDivTabuleiro {
     display: flex;
-    margin: 0 auto;
+    margin: 60px auto;
+    width: min-content;
 }
 
 #divTabuleiro {
     display: inline-grid;
+    width: 100%;
     gap: 15px;
-    margin: 5px auto 35px auto;
+    margin: 5px auto 35px auto; 
     padding: 10px;
     box-shadow: 0 0 5px 0px black;
     background: rgb(7, 69, 82);
@@ -283,6 +285,18 @@ footer ul li {
 #errorMsg {
     visibility: hidden;
     color: red;
+}
+
+#singlegamePage {
+    margin-right: auto;
+    margin-left: auto;
+    margin-top: 60px;
+}
+
+#placar {
+    position: absolute;
+    top: 60px;
+    left: 10vw;
 }
 
 

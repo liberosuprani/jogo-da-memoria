@@ -11,10 +11,11 @@ let dados = [];
 let usuarioLogado;
 
 class User {
-    constructor (email, senha, idade=null) {
+    constructor (email, senha, idade=null, scores=[]) {
         this.email = email;
         this.senha = senha;
         this.idade = idade;  
+        this.scores = scores;  
     }
 }
 
