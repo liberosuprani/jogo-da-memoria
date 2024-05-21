@@ -11,9 +11,13 @@ const BOTAO_ENCERRA_JOGO = 'encerraJogo';
 const BOTAO_CONFIGURA_TABULEIRO = "configuraTabuleiro";
 const SPAN_TEMPO_RESTANTE = 'segRestantes';
 const BOTAO_FAZ_RESTART = 'restartJogo';
-const SPAN_PONTUACAO_ATUAL =  'pontuacaoAtual';
+const SPAN_PONTUACAO_ATUAL = 'pontuacaoAtual';
 const DURACAO_MAXIMA_OMISSAO = 10;
 const DURACAO_MINIMA_OMISSAO = 10;
+
+
+const ITEM_ESTATISTICA = "estatistica"
+
 
 // VARIÁVEIS
 let botaoIniciaJogo;
@@ -68,7 +72,7 @@ function iniciaJogo() {
     acertos = 0;
     cartasClicadas.cartas = [];
     cartasClicadas.quantidade = 0;
-    
+
     carregaTabuleiro();
     iniciaTabuleiro();
 
@@ -110,11 +114,11 @@ function iniciaTimerTempo() {
 function iniciaTimerPontuacao() {
     pontuacao = 0;
     document.getElementById(SPAN_PONTUACAO_ATUAL).innerHTML = pontuacao;
-    timerPontuacaoJogo = setInterval(function() {atualizaPontuacao(null);}, 10000);
+    timerPontuacaoJogo = setInterval(function () { atualizaPontuacao(null); }, 10000);
 }
 
 
-function atualizaPontuacao(incrementar=null) {
+function atualizaPontuacao(incrementar = null) {
     if (incrementar == null)
         pontuacao -= 2;
     else
@@ -125,7 +129,7 @@ function atualizaPontuacao(incrementar=null) {
 
 function encerraTimerPontuacao() {
     clearInterval(timerPontuacaoJogo);
-    console.log("Pontuação total: "+ pontuacao);
+    console.log("Pontuação total: " + pontuacao);
 }
 
 
@@ -143,10 +147,10 @@ class Carta {
 }
 
 let listaDeCartas1 = [
-    new Carta(0, "Futebol"), 
-    new Carta(1, "Basquete"), 
-    new Carta(2, "Vôlei"), 
-    new Carta(3, "Handball"), 
+    new Carta(0, "Futebol"),
+    new Carta(1, "Basquete"),
+    new Carta(2, "Vôlei"),
+    new Carta(3, "Handball"),
     new Carta(4, "Natação"),
     new Carta(5, "Hockey"),
     new Carta(6, "Rugby"),
@@ -163,10 +167,10 @@ let listaDeCartas1 = [
 
 function embaralhaCartas(linhas = configuracao.altura, colunas = configuracao.largura) {
     totalDeCartas = [];
-    if (linhas * colunas < listaDeCartas1.length*2) {
-        for (let i = 0; i < (linhas*colunas)/2; i++) 
-            totalDeCartas.push(listaDeCartas1[i]); 
-        totalDeCartas = totalDeCartas.concat(totalDeCartas);   
+    if (linhas * colunas < listaDeCartas1.length * 2) {
+        for (let i = 0; i < (linhas * colunas) / 2; i++)
+            totalDeCartas.push(listaDeCartas1[i]);
+        totalDeCartas = totalDeCartas.concat(totalDeCartas);
     }
     else {
         totalDeCartas = listaDeCartas1.concat(listaDeCartas1);
@@ -201,20 +205,20 @@ function encerraTabuleiro() {
     }
 }
 
-function configuraTabuleiro () {
+function configuraTabuleiro() {
     //TODO falta verificar se o numero digitado pelo usuario é inteiro
 
     while (true) {
         configuracao.largura = prompt("Largura (entre 2 e 15):");
 
-        if (!isNaN(configuracao.largura)){
+        if (!isNaN(configuracao.largura)) {
             configuracao.largura = parseInt(configuracao.largura);
 
             if (configuracao.largura >= 2 && configuracao.largura <= 15) {
-                if (listaDeCartas1.length*2 % configuracao.largura == 0 || Math.floor(listaDeCartas1.length*2 / configuracao.largura) % 2 == 0 || configuracao.largura == 2) 
-                    configuracao.altura = Math.floor(listaDeCartas1.length*2 / configuracao.largura);
-                else 
-                    configuracao.altura = Math.floor(listaDeCartas1.length*2 / configuracao.largura) - 1;
+                if (listaDeCartas1.length * 2 % configuracao.largura == 0 || Math.floor(listaDeCartas1.length * 2 / configuracao.largura) % 2 == 0 || configuracao.largura == 2)
+                    configuracao.altura = Math.floor(listaDeCartas1.length * 2 / configuracao.largura);
+                else
+                    configuracao.altura = Math.floor(listaDeCartas1.length * 2 / configuracao.largura) - 1;
 
                 carregaTabuleiro();
                 break;
@@ -237,18 +241,18 @@ function carregaTabuleiro(linhas = configuracao.altura, colunas = configuracao.l
     // ATRIBUI N-LINHAS E K-COLUNAS À DIV DO TABULEIRO, DE ACORDO COM OS ARGUMENTOS PASSADOS À FUNÇÃO
     divTabuleiro.style.gridTemplateRows = `repeat(${linhas}, 1fr)`;
     divTabuleiro.style.gridTemplateColumns = `repeat(${colunas}, 1fr)`;
-    
+
     for (let linha = 0, posicaoLista = 0; linha < linhas; linha++) {
         matrizTabuleiro.push([])
         for (let coluna = 0; coluna < colunas; coluna++, posicaoLista++) {
             matrizTabuleiro[linha].push(totalDeCartas[posicaoLista]);
-            
+
             // CRIA UMA DIV PRA CARTA, CUJO ID É "cartaN-K", EM QUE N==Nª DA LINHA E K==Nª DA COLUNA
             let divCarta = document.createElement("div");
             divCarta.id = `carta${linha}-${coluna}`;
             divTabuleiro.append(divCarta);
             divCarta.classList.add("carta");
-            
+
             // POR ENQUANTO, SÓ PARA MOSTRAR O NOME E ID DO OBJETO CARTA NA DIV (#TODO)
             divCarta.append(
                 `${totalDeCartas[posicaoLista].id} - ${totalDeCartas[posicaoLista].name}`
@@ -258,18 +262,18 @@ function carregaTabuleiro(linhas = configuracao.altura, colunas = configuracao.l
 }
 
 function resetarCartas() {
-    
+
 
     for (let k = 0; k < cartasAcertadas.length; k++) {
         carta_id = cartasAcertadas[k].id
         let carta_modificada = document.getElementById(carta_id)
         carta_modificada.style.border = 'solid yellow 3px'
-    }  
+    }
 
-    
+
     cartasAcertadas = []
 }
-                
+
 
 function cartaClicada(event) {
 
@@ -279,7 +283,7 @@ function cartaClicada(event) {
         cartasClicadas.cartas = [];
     }
     // MESMA CARTA CLICADA MAIS DE UMA VEZ
-    else if(cartasClicadas.cartas.length > 0 && event.target == cartasClicadas.cartas[cartasClicadas.cartas.length-1]) {
+    else if (cartasClicadas.cartas.length > 0 && event.target == cartasClicadas.cartas[cartasClicadas.cartas.length - 1]) {
         cartasClicadas.cartas[0].style.border = "";
         console.log("MESMA CARTA CLICADA NOVAMENTE");
         cartasClicadas.quantidade = 0;
@@ -313,22 +317,22 @@ function cartaClicada(event) {
             // VERIFICA SE ALGUMA DAS CARTAS CLICADAS TEM O ATRIBUTO ID (DO OBJETO) DIFERENTE (I.E. NÃO ACERTOU O PAR)
             let primeiroId = cartasClicadasObjetos[0].id;
             for (let cartaClicadaObj of cartasClicadasObjetos) {
-                if(cartaClicadaObj.id != primeiroId){
+                if (cartaClicadaObj.id != primeiroId) {
                     acertou = false;
-                    for (let cartaClicada of cartasClicadas.cartas) 
+                    for (let cartaClicada of cartasClicadas.cartas)
                         cartaClicada.style.border = "";
                 }
 
-            } 
-            
-            if(acertou) {
+            }
+
+            if (acertou) {
                 console.log("ACERTOU!!!!!!!!");
-                for (let cartaClicadaAtual of cartasClicadas.cartas) 
+                for (let cartaClicadaAtual of cartasClicadas.cartas)
                     cartasAcertadas.push(cartaClicadaAtual);
-                
+
                 atualizaPontuacao(10);
             }
-            else{
+            else {
                 console.log("ERROU!!!!!!!!");
             }
             cartasClicadas.quantidade = 0;
@@ -337,17 +341,33 @@ function cartaClicada(event) {
     }
 }
 
+let pontuacoes = []
 
-function pegarId() {
-    for (let cartaClicada of cartasClicadas.cartas) {
-        let idAtual = cartaClicada.id;
 
-        // DÁ A POSICÃO (LINHA E COLUNA) DA CARTA CLICADA, NA MATRIZ QUE REPRESENTA O TABULEIRO 
-        let posicaoNaMatriz = idAtual.slice(5); // retira a substring "carta" do id
-        posicaoNaMatriz = posicaoNaMatriz.split("-");
-        let linha = parseInt(posicaoNaMatriz[0]);
-        let coluna = parseInt(posicaoNaMatriz[1]);
-    }
-    return [linha, coluna]
+function Estatistica(pont, cartasAcertadas) {
+    this.pont = pont
+    this.cartasAcertadas = cartasAcertadas
 }
-    
+
+function gravaPontuacaoNoHistorico(pont) {
+    pontuacoes.push(pont);
+    gravaHistoricoPontuacao()
+}
+
+function gravaHistoricoPontuacao() {
+    localStorage.setItem(ITEM_ESTATISTICA, JSON.stringify(pont));
+}
+
+function trataFazerRegistroPontuacao() {
+    // registra estatistica 
+    pont = new Estatistica(pontuacao, cartasAcertadas)
+
+    gravaPontuacaoNoHistorico(pont)
+    mostraHistoricoEstatistica()
+}
+
+function mostraHistoricoEstatistica() {
+    for (let pontuacao of pontuacoes) {
+        console.log(pontuacao)
+    }
+}
