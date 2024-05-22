@@ -18,7 +18,7 @@ const SPAN_PONTUACAO_ATUAL = 'pontuacaoAtual';
 const DURACAO_MAXIMA_OMISSAO = 10;
 const DURACAO_MINIMA_OMISSAO = 10;
 
-const ITEM_ESTATISTICA = "estatistica"
+const ITEM_ESTATISTICA = "leaderboard"
 
 
 // VARIÁVEIS
@@ -153,6 +153,7 @@ function atualizaCronometro() {
     document.getElementById(SPAN_TEMPO_PASSADO).innerHTML = segundos;
 }
 
+// -------------------------------- TABULEIRO ---------------------------------------
 
 class Carta {
     constructor(id, name) {
@@ -355,6 +356,8 @@ function cartaClicada(event) {
         }
     }
 }
+
+// -------------------------------- ESTATISTICAS ---------------------------------------
 
 let pontuacoes = []
 
