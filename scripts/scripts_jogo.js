@@ -5,16 +5,18 @@ Ravi Mughal - 62504
 */
 
 // CONSTANTES
-const SPAN_TEMPO_PASSADO = 'segPassados';
 const BOTAO_INICIA_JOGO = 'iniciaJogo';
 const BOTAO_ENCERRA_JOGO = 'encerraJogo';
 const BOTAO_CONFIGURA_TABULEIRO = "configuraTabuleiro";
+
+const NOME_RADIO_DIFICULDADE = "dificuldade"
+
+const SPAN_TEMPO_PASSADO = 'segPassados';
 const SPAN_TEMPO_RESTANTE = 'segRestantes';
-const BOTAO_FAZ_RESTART = 'restartJogo';
 const SPAN_PONTUACAO_ATUAL = 'pontuacaoAtual';
+
 const DURACAO_MAXIMA_OMISSAO = 10;
 const DURACAO_MINIMA_OMISSAO = 10;
-
 
 const ITEM_ESTATISTICA = "estatistica"
 
@@ -23,6 +25,7 @@ const ITEM_ESTATISTICA = "estatistica"
 let botaoIniciaJogo;
 let botaoEncerraJogo;
 let botaoConfiguraTabuleiro;
+let dificuldades;
 
 let timerTempoJogo;
 let timerPontuacaoJogo;
@@ -37,9 +40,9 @@ let cartasClicadas = {
     quantidade: 0,
     cartas: [],
 };
-let cartasListeners = [];
 
 let configuracao = {
+    dificuldade: "facil",
     duracaoMaxima: DURACAO_MAXIMA_OMISSAO,
     altura: 5,
     largura: 6,
@@ -54,10 +57,15 @@ function carregaPagina() {
     botaoIniciaJogo = document.getElementById(BOTAO_INICIA_JOGO);
     botaoEncerraJogo = document.getElementById(BOTAO_ENCERRA_JOGO);
     botaoConfiguraTabuleiro = document.getElementById(BOTAO_CONFIGURA_TABULEIRO);
+    dificuldades = document.getElementsByName(NOME_RADIO_DIFICULDADE);
 
     botaoIniciaJogo.disabled = false;
     botaoEncerraJogo.disabled = true;
     botaoConfiguraTabuleiro.disabled = false;
+
+    for (let i = 0; i < dificuldades.length; i++) 
+        dificuldades[i].disabled = false;
+    
 
     carregaTabuleiro();
     defineEventListeners();
@@ -67,6 +75,9 @@ function iniciaJogo() {
     botaoIniciaJogo.disabled = true;
     botaoEncerraJogo.disabled = false;
     botaoConfiguraTabuleiro.disabled = true;
+
+    for (let i = 0; i < dificuldades.length; i++) 
+        dificuldades[i].disabled = true;
 
     cartasAcertadas = [];
     acertos = 0;
@@ -93,6 +104,10 @@ function encerraJogo() {
     botaoIniciaJogo.disabled = false;
     botaoEncerraJogo.disabled = true;
     botaoConfiguraTabuleiro.disabled = false;
+
+    for (let i = 0; i < dificuldades.length; i++) 
+        dificuldades[i].disabled = false;
+
     console.log("tempo total de jogo: " + segundos);
 }
 
@@ -344,9 +359,11 @@ function cartaClicada(event) {
 let pontuacoes = []
 
 
-function Estatistica(pont, cartasAcertadas) {
-    this.pont = pont
-    this.cartasAcertadas = cartasAcertadas
+class Estatistica {
+    constructor(pont, cartasAcertadas) {
+        this.pont = pont;
+        this.cartasAcertadas = cartasAcertadas;
+    }
 }
 
 function gravaPontuacaoNoHistorico(pont) {

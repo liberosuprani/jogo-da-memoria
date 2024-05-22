@@ -43,26 +43,55 @@
     </div>
     <div class="pageContainer">
         <main id="singlegamePage">
-            <div id="placar">
-                <button type="button" id="iniciaJogo">
-                    Iniciar Jogo
-                </button>
-                <button type="button" id="encerraJogo" disabled>
-                    Encerrar Jogo
-                </button>
-                <button type="button" id="configuraTabuleiro">
-                    Configurar tabuleiro
-                </button>
-                <p>
-                    Passou <span id="segPassados">0</span> segundos e sua pontuação atual é <span
-                        id="pontuacaoAtual">0</span>
-                </p>
-            </div>
-            <div id="wrapperDivTabuleiro">
-                <div id="divTabuleiro">
+            <section id="configSection">
+                <div id="configs">
+                    <p>Dificuldade:</p>
+                    <ul>
+                        <input type="radio" id="facil" name="dificuldade" value="facil" checked>
+                        <label for="facil">Fácil</label>
+                            
+                        <input type="radio" id="medio" name="dificuldade" value="medio">
+                        <label for="medio">Médio</label>
+                            
+                        <input type="radio" id="dificil" name="dificuldade" value="dificil">
+                        <label for="dificil">Difícil</label>
+                    </ul>
 
+                    <div id="acoesJogo">
+                        <button type="button" id="iniciaJogo">
+                            Iniciar Jogo
+                        </button>
+                        <button type="button" id="encerraJogo" disabled>
+                            Encerrar Jogo
+                        </button>
+                        <button type="button" id="configuraTabuleiro">
+                            Configurar tabuleiro
+                        </button>
+                        
+                    </div>
                 </div>
-            </div>
+
+            </section>
+
+            <section id="gameSection">
+                <div id="wrapperDivTabuleiro">
+                    <div id="divTabuleiro">
+
+                    </div>
+                </div>
+            </section>
+
+            <section id="leaderboardSection">
+                <div id="leaderboard">
+                    <p>
+                        Tempo: <span id="segPassados">0</span>
+                    </p>
+
+                    <p>
+                        Pontuação: <span id="pontuacaoAtual">0</span>
+                    </p>
+                </div>
+            </section>
         </main>
     </div>
 

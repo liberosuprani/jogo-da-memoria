@@ -25,7 +25,6 @@ p {
     font-size: 20px;
     margin-top: 25px;
     text-align: justify-all;
-
 }
 
 h1 {
@@ -36,6 +35,15 @@ h1 {
 h2, h3 {
     margin-top: 30px;
     font-size: 27.5px;
+}
+
+ul {
+    padding-left: 0;
+    list-style-position: inside;
+}
+
+ul li {
+    display: block;
 }
 
 #homepage {
@@ -60,6 +68,24 @@ h2, h3 {
 
 .pageContainer ol {
     padding: 0;
+}
+
+/* li#itemDeslogar {
+    position: absolute;
+    right: 0;
+}
+li#itemDeslogar2 {
+    position: absolute;
+    right: 0;
+} */
+
+#botaoDeslogar {
+    width: 30px;
+    cursor: pointer;
+    margin-right: 30px;
+}
+#botaoDeslogar:hover {
+    content: url('../img/logout-svgrepo-com-hover.svg');
 }
 
 #loginPage {
@@ -97,9 +123,9 @@ h2, h3 {
 
 @media only screen and (min-width: 650px) {
     #navbar {
-        justify-content: space-evenly;
         align-items: center;
-    }
+        justify-content: space-between;
+    } 
     #navList1 {
         list-style-type: none;
         padding: 0 30px 0 30px;
@@ -116,16 +142,16 @@ h2, h3 {
 
 @media only screen and (max-width: 649px) {
     #navbar {
-        justify-content: flex-start;
         align-items: center;
+        justify-content: space-between;
     }
     #navList2 {
         list-style-type: none;
         padding: 0 40px 0 40px;
         display: flex;
         flex-direction: row; 
-        align-items: center;
         justify-content: left;
+        align-items: center;
         font-size: 20px;
     }
     #navList1 {
@@ -149,6 +175,9 @@ h2, h3 {
 }
 
 #navbar ul li a:hover {
+    color: #7bc7d1;
+}
+#navbar ul li button:hover {
     color: #7bc7d1;
 }
 
@@ -220,19 +249,29 @@ h2, h3 {
 
 footer {
     background: rgb(2,0,36);
+    font-size: 15px;
     box-shadow: 0 -5px 3px -5px black;
     background: linear-gradient(90deg, rgb(2,0,36) 0%, rgb(0, 74, 88) 100%); 
     color: #E3FEF7;
-    padding: 20px 0 20px 0;
+    padding: 20px 0; 
+    padding-left: 50px;
     position: relative;
     bottom: 0;
 }
 
+footer p {
+    font-size: 15px;
+    margin-top: 0px;
+}
+
 footer ul {
-    list-style-type: none; 
+    padding-left: 0;
+    list-style-type: square; 
+    list-style-position: inside;
 }
 
 footer ul li {
+    display: list-item;
     margin-bottom: 10px;
 }
 
@@ -256,15 +295,14 @@ footer ul li {
 
 #wrapperDivTabuleiro {
     display: flex;
-    margin: 60px auto;
-    width: min-content;
+    /* margin: 60px auto; */
+    /* width: min-content; */
 }
 
 #divTabuleiro {
     display: inline-grid;
     width: 100%;
     gap: 15px;
-    margin: 5px auto 35px auto; 
     padding: 10px;
     box-shadow: 0 0 5px 0px black;
     background: rgb(7, 69, 82);
@@ -273,13 +311,12 @@ footer ul li {
 .carta {
     background-color: rgb(61, 67, 237);
     text-align: center;
-    width:75px;
-    height:calc(75px / 2 * 3) ;
+    width: 60px;
+    height:calc(60px / 2 * 3) ;
     border-radius: 5px;
     position: relative;
     transform-style: preserve-3d;
     transition: all 0.2s ease-in-out;
-
 }
 
 #errorMsg {
@@ -288,16 +325,45 @@ footer ul li {
 }
 
 #singlegamePage {
-    margin-right: auto;
-    margin-left: auto;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+    margin-right: 0;
+    margin-left: 0;
     margin-top: 60px;
 }
 
-#placar {
-    position: absolute;
-    top: 60px;
-    left: 10vw;
+div#acoesJogo {
+    margin-top: 30px;
 }
+
+section#configSection, section#leaderboardSection {
+    display: flex;
+    justify-content: center;
+    padding-top: 0;
+    flex: 1;
+}
+
+section#configSection ul {
+    margin: 0;
+}
+section#configSection p, section#leaderboardSection p {
+    margin-top: 0;
+}
+
+div#configs, div#leaderboard {
+    height: max-content;
+    padding: 30px;
+    background: rgb(7, 69, 82);
+    box-shadow: 0 0 5px 0px black;
+}
+
+div#singlegamePage p {
+    margin-top: 0;
+}
+
+
+
 
 
 
