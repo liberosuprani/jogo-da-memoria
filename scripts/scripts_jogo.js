@@ -387,8 +387,20 @@ function trataFazerRegistroPontuacao() {
     mostraHistoricoEstatistica()
 }
 
+let TABELA_ESTATISTICAS = 'tblEstatisticas';
+
 function mostraHistoricoEstatistica() {
+
+    let tabelaAntiga = document.getElementById(TABELA_ESTATISTICAS);
+
+    let tabelaNova = document.createElement("table");
+    tabelaNova.setAttribute("id", TABELA_ESTATISTICAS);
+
+    let linhaTabela = document.createElement("tr");
+
     for (let pontuacao of pontuacoes) {
         console.log(pontuacao)
     }
+
+
 }

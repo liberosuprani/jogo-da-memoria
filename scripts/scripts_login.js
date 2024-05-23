@@ -47,7 +47,7 @@ function tentaLogin() {
     let user = new User(email, password);
     
     let loginValido = validaLogin(user);
-
+    
     if (loginValido) {
         errorMsg.style.visibility = "hidden";
         localStorage.setItem(ITEM_DADOS_USUARIOS_LOGADOS, JSON.stringify(usuariosLogados));
