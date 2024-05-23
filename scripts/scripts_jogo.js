@@ -29,7 +29,7 @@ let dificuldades;
 
 let timerTempoJogo;
 let timerPontuacaoJogo;
-let pontuacao = 0
+let pontuacao = 0;
 let segundos = 0;
 
 let totalDeCartas = [];
@@ -360,8 +360,8 @@ function cartaClicada(event) {
 
 // -------------------------------- ESTATISTICAS ---------------------------------------
 
-let pontuacoes = []
-
+// let pontuacoes = JSON.parse(localStorage.getItem(ITEM_ESTATISTICA)) || [];
+ let pontuacoes = [];
 
 class Estatistica {
     constructor(pont, cartasAcertadas) {
@@ -387,20 +387,35 @@ function trataFazerRegistroPontuacao() {
     mostraHistoricoEstatistica()
 }
 
-let TABELA_ESTATISTICAS = 'tblEstatisticas';
+const TABELA_ESTATISTICAS = 'tblEstatisticas';
 
 function mostraHistoricoEstatistica() {
 
     let tabelaAntiga = document.getElementById(TABELA_ESTATISTICAS);
+    let divLeaderboard = document.getElementById("leaderboard");
 
     let tabelaNova = document.createElement("table");
     tabelaNova.setAttribute("id", TABELA_ESTATISTICAS);
+    divLeaderboard.append(tabelaNova);
 
     let linhaTabela = document.createElement("tr");
 
+    linhaTabela.innerHTML = "<th>#</th>" +
+        "<th>Nome</th>" +
+        "<th>Pontuação</th>" +
+        "<th>Pares Acertados</th>"
+    tabelaNova.appendChild(linhaTabela);
+
+
+    let numeroEstatistica = 1;
     for (let pontuacao of pontuacoes) {
-        console.log(pontuacao)
+        linhaTabela = document.createElement("tr");
+        linhaTabela.innerHTML = "<td>" + numeroEstatistica + "</td>" + "<td>" + "Ravi" + "</td>" + "<td>" + pontuacao.pont + "</td>" + "<td>" + (pontuacao.cartasAcertadas.length) / 2 + "</td>"
+
+        tabelaNova.appendChild(linhaTabela)
+        numeroEstatistica++;
+        console.log(pontuacao.pont)
     }
 
-
+    tabelaAntiga.parentNode.replaceChild(tabelaNova, tabelaAntiga);
 }

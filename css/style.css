@@ -72,6 +72,7 @@ ul li {
 
 
 #botaoDeslogar {
+    visibility: hidden;
     width: 30px;
     cursor: pointer;
     margin-right: 30px;
