@@ -63,9 +63,9 @@ function carregaPagina() {
     botaoEncerraJogo.disabled = true;
     botaoConfiguraTabuleiro.disabled = false;
 
-    for (let i = 0; i < dificuldades.length; i++) 
+    for (let i = 0; i < dificuldades.length; i++)
         dificuldades[i].disabled = false;
-    
+
 
     carregaTabuleiro();
     defineEventListeners();
@@ -76,7 +76,7 @@ function iniciaJogo() {
     botaoEncerraJogo.disabled = false;
     botaoConfiguraTabuleiro.disabled = true;
 
-    for (let i = 0; i < dificuldades.length; i++) 
+    for (let i = 0; i < dificuldades.length; i++)
         dificuldades[i].disabled = true;
 
     cartasAcertadas = [];
@@ -105,10 +105,11 @@ function encerraJogo() {
     botaoEncerraJogo.disabled = true;
     botaoConfiguraTabuleiro.disabled = false;
 
-    for (let i = 0; i < dificuldades.length; i++) 
+    for (let i = 0; i < dificuldades.length; i++)
         dificuldades[i].disabled = false;
 
     console.log("tempo total de jogo: " + segundos);
+    trataFazerRegistroPontuacao();
 }
 
 function defineEventListeners() {
