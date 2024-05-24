@@ -360,31 +360,28 @@ function cartaClicada(event) {
 
 // -------------------------------- ESTATISTICAS ---------------------------------------
 
-// let pontuacoes = JSON.parse(localStorage.getItem(ITEM_ESTATISTICA)) || [];
- let pontuacoes = [];
+let pontuacoes = []
 
 class Estatistica {
     constructor(pont, cartasAcertadas) {
         this.pont = pont;
-        this.cartasAcertadas = cartasAcertadas;
+        this.cartasAcertadas = cartasAcertadas
     }
 }
 
-function gravaPontuacaoNoHistorico(pont) {
-    pontuacoes.push(pont);
-    gravaHistoricoPontuacao()
-}
-
-function gravaHistoricoPontuacao() {
-    localStorage.setItem(ITEM_ESTATISTICA, JSON.stringify(pont));
-}
-
 function trataFazerRegistroPontuacao() {
-    // registra estatistica 
-    pont = new Estatistica(pontuacao, cartasAcertadas)
+    let userEstatistica = new Estatistica(pontuacao, (cartasAcertadas.length) / 2);
 
-    gravaPontuacaoNoHistorico(pont)
-    mostraHistoricoEstatistica()
+    gravaPontuacaoNoHistorico(userEstatistica)
+}
+
+function gravaPontuacaoNoHistorico(userEstatistica) {
+    pontuacoes.push(userEstatistica);
+    gravaHistoricoPontuacao(pontuacoes)
+}
+
+function gravaHistoricoPontuacao(pontuacoes) {
+    localStorage.setItem(ITEM_ESTATISTICA, JSON.stringify(pontuacoes))
 }
 
 const TABELA_ESTATISTICAS = 'tblEstatisticas';
