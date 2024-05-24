@@ -41,6 +41,7 @@ let cartasClicadas = {
     cartas: [],
 };
 
+
 let configuracao = {
     dificuldade: "facil",
     duracaoMaxima: DURACAO_MAXIMA_OMISSAO,
@@ -364,6 +365,9 @@ function cartaClicada(event) {
 let pontuacoes = JSON.parse(localStorage.getItem(ITEM_ESTATISTICA)) || [];
 
 
+const ITEM_DADOS_USUARIOS_LOGADOS = "usuariosLogados";
+
+
 class Estatistica {
     constructor(pont, cartasAcertadas) {
         this.pont = pont;
@@ -406,11 +410,14 @@ function mostraHistoricoEstatistica() {
         "<th>Pares Acertados</th>"
     tabelaNova.appendChild(linhaTabela);
 
+    let dados = JSON.parse(localStorage.getItem(ITEM_DADOS_USUARIOS_LOGADOS))
+
+    let email = dados.email
 
     let numeroEstatistica = 1;
     for (let pontuacao of pontuacoes) {
         linhaTabela = document.createElement("tr");
-        linhaTabela.innerHTML = "<td>" + numeroEstatistica + "</td>" + "<td>" + "Ravi" + "</td>" + "<td>" + pontuacao.pont + "</td>" + "<td>" + pontuacao.cartasAcertadas + "</td>"
+        linhaTabela.innerHTML = "<td>" + numeroEstatistica + "</td>" + "<td>" + email+ "</td>" + "<td>" + pontuacao.pont + "</td>" + "<td>" + pontuacao.cartasAcertadas + "</td>"
 
         tabelaNova.appendChild(linhaTabela)
         numeroEstatistica++;
