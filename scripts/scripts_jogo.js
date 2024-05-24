@@ -68,6 +68,7 @@ function carregaPagina() {
 
 
     carregaTabuleiro();
+    mostraHistoricoEstatistica()
     defineEventListeners();
 }
 
@@ -374,6 +375,7 @@ function trataFazerRegistroPontuacao() {
     let userEstatistica = new Estatistica(pontuacao, (cartasAcertadas.length) / 2);
 
     gravaPontuacaoNoHistorico(userEstatistica)
+    mostraHistoricoEstatistica()
 }
 
 function gravaPontuacaoNoHistorico(userEstatistica) {
@@ -408,7 +410,7 @@ function mostraHistoricoEstatistica() {
     let numeroEstatistica = 1;
     for (let pontuacao of pontuacoes) {
         linhaTabela = document.createElement("tr");
-        linhaTabela.innerHTML = "<td>" + numeroEstatistica + "</td>" + "<td>" + "Ravi" + "</td>" + "<td>" + pontuacao.pont + "</td>" + "<td>" + (pontuacao.cartasAcertadas.length) / 2 + "</td>"
+        linhaTabela.innerHTML = "<td>" + numeroEstatistica + "</td>" + "<td>" + "Ravi" + "</td>" + "<td>" + pontuacao.pont + "</td>" + "<td>" + pontuacao.cartasAcertadas + "</td>"
 
         tabelaNova.appendChild(linhaTabela)
         numeroEstatistica++;
