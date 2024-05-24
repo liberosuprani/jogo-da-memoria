@@ -207,7 +207,7 @@ function iniciaTabuleiro() {
     for (let linha = 0; linha < matrizTabuleiro.length; linha++) {
         for (let coluna = 0; coluna < matrizTabuleiro[linha].length; coluna++) {
             let divCarta = document.getElementById(`carta${linha}-${coluna}`);
-            console.log(divCarta);
+            // console.log(divCarta);
             divCarta.addEventListener("click", cartaClicada);
         }
     }
@@ -360,7 +360,8 @@ function cartaClicada(event) {
 
 // -------------------------------- ESTATISTICAS ---------------------------------------
 
-let pontuacoes = []
+let pontuacoes = JSON.parse(localStorage.getItem(ITEM_ESTATISTICA)) || [];
+
 
 class Estatistica {
     constructor(pont, cartasAcertadas) {
