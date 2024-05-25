@@ -72,7 +72,7 @@ function carregaPagina() {
 
 
     carregaTabuleiro();
-    mostraHistoricoEstatistica()
+    mostraHistoricoEstatistica();
     defineEventListeners();
 }
 
@@ -114,7 +114,7 @@ function encerraJogo() {
         dificuldades[i].disabled = false;
 
     console.log("tempo total de jogo: " + segundos);
-    let segundos_do_jogo = segundos
+    let segundos_do_jogo = segundos;
     trataFazerRegistroPontuacao();
 }
 
@@ -233,22 +233,23 @@ function configuraTabuleiro() {
     //TODO falta verificar se o numero digitado pelo usuario é inteiro
 
     while (true) {
-        configuracao.largura = prompt("Largura (entre 2 e 15):");
+        configuracao.largura = prompt("Largura (entre 5 e 10):");
 
         if (!isNaN(configuracao.largura)) {
-            configuracao.largura = parseInt(configuracao.largura);
+            configuracao.largura = parseInt(configuracao.largura); 
+            let largura = configuracao.largura;
 
-            if (configuracao.largura >= 2 && configuracao.largura <= 15) {
-                if (listaDeCartas1.length * 2 % configuracao.largura == 0 || Math.floor(listaDeCartas1.length * 2 / configuracao.largura) % 2 == 0 || configuracao.largura == 2)
-                    configuracao.altura = Math.floor(listaDeCartas1.length * 2 / configuracao.largura);
+            if (largura >= 5 && largura <= 10) {
+                if (listaDeCartas1.length * 2 % largura == 0 || Math.floor(listaDeCartas1.length * 2 / largura) % 2 == 0 || largura == 2)
+                    configuracao.altura = Math.floor(listaDeCartas1.length * 2 / largura);
                 else
-                    configuracao.altura = Math.floor(listaDeCartas1.length * 2 / configuracao.largura) - 1;
+                    configuracao.altura = Math.floor(listaDeCartas1.length * 2 / largura) - 1;
 
                 carregaTabuleiro();
                 break;
             }
             else
-                alert("Valor deve estar entre 2 e 15");
+                alert("Valor deve estar entre 5 e 10");
         }
         else {
             alert("Valor inválido");
@@ -262,6 +263,7 @@ function carregaTabuleiro(linhas = configuracao.altura, colunas = configuracao.l
 
     let divTabuleiro = document.getElementById("divTabuleiro");
     divTabuleiro.innerHTML = "";
+
     // ATRIBUI N-LINHAS E K-COLUNAS À DIV DO TABULEIRO, DE ACORDO COM OS ARGUMENTOS PASSADOS À FUNÇÃO
     divTabuleiro.style.gridTemplateRows = `repeat(${linhas}, 1fr)`;
     divTabuleiro.style.gridTemplateColumns = `repeat(${colunas}, 1fr)`;
@@ -285,18 +287,15 @@ function carregaTabuleiro(linhas = configuracao.altura, colunas = configuracao.l
     }
 }
 
-function resetarCartas() {
+// function resetarCartas() {
+//     for (let k = 0; k < cartasAcertadas.length; k++) {
+//         let carta_id = cartasAcertadas[k].id;
+//         let carta_modificada = document.getElementById(carta_id);
+//         carta_modificada.style.border = 'solid yellow 3px';
+//     }
 
-
-    for (let k = 0; k < cartasAcertadas.length; k++) {
-        carta_id = cartasAcertadas[k].id
-        let carta_modificada = document.getElementById(carta_id)
-        carta_modificada.style.border = 'solid yellow 3px'
-    }
-
-
-    cartasAcertadas = []
-}
+//     cartasAcertadas = []
+// }
 
 
 function cartaClicada(event) {
@@ -317,6 +316,7 @@ function cartaClicada(event) {
         cartasClicadas.quantidade += 1;
         cartasClicadas.cartas.push(event.target);
         event.target.style.border = "solid red 2px";
+
         // CASO SEJA A SEGUNDA CARTA A SER CLICADA
         if (cartasClicadas.quantidade == 2) {
             let acertou = true;
@@ -367,16 +367,14 @@ function cartaClicada(event) {
 
 // -------------------------------- ESTATISTICAS ---------------------------------------
 
+const TABELA_ESTATISTICAS = 'tblEstatisticas';
 let pontuacoes = JSON.parse(localStorage.getItem(ITEM_ESTATISTICA)) || [];
-
-
-
 
 class Estatistica {
     constructor(pont, cartasAcertadas, tempo) {
         this.pont = pont;
-        this.cartasAcertadas = cartasAcertadas
-        this.tempo = tempo
+        this.cartasAcertadas = cartasAcertadas;
+        this.tempo = tempo;
     }
 }
 
@@ -396,8 +394,6 @@ function gravaHistoricoPontuacao(pontuacoes) {
     localStorage.setItem(ITEM_ESTATISTICA, JSON.stringify(pontuacoes))
 }
 
-const TABELA_ESTATISTICAS = 'tblEstatisticas';
-
 function mostraHistoricoEstatistica() {
 
     let tabelaAntiga = document.getElementById(TABELA_ESTATISTICAS);
@@ -413,25 +409,25 @@ function mostraHistoricoEstatistica() {
         "<th>Nome</th>" +
         "<th>Pontuação</th>" +
         "<th>Pares Acertados</th>" +
-        "<td> Segundos </th>"
+        "<td>Tempo</th>"
     tabelaNova.appendChild(linhaTabela);
 
     let dados = JSON.parse(localStorage.getItem(ITEM_DADOS_USUARIOS_LOGADOS))
 
-    let email = dados.email
+    let nome = dados.nome;
 
     let numeroEstatistica = 1;
     let tempoPorJogo = []
     for (let pontuacao of pontuacoes) {
         linhaTabela = document.createElement("tr");
-        linhaTabela.innerHTML = "<td>" + numeroEstatistica + "</td>" + "<td>" + email + "</td>" + "<td>" + pontuacao.pont + "</td>" + "<td>" + pontuacao.cartasAcertadas + "</td>" + "<td>" + pontuacao.tempo + "</td>"
+        linhaTabela.innerHTML = "<td>" + numeroEstatistica + "</td>" + "<td>" + nome + "</td>" + "<td>" + pontuacao.pont + "</td>" + "<td>" + pontuacao.cartasAcertadas + "</td>" + "<td>" + pontuacao.tempo + "</td>"
 
         tabelaNova.appendChild(linhaTabela)
         numeroEstatistica++;
     }
 
     tabelaAntiga.parentNode.replaceChild(tabelaNova, tabelaAntiga);
-    toScores(dados, numeroEstatistica - 1)
+    toScores(dados, numeroEstatistica - 1);
 }
 
 function toScores(dados, numeroEstatistica) {

@@ -58,24 +58,25 @@ Ravi Mughal - 62504
     <img class="backgroundImage" src="./img/imagens para o fundo/settings.jpg">
 
     <div class="pageContainer">
-        <main id="loginPage">
+        <main id="registerPage">
             <h2>Registro</h2>
             <form id="registerForm" method="post">
-                <label for="email">E-mail:</label>
-                <input type="text" id="email" name="email" required><br>
+                <input type="text" id="email" name="email" placeholder="Email" required><br>
 
-                <label for="password">Senha:</label>
-                <input type="password" id="password" name="password" required><br>
+                <input type="text" id="name" name="name" placeholder="Primeiro nome" required><br>
 
-                <label for="age">Idade:</label>
-                <input type="number" id="age" name="age" required><br>
+                <input type="password" id="password" name="password" placeholder="Senha" required><br>
+
+                <input type="number" id="age" name="age" placeholder="Idade" required><br>
 
                 <label for="gender">Gênero:</label>
                 <select id="gender" name="gender">
                     <option value="male">Masculino</option>
                     <option value="female">Feminino</option>
                     <option value="other">Outro</option>
-                    <input id="botaoRegisto" type="reset" value="Registar-se">
+                </select>
+
+                <input id="botaoRegisto" type="reset" value="Registar-se">
             </form>
             <p id="errorMsg">Já existe um usuário com este e-mail.</p>
         </main>
