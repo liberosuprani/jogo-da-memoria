@@ -420,20 +420,42 @@ function mostraHistoricoEstatistica() {
 
     let email = dados.email
 
-    let numeroEstatistica = 1;
+    let numeroDeJogos = 1;
     let tempoPorJogo = []
     for (let pontuacao of pontuacoes) {
         linhaTabela = document.createElement("tr");
-        linhaTabela.innerHTML = "<td>" + numeroEstatistica + "</td>" + "<td>" + email + "</td>" + "<td>" + pontuacao.pont + "</td>" + "<td>" + pontuacao.cartasAcertadas + "</td>" + "<td>" + pontuacao.tempo + "</td>"
+        linhaTabela.innerHTML = "<td>" + numeroDeJogos + "</td>" + "<td>" + email + "</td>" + "<td>" + pontuacao.pont + "</td>" + "<td>" + pontuacao.cartasAcertadas + "</td>" + "<td>" + pontuacao.tempo + "</td>"
 
         tabelaNova.appendChild(linhaTabela)
-        numeroEstatistica++;
+        numeroDeJogos++;
     }
 
     tabelaAntiga.parentNode.replaceChild(tabelaNova, tabelaAntiga);
-    toScores(dados, numeroEstatistica - 1)
+    toScores(numeroDeJogos - 1, pontuacoes, dados);
+    // somarTemposObjeto(pontuacoes)
 }
 
-function toScores(dados, numeroEstatistica) {
-    console.log(dados.email, numeroEstatistica, segundos);
+function toScores(numeroDeJogos, pontuacoes, dados) {
+    // definir para o objeto User o numero de jogos, tempo total jogado e tempo de cada jogo no dicionário scores
+    // numeroDeJogos: número total de jogos
+    // pontuacoes: objeto em local storage de leaderBoard com estatisticas de pontuacao, cartas acertadas e tempo do jogo 
+    // dados: objeto do tipo User de ITEM_DADOS_USUARIOS_LOGADOS 
+    atualizarNumeroDeJogos(dados, numeroDeJogos)
+
+}
+
+function atualizarNumeroDeJogos(dados, numeroDeJogos) {
+    dados.scores.jogos = numeroDeJogos;
+    localStorage.setItem(ITEM_DADOS_USUARIOS_LOGADOS, JSON.stringify(dados));
+
+    console.log(dados)
+}
+
+function somarTemposObjeto(objeto) {
+    let total = 0
+    for (let i of objeto) {
+        total += i.tempo
+    }
+    // console.log("tempo total: " + total)
+    return total
 }
