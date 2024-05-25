@@ -14,12 +14,12 @@ let usuariosLogados;
 
 
 class User {
-    constructor (email, nome=null, senha, idade=null, scores={jogos: null, tempoTotal: null, tempoPorJogo: []}) {
+    constructor(email, nome = null, senha, idade = null, scores = { jogos: null, tempoTotal: null, tempoPorJogo: [] }) {
         this.email = email;
         this.nome = nome;
         this.senha = senha;
-        this.idade = idade;  
-        this.scores = scores;  
+        this.idade = idade;
+        this.scores = scores;
     }
 }
 
@@ -27,9 +27,14 @@ window.addEventListener("load", principal);
 
 function principal() {
     obtemDadosUsuario();
-    formulario = document.forms[FORMULARIO_LOGIN];
 
-    defineEventListeners();
+    if (usuariosLogados.length != 0) {
+        window.href.location = "jogo.html";
+    }
+    else {
+        formulario = document.forms[FORMULARIO_LOGIN];
+        defineEventListeners();
+    }
 }
 
 function defineEventListeners() {
@@ -38,6 +43,7 @@ function defineEventListeners() {
 
 function obtemDadosUsuario() {
     dados = JSON.parse(localStorage.getItem(ITEM_DADOS_USUARIO)) || [];
+    usuariosLogados = JSON.parse(localStorage.getItem(ITEM_DADOS_USUARIOS_LOGADOS)) || [];
 }
 
 
@@ -47,7 +53,7 @@ function tentaLogin() {
     let email = formulario.elements[EMAIL_ID].value;
     let password = formulario.elements[PASSWORD_ID].value;
     let user = new User(email, null, password);
-    
+
     let loginValido = validaLogin(user);
 
     if (loginValido) {
@@ -63,7 +69,7 @@ function tentaLogin() {
 function validaLogin(user) {
     let achou = false;
 
-    for (i = 0; i<dados.length; i++) {
+    for (i = 0; i < dados.length; i++) {
         if (user.email == dados[i].email && user.senha == dados[i].senha) {
             achou = true;
             usuariosLogados = dados[i];

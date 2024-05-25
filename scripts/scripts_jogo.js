@@ -10,6 +10,7 @@ const BOTAO_ENCERRA_JOGO = 'encerraJogo';
 const BOTAO_CONFIGURA_TABULEIRO = "configuraTabuleiro";
 
 const NOME_RADIO_DIFICULDADE = "dificuldade"
+const NOME_RADIO_MODOS = ""
 
 const SPAN_TEMPO_PASSADO = 'segPassados';
 const SPAN_TEMPO_RESTANTE = 'segRestantes';
@@ -29,6 +30,7 @@ let botaoIniciaJogo;
 let botaoEncerraJogo;
 let botaoConfiguraTabuleiro;
 let dificuldades;
+let modos;
 
 let timerTempoJogo;
 let timerPontuacaoJogo;
@@ -47,6 +49,7 @@ let cartasClicadas = {
 
 let configuracao = {
     dificuldade: "facil",
+    modo: "normal",
     duracaoMaxima: DURACAO_MAXIMA_OMISSAO,
     altura: 5,
     largura: 6,
@@ -86,6 +89,11 @@ function iniciaJogo() {
         if (dificuldades[i].checked == true)
             configuracao.dificuldade = dificuldades[i].value;
     }
+    // for (let i = 0; i < modos.length; i++) {
+    //     modos[i].disabled = true;
+    //     if (modos[i].checked == true)
+    //         configuracao.modo = modos[i].value;
+    // }
 
     cartasAcertadas = [];
     acertos = 0;
@@ -176,40 +184,41 @@ function atualizaCronometro() {
 // -------------------------------- TABULEIRO ---------------------------------------
 
 class Carta {
-    constructor(id, name) {
+    constructor(id, name, image) {
         this.id = id;
         this.name = name;
+        this.image = image;
     }
 }
 
-let listaDeCartas1 = [
-    new Carta(0, "Futebol"),
-    new Carta(1, "Basquete"),
-    new Carta(2, "Vôlei"),
-    new Carta(3, "Handball"),
-    new Carta(4, "Natação"),
-    new Carta(5, "Hockey"),
-    new Carta(6, "Rugby"),
-    new Carta(7, "Baseball"),
-    new Carta(8, "Capoeira"),
-    new Carta(9, "Tênis"),
-    new Carta(10, "Skate"),
-    new Carta(11, "Cricket"),
-    new Carta(12, "Ping-pong"),
-    new Carta(13, "Atletismo"),
-    new Carta(14, "Arco e flecha"),
+let listaDeCartasEsportes = [
+    new Carta(0, "Futebol", "./img/colecoes/esportes/futebol.jpg"),
+    new Carta(1, "Basquete", "./img/colecoes/esportes/basquete.jpg"),
+    new Carta(2, "Vôlei", "./img/colecoes/esportes/volei.jpg"),
+    new Carta(3, "Handball", "./img/colecoes/esportes/handball.jpg"),
+    new Carta(4, "Natação", "./img/colecoes/esportes/natacao.jpg"),
+    new Carta(5, "Hockey", "./img/colecoes/esportes/hockey.jpg"),
+    new Carta(6, "Rugby", "./img/colecoes/esportes/rugby.jpg"),
+    new Carta(7, "Baseball", "./img/colecoes/esportes/baseball.jpg"),
+    new Carta(8, "Capoeira", "./img/colecoes/esportes/capoeira.jpg"),
+    new Carta(9, "Tênis", "./img/colecoes/esportes/tenis.jpg"),
+    new Carta(10, "Skate", "./img/colecoes/esportes/skate.jpg"),
+    new Carta(11, "Cricket", "./img/colecoes/esportes/cricket.jpg"),
+    new Carta(12, "Ping-pong", "./img/colecoes/esportes/pingpong.jpg"),
+    new Carta(13, "Atletismo", "./img/colecoes/esportes/atletismo.jpg"),
+    new Carta(14, "Arco e flecha", "./img/colecoes/esportes/arcoeflecha.jpg"),
 ];
 
 
 function embaralhaCartas(linhas = configuracao.altura, colunas = configuracao.largura) {
     totalDeCartas = [];
-    if (linhas * colunas < listaDeCartas1.length * 2) {
+    if (linhas * colunas < listaDeCartasEsportes.length * 2) {
         for (let i = 0; i < (linhas * colunas) / 2; i++)
-            totalDeCartas.push(listaDeCartas1[i]);
+            totalDeCartas.push(listaDeCartasEsportes[i]);
         totalDeCartas = totalDeCartas.concat(totalDeCartas);
     }
     else {
-        totalDeCartas = listaDeCartas1.concat(listaDeCartas1);
+        totalDeCartas = listaDeCartasEsportes.concat(listaDeCartasEsportes);
     }
     for (let i = 0; i < totalDeCartas.length; i++) {
         // PEGA UMA POSICAO ALEATORIA 
@@ -225,9 +234,9 @@ function embaralhaCartas(linhas = configuracao.altura, colunas = configuracao.la
 function iniciaTabuleiro() {
     for (let linha = 0; linha < matrizTabuleiro.length; linha++) {
         for (let coluna = 0; coluna < matrizTabuleiro[linha].length; coluna++) {
-            let divCarta = document.getElementById(`carta${linha}-${coluna}`);
-            // console.log(divCarta);
-            divCarta.addEventListener("click", cartaClicada);
+            let imgCarta = document.getElementById(`carta${linha}-${coluna}`);
+            // console.log(imgCarta);
+            imgCarta.addEventListener("click", cartaClicada);
         }
     }
 }
@@ -235,8 +244,8 @@ function iniciaTabuleiro() {
 function encerraTabuleiro() {
     for (let linha = 0; linha < matrizTabuleiro.length; linha++) {
         for (let coluna = 0; coluna < matrizTabuleiro[linha].length; coluna++) {
-            let divCarta = document.getElementById(`carta${linha}-${coluna}`);
-            divCarta.removeEventListener("click", cartaClicada);
+            let imgCarta = document.getElementById(`carta${linha}-${coluna}`);
+            imgCarta.removeEventListener("click", cartaClicada);
         }
     }
 }
@@ -252,10 +261,10 @@ function configuraTabuleiro() {
             let largura = configuracao.largura;
 
             if (largura >= 5 && largura <= 10) {
-                if (listaDeCartas1.length * 2 % largura == 0 || Math.floor(listaDeCartas1.length * 2 / largura) % 2 == 0 || largura == 2)
-                    configuracao.altura = Math.floor(listaDeCartas1.length * 2 / largura);
+                if (listaDeCartasEsportes.length * 2 % largura == 0 || Math.floor(listaDeCartasEsportes.length * 2 / largura) % 2 == 0 || largura == 2)
+                    configuracao.altura = Math.floor(listaDeCartasEsportes.length * 2 / largura);
                 else
-                    configuracao.altura = Math.floor(listaDeCartas1.length * 2 / largura) - 1;
+                    configuracao.altura = Math.floor(listaDeCartasEsportes.length * 2 / largura) - 1;
 
                 carregaTabuleiro();
                 break;
@@ -285,29 +294,20 @@ function carregaTabuleiro(linhas = configuracao.altura, colunas = configuracao.l
         for (let coluna = 0; coluna < colunas; coluna++, posicaoLista++) {
             matrizTabuleiro[linha].push(totalDeCartas[posicaoLista]);
 
+            let divCartaContainer = document.createElement("div");
+            
+            
             // CRIA UMA DIV PRA CARTA, CUJO ID É "cartaN-K", EM QUE N==Nª DA LINHA E K==Nª DA COLUNA
-            let divCarta = document.createElement("div");
-            divCarta.id = `carta${linha}-${coluna}`;
-            divTabuleiro.append(divCarta);
-            divCarta.classList.add("carta");
+            let imgCarta = document.createElement("img");
+            imgCarta.id = `carta${linha}-${coluna}`;
+            divTabuleiro.append(imgCarta);
+            imgCarta.classList.add("carta");
 
             // POR ENQUANTO, SÓ PARA MOSTRAR O NOME E ID DO OBJETO CARTA NA DIV (#TODO)
-            divCarta.append(
-                `${totalDeCartas[posicaoLista].id} - ${totalDeCartas[posicaoLista].name}`
-            );
+            imgCarta.src = totalDeCartas[posicaoLista].image;
         }
     }
 }
-
-// function resetarCartas() {
-//     for (let k = 0; k < cartasAcertadas.length; k++) {
-//         let carta_id = cartasAcertadas[k].id;
-//         let carta_modificada = document.getElementById(carta_id);
-//         carta_modificada.style.border = 'solid yellow 3px';
-//     }
-
-//     cartasAcertadas = []
-// }
 
 
 function cartaClicada(event) {
@@ -358,7 +358,6 @@ function cartaClicada(event) {
                     for (let cartaClicada of cartasClicadas.cartas)
                         cartaClicada.style.border = "";
                 }
-
             }
 
             if (acertou) {
@@ -424,9 +423,9 @@ function mostraHistoricoEstatistica() {
         "<td>Tempo</th>"
     tabelaNova.appendChild(linhaTabela);
 
-    let dados = JSON.parse(localStorage.getItem(ITEM_DADOS_USUARIOS_LOGADOS))
+    let dadosUsuarioLogado = JSON.parse(localStorage.getItem(ITEM_DADOS_USUARIOS_LOGADOS));
 
-    let nome = dados.nome;
+    let nome = dadosUsuarioLogado.nome;
 
     let numeroDeJogos = 1;
     let tempoPorJogo = [];
@@ -439,7 +438,7 @@ function mostraHistoricoEstatistica() {
     }
 
     tabelaAntiga.parentNode.replaceChild(tabelaNova, tabelaAntiga);
-    toScores(numeroDeJogos - 1, pontuacoes, dados);
+    toScores(numeroDeJogos - 1, pontuacoes, dadosUsuarioLogado);
     // somarTemposObjeto(pontuacoes)
 }
 
@@ -460,7 +459,6 @@ function atualizarTempoPorJogo(dados, pontuacoes) {
     for (let jogo of pontuacoes) {
         temposDosJogos.push(jogo.tempo)
     }
-    console.log(temposDosJogos)
 
     dados.scores.tempoPorJogo = temposDosJogos
 
@@ -488,3 +486,43 @@ function somarTemposObjeto(objeto) {
     // console.log("tempo total: " + total)
     return total
 }
+
+const ITEM_DADOS_USUARIO = "dados";
+
+
+
+function atualizaDadosScores() {
+    let userRegistro = JSON.parse(localStorage.getItem(ITEM_DADOS_USUARIO));
+
+    let userEstatistica = JSON.parse(localStorage.getItem(ITEM_DADOS_USUARIOS_LOGADOS));
+
+    let usuario;
+    for (let user of userRegistro) {
+        if (user.email == userEstatistica.email) {
+            user = userEstatistica;
+            usuario = user;
+        }
+    }
+
+    if (usuario) {
+
+        //RESOLVER 
+        // SUBSTITUIR VALOR POR INDICE DO DICIONARIO DE DADOS
+        // console.log(userRegistro)
+        // let index = userRegistro.findIndex(user => user.email === usuario.email)
+        // console.log("index", index)
+
+        // if (index !== -1) {
+        //     userRegistro[index] = usuario
+        // }
+        // localStorage.setItem(ITEM_DADOS_USUARIO, JSON.stringify(usuario));
+        // console.log("atualizado")
+    }
+
+
+
+}
+
+
+
+atualizaDadosScores()

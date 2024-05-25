@@ -8,15 +8,18 @@ const GENDER_ID = "gender";
 const PASSWORD_ID = "password";
 const AGE_ID = "age";
 
-let formulario = null
+let formulario = null;
 let dados = [];
 
+console.log("lista aqui", dados)
+
 class User {
-    constructor(email, nome, senha, idade = null, scores = { jogos: null, tempoTotal: null, tempoPorJogo: [] }) {
+    constructor(email, nome, senha, idade = null, genero, scores = { jogos: null, tempoTotal: null, tempoPorJogo: [] }) {
         this.email = email;
         this.nome = nome;
         this.senha = senha;
         this.idade = idade;
+        this.genero = genero;
         this.scores = scores;
     }
 }
@@ -41,6 +44,7 @@ function obtemDadosUsuario() {
 function gravaDadosUser() {
     let errorMsg = document.getElementById("errorMsg");
     let usuarioJaExiste = false;
+
     let email = formulario.elements[EMAIL_ID].value;
 
     for (let i = 0; i < dados.length; i++) {
@@ -54,11 +58,14 @@ function gravaDadosUser() {
     }
     else {
         errorMsg.style.visibility = "hidden";
-        let password = formulario.elements[PASSWORD_ID].value;
-        console.log(password);
-        let age = formulario.elements[AGE_ID].value;
+
         let name = formulario.elements[NAME_ID].value;
-        dados.push(new User(email, name, password, age));
+        let password = formulario.elements[PASSWORD_ID].value;
+        let age = formulario.elements[AGE_ID].value;
+        let gender = formulario.elements[GENDER_ID].value;
+
+        console.log("dados user: ", dados);
+        dados.push(new User(email, name, password, age, gender));
         localStorage.setItem(ITEM_DADOS_USUARIO, JSON.stringify(dados));
         window.location.href = "login.html";
     }
