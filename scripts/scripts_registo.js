@@ -12,11 +12,11 @@ let formulario = null
 let dados = [];
 
 class User {
-    constructor (email, nome, senha, idade=null, scores = []) {
+    constructor(email, nome, senha, idade = null, scores = { jogos: null, tempoTotal: null, tempoPorJogo: [] }) {
         this.email = email;
         this.nome = nome;
         this.senha = senha;
-        this.idade = idade;  
+        this.idade = idade;
         this.scores = scores;
     }
 }
@@ -43,7 +43,7 @@ function gravaDadosUser() {
     let usuarioJaExiste = false;
     let email = formulario.elements[EMAIL_ID].value;
 
-    for (let i = 0; i<dados.length; i++) {
+    for (let i = 0; i < dados.length; i++) {
         if (email == dados[i].email) {
             usuarioJaExiste = true;
             break;

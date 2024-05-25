@@ -81,8 +81,11 @@ function iniciaJogo() {
     botaoEncerraJogo.disabled = false;
     botaoConfiguraTabuleiro.disabled = true;
 
-    for (let i = 0; i < dificuldades.length; i++)
+    for (let i = 0; i < dificuldades.length; i++) {
         dificuldades[i].disabled = true;
+        if (dificuldades[i].checked == true)
+            configuracao.dificuldade = dificuldades[i].value;
+    }
 
     cartasAcertadas = [];
     acertos = 0;
@@ -102,7 +105,6 @@ function encerraJogo() {
 
     console.log("encerrado");
     encerraTimerPontuacao();
-    jogoIniciado = false;
 
     clearInterval(timerTempoJogo);
 
@@ -110,11 +112,18 @@ function encerraJogo() {
     botaoEncerraJogo.disabled = true;
     botaoConfiguraTabuleiro.disabled = false;
 
+    if (configuracao.dificuldade == "medio")
+        pontuacao *= 1.25;
+    else if (configuracao.dificuldade == "dificil")
+        pontuacao *= 1.65;
+
+    console.log("PONTUACAO FINAL" + pontuacao);
+
     for (let i = 0; i < dificuldades.length; i++)
         dificuldades[i].disabled = false;
 
+
     console.log("tempo total de jogo: " + segundos);
-    let segundos_do_jogo = segundos;
     trataFazerRegistroPontuacao();
 }
 
@@ -142,8 +151,11 @@ function iniciaTimerPontuacao() {
 
 
 function atualizaPontuacao(incrementar = null) {
-    if (incrementar == null)
-        pontuacao -= 2;
+    if (incrementar == null) {
+        let decremento;
+        configuracao.dificuldade == "facil" ? decremento = 1 : (configuracao.dificuldade == "medio" ? decremento = 3 : decremento = 5);
+        pontuacao -= decremento;
+    }
     else
         pontuacao += incrementar;
     document.getElementById(SPAN_PONTUACAO_ATUAL).innerHTML = pontuacao;
@@ -236,7 +248,7 @@ function configuraTabuleiro() {
         configuracao.largura = prompt("Largura (entre 5 e 10):");
 
         if (!isNaN(configuracao.largura)) {
-            configuracao.largura = parseInt(configuracao.largura); 
+            configuracao.largura = parseInt(configuracao.largura);
             let largura = configuracao.largura;
 
             if (largura >= 5 && largura <= 10) {
@@ -417,7 +429,7 @@ function mostraHistoricoEstatistica() {
     let nome = dados.nome;
 
     let numeroDeJogos = 1;
-    let tempoPorJogo = []
+    let tempoPorJogo = [];
     for (let pontuacao of pontuacoes) {
         linhaTabela = document.createElement("tr");
         linhaTabela.innerHTML = "<td>" + numeroDeJogos + "</td>" + "<td>" + nome + "</td>" + "<td>" + pontuacao.pont + "</td>" + "<td>" + pontuacao.cartasAcertadas + "</td>" + "<td>" + pontuacao.tempo + "</td>"
@@ -436,15 +448,36 @@ function toScores(numeroDeJogos, pontuacoes, dados) {
     // numeroDeJogos: número total de jogos
     // pontuacoes: objeto em local storage de leaderBoard com estatisticas de pontuacao, cartas acertadas e tempo do jogo 
     // dados: objeto do tipo User de ITEM_DADOS_USUARIOS_LOGADOS 
-    atualizarNumeroDeJogos(dados, numeroDeJogos)
+    atualizarNumeroDeJogos(dados, numeroDeJogos);
+    atualizarTempoTotal(pontuacoes, dados);
+    atualizarTempoPorJogo(dados, pontuacoes);
 
+}
+
+
+function atualizarTempoPorJogo(dados, pontuacoes) {
+    temposDosJogos = []
+    for (let jogo of pontuacoes) {
+        temposDosJogos.push(jogo.tempo)
+    }
+    console.log(temposDosJogos)
+
+    dados.scores.tempoPorJogo = temposDosJogos
+
+    localStorage.setItem(ITEM_DADOS_USUARIOS_LOGADOS, JSON.stringify(dados))
 }
 
 function atualizarNumeroDeJogos(dados, numeroDeJogos) {
     dados.scores.jogos = numeroDeJogos;
     localStorage.setItem(ITEM_DADOS_USUARIOS_LOGADOS, JSON.stringify(dados));
 
-    console.log(dados)
+}
+
+function atualizarTempoTotal(pontuacoes, dados) {
+    tempoTotal = somarTemposObjeto(pontuacoes)
+
+    dados.scores.tempoTotal = tempoTotal
+    localStorage.setItem(ITEM_DADOS_USUARIOS_LOGADOS, JSON.stringify(dados))
 }
 
 function somarTemposObjeto(objeto) {
