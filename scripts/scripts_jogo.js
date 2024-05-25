@@ -21,6 +21,9 @@ const DURACAO_MINIMA_OMISSAO = 10;
 const ITEM_ESTATISTICA = "leaderboard"
 
 
+const ITEM_DADOS_USUARIOS_LOGADOS = "usuariosLogados";
+
+
 // VARIÁVEIS
 let botaoIniciaJogo;
 let botaoEncerraJogo;
@@ -111,8 +114,10 @@ function encerraJogo() {
         dificuldades[i].disabled = false;
 
     console.log("tempo total de jogo: " + segundos);
+    let segundos_do_jogo = segundos
     trataFazerRegistroPontuacao();
 }
+
 
 function defineEventListeners() {
     botaoIniciaJogo.addEventListener("click", iniciaJogo);
@@ -365,18 +370,18 @@ function cartaClicada(event) {
 let pontuacoes = JSON.parse(localStorage.getItem(ITEM_ESTATISTICA)) || [];
 
 
-const ITEM_DADOS_USUARIOS_LOGADOS = "usuariosLogados";
 
 
 class Estatistica {
-    constructor(pont, cartasAcertadas) {
+    constructor(pont, cartasAcertadas, tempo) {
         this.pont = pont;
         this.cartasAcertadas = cartasAcertadas
+        this.tempo = tempo
     }
 }
 
 function trataFazerRegistroPontuacao() {
-    let userEstatistica = new Estatistica(pontuacao, (cartasAcertadas.length) / 2);
+    let userEstatistica = new Estatistica(pontuacao, (cartasAcertadas.length) / 2, segundos);
 
     gravaPontuacaoNoHistorico(userEstatistica)
     mostraHistoricoEstatistica()
@@ -407,7 +412,8 @@ function mostraHistoricoEstatistica() {
     linhaTabela.innerHTML = "<th>#</th>" +
         "<th>Nome</th>" +
         "<th>Pontuação</th>" +
-        "<th>Pares Acertados</th>"
+        "<th>Pares Acertados</th>" +
+        "<td> Segundos </th>"
     tabelaNova.appendChild(linhaTabela);
 
     let dados = JSON.parse(localStorage.getItem(ITEM_DADOS_USUARIOS_LOGADOS))
@@ -415,14 +421,19 @@ function mostraHistoricoEstatistica() {
     let email = dados.email
 
     let numeroEstatistica = 1;
+    let tempoPorJogo = []
     for (let pontuacao of pontuacoes) {
         linhaTabela = document.createElement("tr");
-        linhaTabela.innerHTML = "<td>" + numeroEstatistica + "</td>" + "<td>" + email+ "</td>" + "<td>" + pontuacao.pont + "</td>" + "<td>" + pontuacao.cartasAcertadas + "</td>"
+        linhaTabela.innerHTML = "<td>" + numeroEstatistica + "</td>" + "<td>" + email + "</td>" + "<td>" + pontuacao.pont + "</td>" + "<td>" + pontuacao.cartasAcertadas + "</td>" + "<td>" + pontuacao.tempo + "</td>"
 
         tabelaNova.appendChild(linhaTabela)
         numeroEstatistica++;
-        console.log(pontuacao.pont)
     }
 
     tabelaAntiga.parentNode.replaceChild(tabelaNova, tabelaAntiga);
+    toScores(dados, numeroEstatistica - 1)
+}
+
+function toScores(dados, numeroEstatistica) {
+    console.log(dados.email, numeroEstatistica, segundos);
 }

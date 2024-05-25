@@ -13,7 +13,7 @@ let usuariosLogados;
 
 
 class User {
-    constructor (email, senha, idade=null, scores=[]) {
+    constructor (email, senha, idade=null, scores={jogos: null, tempoTotal: null, tempoPorJogo: []}) {
         this.email = email;
         this.senha = senha;
         this.idade = idade;  
