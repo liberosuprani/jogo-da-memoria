@@ -49,6 +49,7 @@
     <div class="pageContainer">
         <main id="singlegamePage">
             <section id="configSection">
+                
                 <div id="configs">
                     <p>Dificuldade:</p>
                     <ul>
@@ -71,22 +72,45 @@
                         </button>
                         <button type="button" id="configuraTabuleiro">
                             Configurar tabuleiro
-                        </button>
-                        
+                        </button>   
                     </div>
                 </div>
 
+                <div id="leaderboard">
+                    <p>
+                        Tempo: <span id="segPassados">0</span>
+                    </p>
+    
+                    <p>
+                        Pontuação: <span id="pontuacaoAtual">0</span>
+                    </p>
+
+                    <hr>
+
+                    <h2>
+                        Estatisticas
+                    </h2>
+                    <p>
+    
+                    </p>
+                    
+                    <div style="overflow-y: auto;">
+                        <table id="tblEstatisticas">
+                            <!-- AQUI ENTRAM AS ESTATISTICAS COM O JAVASCRIPT -->
+                        </table>
+                    </div>
+                </div>
             </section>
 
             <section id="gameSection">
                 <div id="wrapperDivTabuleiro">
                     <div id="divTabuleiro">
-
+                        <!-- AQUI ENTRAM AS CARTAS COM O JAVASCRIPT -->
                     </div>
                 </div>
             </section>
             
-            <section id="leaderboardSection">
+            <!-- <section id="leaderboardSection">
                 <div id="leaderboard">
                     <p>
                         Tempo: <span id="segPassados">0</span>
@@ -102,15 +126,11 @@
     
                     </p>
                     <table id="tblEstatisticas">
-                        
+                        <!-- AQUI ENTRAM AS ESTATISTICAS COM O JAVASCRIPT 
                     </table>
                 </div>
-
-            </section>
-
-            
+            </section> -->
         </main>
-
     </div>
 
     <footer>

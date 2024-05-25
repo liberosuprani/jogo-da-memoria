@@ -3,6 +3,7 @@ const ITEM_DADOS_USUARIO = "dados";
 const ITEM_DADOS_USUARIOS_LOGADOS = "usuariosLogados";
 const FORMULARIO_LOGIN = "loginForm";
 const EMAIL_ID = "email";
+const NOME_ID = "nome";
 const PASSWORD_ID = "password";
 const BOTAO_LOGIN = "botaoLogin";
 
@@ -13,8 +14,9 @@ let usuariosLogados;
 
 
 class User {
-    constructor (email, senha, idade=null, scores={jogos: null, tempoTotal: null, tempoPorJogo: []}) {
+    constructor (email, nome=null, senha, idade=null, scores={jogos: null, tempoTotal: null, tempoPorJogo: []}) {
         this.email = email;
+        this.nome = nome;
         this.senha = senha;
         this.idade = idade;  
         this.scores = scores;  
@@ -44,7 +46,7 @@ function tentaLogin() {
     let errorMsg = document.getElementById("errorMsg");
     let email = formulario.elements[EMAIL_ID].value;
     let password = formulario.elements[PASSWORD_ID].value;
-    let user = new User(email, password);
+    let user = new User(email, null, password);
     
     let loginValido = validaLogin(user);
 

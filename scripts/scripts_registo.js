@@ -3,6 +3,7 @@ const FORMULARIO_REGISTRO = "registerForm";
 const BOTAO_REGISTRO = "botaoRegisto";
 const ITEM_DADOS_USUARIO = "dados";
 const EMAIL_ID = "email";
+const NAME_ID = "name";
 const GENDER_ID = "gender";
 const PASSWORD_ID = "password";
 const AGE_ID = "age";
@@ -11,8 +12,9 @@ let formulario = null
 let dados = [];
 
 class User {
-    constructor (email, senha, idade=null, scores = []) {
+    constructor (email, nome, senha, idade=null, scores = []) {
         this.email = email;
+        this.nome = nome;
         this.senha = senha;
         this.idade = idade;  
         this.scores = scores;
@@ -55,7 +57,8 @@ function gravaDadosUser() {
         let password = formulario.elements[PASSWORD_ID].value;
         console.log(password);
         let age = formulario.elements[AGE_ID].value;
-        dados.push(new User(email, password, age));
+        let name = formulario.elements[NAME_ID].value;
+        dados.push(new User(email, name, password, age));
         localStorage.setItem(ITEM_DADOS_USUARIO, JSON.stringify(dados));
         window.location.href = "login.html";
     }
