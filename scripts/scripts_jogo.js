@@ -14,7 +14,7 @@ const NOME_RADIO_DIFICULDADE = "dificuldade";
 const NOME_RADIO_MODOS = "";
 
 const NOME_DIV_JOGADORES = "divJogadores";
-const NOME_RADIO_TEMAS = 'tema'
+const NOME_RADIO_TEMAS = 'tema';
 
 const SPAN_TEMPO_PASSADO = 'segPassados';
 const SPAN_TEMPO_RESTANTE = 'segRestantes';
@@ -49,6 +49,7 @@ let segundos = 0;
 let usuariosSecundarios = [];
 
 let dadosMultiplayer = [];
+let dadosSessaoMultiplayer = []; 
 
 let totalDeCartas = [];
 let matrizTabuleiro = [];
@@ -69,11 +70,7 @@ let configuracao = {
     qtdJogadores : 1,
 }
 
-
-
-
 window.addEventListener("load", carregaPagina);
-
 
 function carregaPagina() {
 
@@ -99,16 +96,17 @@ function carregaPagina() {
 
     if (configuracao.qtdJogadores == 1)
         mostraHistoricoEstatistica();
-    else {
-        mostraHistoricoEstatisticaMultiplayer();
-        dadosMultiplayer = [];
-    }
+    else
+    carregaTodoHistoricoMultiplayer();
     defineEventListeners();
 }
+
+
 
 function carregaUsuariosLogados() {
     usuariosSecundarios = JSON.parse(localStorage.getItem(ITEM_DADOS_USUARIOS_SECUNDARIOS)) || [];
     usuarioLogado = JSON.parse(localStorage.getItem(ITEM_DADOS_USUARIOS_LOGADOS)) || [];
+    dadosMultiplayer = JSON.parse(localStorage.getItem(ITEM_DADOS_MULTIPLAYER)) || [];
     
     configuracao.qtdJogadores = 1 + usuariosSecundarios.length;
 
@@ -117,7 +115,7 @@ function carregaUsuariosLogados() {
     jogadorPrincipal.id = `jogador-1`
     jogadorPrincipal.innerHTML = `${usuarioLogado.nome}`;
     divJogadores.append(jogadorPrincipal);
-    dadosMultiplayer.push({ 
+    dadosSessaoMultiplayer.push({ 
         jogador: usuarioLogado,
         pontos: 0,
     })
@@ -129,7 +127,7 @@ function carregaUsuariosLogados() {
             nomeJogador.innerHTML = `${usuariosSecundarios[i].nome}`; 
             divJogadores.append(nomeJogador);
 
-            dadosMultiplayer.push({ 
+            dadosSessaoMultiplayer.push({ 
                 jogador: usuariosSecundarios[i],
                 pontos: 0,
             })
@@ -156,14 +154,7 @@ function iniciaJogo() {
 
         }
     }
-    getTema(configuracao.tema)
-
-    //#TODO modos 
-    // for (let i = 0; i < modos.length; i++) {
-    //     modos[i].disabled = true;
-    //     if (modos[i].checked == true)
-    //         configuracao.modo = modos[i].value;
-    // }
+    getTema(configuracao.tema);
 
     cartasAcertadas = [];
     acertos = 0;
@@ -183,17 +174,22 @@ function iniciaJogo() {
         cartasAcertadas = [];
     }
 }
+let backgroundHTML = document.getElementById("backgroundIMG");
+
+var backgroundImage = "./img/imagens para o fundo/aldeia_easy.jpg"
 
 function getTema(temaRadio) {
     switch(temaRadio) {
         case "esportes":
             colecaoEscolhida = listaDeCartasEsportes;
+            backgroundImage = "./img/imagens para o fundo/aldeia_easy.jpg"
             break;
         case "animais":
-            colecaoEscolhida = listaDeCartasAnimais;
+            colecaoEscolhida = listaDeCartasAnimais;backgroundImage = 'img/imagens para o fundo/floresta_easy.jpg'
             break;
         case "super-herois":
             colecaoEscolhida = listaDeCartasSuperHerois;
+            backgroundImage = 'img/imagens para o fundo/cidade_hard.jpg'
             break;
     }
 }
@@ -210,6 +206,7 @@ function encerraJogo() {
     botaoIniciaJogo.disabled = false;
     botaoEncerraJogo.disabled = true;
     botaoConfiguraTabuleiro.disabled = false;
+    botaoAdicionaJogador.disabled = false;
 
     if (configuracao.dificuldade == "medio")
         pontuacao *= 1.25;
@@ -231,7 +228,24 @@ function encerraJogo() {
         adicionaLocalStorageTodosOsJogadores();
     }
     else {
+        dadosMultiplayer.push(dadosSessaoMultiplayer);
+        localStorage.setItem(ITEM_DADOS_MULTIPLAYER, JSON.stringify(dadosMultiplayer));
         mostraHistoricoEstatisticaMultiplayer();
+        
+        dadosSessaoMultiplayer = [];
+        dadosSessaoMultiplayer.push({ 
+            jogador: usuarioLogado,
+            pontos: 0,
+        })
+    
+        if (usuariosSecundarios.length > 0) {
+            for (i = 0; i<usuariosSecundarios.length; i++) {
+                dadosSessaoMultiplayer.push({ 
+                    jogador: usuariosSecundarios[i],
+                    pontos: 0,
+                })
+            }
+        }
     }
 }
 
@@ -556,7 +570,7 @@ function cartaClicada() {
                 else {
                     let jogadorDaVez = retornaJogadorDaVez();
 
-                    for (let dado of dadosMultiplayer) {
+                    for (let dado of dadosSessaoMultiplayer) {
                         if (jogadorDaVez.email == dado.jogador.email)
                             dado.pontos += 10;
                     }
@@ -602,8 +616,6 @@ function pegarDadosUsuarioLogado() {
     return JSON.parse(localStorage.getItem(ITEM_DADOS_USUARIOS_LOGADOS));
 }
 
-
-
 function trataFazerRegistroPontuacao() {
     usuarioLogado = pegarDadosUsuarioLogado();
     
@@ -626,6 +638,27 @@ function gravaHistoricoPontuacao(pontuacoes) {
     localStorage.setItem(ITEM_ESTATISTICA, JSON.stringify(pontuacoes));
 }
 
+function carregaTodoHistoricoMultiplayer() {
+    let divLeaderboard = document.getElementById("leaderboard");
+
+    let tabelaNova = document.createElement("table");
+    tabelaNova.setAttribute("id", TABELA_ESTATISTICAS);
+    divLeaderboard.append(tabelaNova);
+
+    for (let i = 0; i < dadosMultiplayer.length; i++) {
+        let str = "";
+        str = `<tr><th>Jogo ${i+1}</th>`;
+
+        for (dado of dadosMultiplayer[i]) {
+            str += "<th>Nome</th>" + "<th>Pontuação</th></tr>"
+
+            str += `<tr> <td> </td>  <td>${dado.jogador.nome}</td><td>${dado.pontos}</td></tr>`;
+            tabelaNova.innerHTML += str;
+            str = "<th></th>";
+        }
+    }
+}
+
 function mostraHistoricoEstatisticaMultiplayer() {
     let divLeaderboard = document.getElementById("leaderboard");
 
@@ -635,18 +668,18 @@ function mostraHistoricoEstatisticaMultiplayer() {
 
     let linhaTabela = document.createElement("tr");
 
-    linhaTabela.innerHTML = "<th>#</th>" +
+    linhaTabela.innerHTML = "<th>Jogo</th>" +
         "<th>Nome</th>" +
         "<th>Pontuação</th>"
     tabelaNova.appendChild(linhaTabela);
 
-    let dadosUsuariosLogados = dadosMultiplayer;
+    let dadosUsuariosLogados = dadosSessaoMultiplayer;
 
     for (let dado of dadosUsuariosLogados) {
         linhaTabela = document.createElement("tr");
-        linhaTabela.innerHTML = "<td>" + dado.jogador.nome + "</td>" + "<td>" + dado.pontos + "</td>";
+        linhaTabela.innerHTML = "<td>" + (dadosMultiplayer.length) + "</td>" + "<td>" + dado.jogador.nome + "</td>" + "<td>" + dado.pontos + "</td>";
 
-        tabelaNova.appendChild(linhaTabela)
+        tabelaNova.appendChild(linhaTabela);
     }
 }
 
