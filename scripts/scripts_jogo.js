@@ -492,7 +492,7 @@ function toScores(numeroDeJogos, pontuacoes, dados) {
     atualizarNumeroDeJogos(dados, numeroDeJogos);
     atualizarTempoTotal(pontuacoes, dados);
     atualizarTempoPorJogo(dados, pontuacoes);
-
+    atualizaDadosScores()
 }
 
 
@@ -569,4 +569,3 @@ function atualizaDadosScores() {
 
 
 
-atualizaDadosScores()
