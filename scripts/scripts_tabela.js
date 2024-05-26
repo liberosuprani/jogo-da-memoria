@@ -38,7 +38,7 @@ function mostrarTodosOsJogadores() {
     let posicao = 1;
     for (let jogo of todosOsJogadores) {
         linhaTabela = document.createElement("tr");
-        linhaTabela.innerHTML = "<td>" + posicao + "</td>" + "<td>" + 'ravi' + "</td>" + "<td>" + jogo.pont + "</td>" + "<td>" + jogo.cartasAcertadas + "</td>" + "<td>" + jogo.tempo + "</td>"
+        linhaTabela.innerHTML = "<td>" + posicao + "</td>" + "<td>" + jogo.email + "</td>" + "<td>" + jogo.pont + "</td>" + "<td>" + jogo.cartasAcertadas + "</td>" + "<td>" + jogo.tempo + "</td>"
 
         tabelaNova.appendChild(linhaTabela)
         if (posicao >= 10) {
