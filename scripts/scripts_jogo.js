@@ -90,6 +90,8 @@ function iniciaJogo() {
         if (dificuldades[i].checked == true)
             configuracao.dificuldade = dificuldades[i].value;
     }
+
+    //#TODO modos 
     // for (let i = 0; i < modos.length; i++) {
     //     modos[i].disabled = true;
     //     if (modos[i].checked == true)
@@ -186,10 +188,10 @@ function atualizaCronometro() {
 // -------------------------------- TABULEIRO ---------------------------------------
 
 class Carta {
-    constructor(id, name, image) {
+    constructor(id, nome, imagem) {
         this.id = id;
-        this.name = name;
-        this.image = image;
+        this.nome = nome;
+        this.imagem = imagem;
     }
 }
 
@@ -315,7 +317,7 @@ function carregaTabuleiro(linhas = configuracao.altura, colunas = configuracao.l
             let imgCartaFrente = document.createElement("img");
             imgCartaFrente.id = "frente";
             imgCartaFrente.classList.add("face");
-            imgCartaFrente.src = totalDeCartas[posicaoLista].image;
+            imgCartaFrente.src = totalDeCartas[posicaoLista].imagem;
 
             divCartaContainer.append(imgCartaAtras);
             divCartaContainer.append(imgCartaFrente);
@@ -419,7 +421,7 @@ const TABELA_ESTATISTICAS = 'tblEstatisticas';
 let pontuacoes = JSON.parse(localStorage.getItem(ITEM_ESTATISTICA)) || [];
 
 class Estatistica {
-    constructor(email ,pont, cartasAcertadas, tempo) {
+    constructor(email, pont, cartasAcertadas, tempo) {
         this.email = email;
         this.pont = pont;
         this.cartasAcertadas = cartasAcertadas;
@@ -443,18 +445,10 @@ function trataFazerRegistroPontuacao() {
 
 function gravaPontuacaoNoHistorico(userEstatistica) {
     
-    if (pontuacoes.length == 10) {
-        let menor = 0;
-
-        for (let i = 1; i < pontuacoes.length; i++) {
-            if (pontuacoes[i] < menor)
-                menor = i
-        }
-        pontuacoes.splice(menor, 1);
-    }
-
+    if (pontuacoes.length == 10) 
+        pontuacoes.splice(10, 1);
+    
     pontuacoes.push(userEstatistica);
-
     gravaHistoricoPontuacao(pontuacoes)
 }
 
@@ -562,7 +556,6 @@ function atualizaDadosScores() {
     }
 
     if (usuario) {
-
         //RESOLVER 
         // SUBSTITUIR VALOR POR INDICE DO DICIONARIO DE DADOS
         // console.log(userRegistro)
@@ -577,11 +570,7 @@ function atualizaDadosScores() {
         }
         
     }
-
-
-
 }
-
 
 function pegarTodosOsJogadores() {
     return JSON.parse(localStorage.getItem(TODOS_OS_JOGADORES)) || [];

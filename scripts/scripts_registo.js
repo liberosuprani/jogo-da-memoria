@@ -3,10 +3,10 @@ const FORMULARIO_REGISTRO = "registerForm";
 const BOTAO_REGISTRO = "botaoRegisto";
 const ITEM_DADOS_USUARIO = "dados";
 const EMAIL_ID = "email";
-const NAME_ID = "name";
-const GENDER_ID = "gender";
-const PASSWORD_ID = "password";
-const AGE_ID = "age";
+const NAME_ID = "nome";
+const GENDER_ID = "genero";
+const PASSWORD_ID = "senha";
+const AGE_ID = "idade";
 
 let formulario = null;
 let dados = [];

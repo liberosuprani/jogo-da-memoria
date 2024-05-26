@@ -1,6 +1,5 @@
 const BOTAO_DESLOGAR = "botaoDeslogar";
 
-
 let botaoDeslogar;
 
 window.addEventListener("load", principal);
