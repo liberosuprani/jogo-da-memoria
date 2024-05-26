@@ -11,7 +11,7 @@ Ravi Mughal - 62504
 
 body {
     font-family: "Roboto", sans-serif;
-    background: linear-gradient(90deg, rgba(2,0,36,1) 0%, rgba(0,121,146,1) 100%);  
+    background: linear-gradient(90deg, rgba(2, 0, 36, 1) 0%, rgba(0, 121, 146, 1) 100%);
     margin: 0;
     color: #E3FEF7;
 }
@@ -32,7 +32,8 @@ h1 {
     font-size: 35px;
 }
 
-h2, h3 {
+h2,
+h3 {
     margin-top: 30px;
     font-size: 27.5px;
 }
@@ -60,11 +61,11 @@ ul li {
     min-width: 200px;
 }
 
-.pageContainer { 
+.pageContainer {
     display: flex;
     flex-direction: column;
-    min-height: 100vh; 
-} 
+    min-height: 100vh;
+}
 
 .pageContainer ol {
     padding: 0;
@@ -77,11 +78,13 @@ ul li {
     cursor: pointer;
     margin-right: 30px;
 }
+
 #botaoDeslogar:hover {
     content: url('../img/logout-svgrepo-com-hover.svg');
 }
 
-#loginPage, #registerPage {
+#loginPage,
+#registerPage {
     text-align: center;
     flex-grow: 0;
     width: 35vw;
@@ -91,7 +94,9 @@ ul li {
     padding: 50px 30px 50px 30px;
 }
 
-#loginPage input, #registerPage input, select {
+#loginPage input,
+#registerPage input,
+select {
     box-sizing: border-box;
     display: block;
     width: 80%;
@@ -99,13 +104,14 @@ ul li {
     padding: 10px 10px;
 }
 
-#loginPage a, #registerPage a {
+#loginPage a,
+#registerPage a {
     color: white;
 }
 
 #navbar {
-    background: rgb(2,0,36);
-    background: linear-gradient(90deg, rgba(2,0,36,1) 0%, rgba(0,121,146,1) 100%); 
+    background: rgb(2, 0, 36);
+    background: linear-gradient(90deg, rgba(2, 0, 36, 1) 0%, rgba(0, 121, 146, 1) 100%);
     box-shadow: 0 0 5px 0px black;
     display: flex;
     position: sticky;
@@ -118,22 +124,29 @@ ul li {
     #navbar {
         align-items: center;
         justify-content: space-between;
-    } 
+    }
+
     #navList1 {
         list-style-type: none;
         padding: 0 30px 0 30px;
         display: flex;
         flex-direction: row;
-        flex-wrap: wrap; /** responsividade , quebra de linha **/
+        flex-wrap: wrap;
+        /** responsividade , quebra de linha **/
         align-items: center;
         font-size: 20px;
     }
+
     #navList2 {
         display: none;
     }
+
     #singlegamePage {
         flex-direction: row;
     }
+
+
+
 }
 
 @media only screen and (max-width: 649px) {
@@ -141,15 +154,17 @@ ul li {
         align-items: center;
         justify-content: space-between;
     }
+
     #navList2 {
         list-style-type: none;
         padding: 0 40px 0 40px;
         display: flex;
-        flex-direction: row; 
+        flex-direction: row;
         justify-content: left;
         align-items: center;
         font-size: 20px;
     }
+
     #navList1 {
         display: none;
     }
@@ -160,6 +175,15 @@ ul li {
 
     .backgroundImage {
         display: none;
+    }
+
+    #configs, #leaderboard {
+        max-width: 75% !important;
+    }
+
+    #gameSection {
+        max-width: 85% !important;
+        margin: auto;
     }
 }
 
@@ -177,6 +201,7 @@ ul li {
 #navbar ul li a:hover {
     color: #7bc7d1;
 }
+
 #navbar ul li button:hover {
     color: #7bc7d1;
 }
@@ -191,7 +216,7 @@ ul li {
 
 
 #mobileNavbar {
-    background-color: rgb(2,0,36);
+    background-color: rgb(2, 0, 36);
     display: none;
     flex-direction: column;
     position: fixed;
@@ -224,7 +249,7 @@ ul li {
 
 #homebutton:hover {
     content: url('../img/home-1-svgrepo-com_2.png');
-} 
+}
 
 .listaOrdenada {
     font-size: 20px;
@@ -240,7 +265,7 @@ ul li {
     display: flex;
     margin: 0 auto;
     max-width: 100%;
-}   
+}
 
 .buttonDificulty {
     margin: 0 5px 15px 5px !important;
@@ -248,12 +273,12 @@ ul li {
 
 
 footer {
-    background: rgb(2,0,36);
+    background: rgb(2, 0, 36);
     font-size: 15px;
     box-shadow: 0 -5px 3px -5px black;
-    background: linear-gradient(90deg, rgb(2,0,36) 0%, rgb(0, 74, 88) 100%); 
+    background: linear-gradient(90deg, rgb(2, 0, 36) 0%, rgb(0, 74, 88) 100%);
     color: #E3FEF7;
-    padding: 20px 0; 
+    padding: 20px 0;
     padding-left: 50px;
     position: relative;
     bottom: 0;
@@ -266,7 +291,7 @@ footer p {
 
 footer ul {
     padding-left: 0;
-    list-style-type: square; 
+    list-style-type: square;
     list-style-position: inside;
 }
 
@@ -283,7 +308,7 @@ footer ul li {
     width: 100%;
     height: 100%;
     opacity: 0.2;
-    
+
 }
 
 .aboutUs {
@@ -293,27 +318,15 @@ footer ul li {
 
 /**     --------------------     ESTILOS REFERENTES AO JOGO EM SI     --------------------     **/
 
-/* @media only screen and (min-width: 650px) {
-    #singlegamePage {
-        flex-direction: row;
-    }
-}
-
-@media only screen and (max-width: 649px) {
-    #singlegamePage {
-        flex-direction: column;
-    }
-} */
-
 #wrapperDivTabuleiro {
+    overflow-x: auto;
+    max-width: 100%;
     display: flex;
-    /* margin: 60px auto; */
-    /* width: min-content; */
 }
 
 #divTabuleiro {
     display: inline-grid;
-    width: 100%;
+    width: max-content;
     gap: 15px;
     padding: 10px;
     box-shadow: 0 0 5px 0px black;
@@ -322,8 +335,8 @@ footer ul li {
 
 .carta {
     width: 60px;
-    height:calc(60px / 2 * 3) ;
-    
+    height: calc(60px / 2 * 3);
+
     perspective: 1000px;
     transform-style: preserve-3d;
     transition: 0.8s;
@@ -352,10 +365,11 @@ footer ul li {
     display: flex;
     align-items: center;
     justify-content: center;
-    
+
     height: 100%;
-    width: 100%;;
-    border-radius: 5px;    
+    width: 100%;
+    ;
+    border-radius: 5px;
 }
 
 #errorMsg {
@@ -375,13 +389,16 @@ div#acoesJogo {
     margin-top: 30px;
 }
 
-section#configSection, section#gameSection {
-    max-width: 90vw;
+section#configSection,
+section#gameSection {
+    max-width: 100vw;
     display: flex;
     flex-direction: column;
     align-items: center;
     padding-top: 0;
 }
+
+
 
 div#tempoPontuacao {
     display: flex;
@@ -398,12 +415,15 @@ div#tempoPontuacao p {
 section#configSection ul {
     margin: 0;
 }
-section#configSection p, section#leaderboardSection p {
+
+section#configSection p,
+section#leaderboardSection p {
     margin-top: 0;
 }
 
-div#configs, div#leaderboard {
-    width: 100%; 
+div#configs,
+div#leaderboard {
+    max-width: 100%;
     margin-bottom: 30px;
     padding: 30px;
     padding-top: 10px;
@@ -414,13 +434,3 @@ div#configs, div#leaderboard {
 div#singlegamePage p {
     margin-top: 0;
 }
-
-
-
-
-
-
-
-
-
-
