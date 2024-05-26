@@ -551,14 +551,16 @@ function atualizaDadosScores() {
         //RESOLVER 
         // SUBSTITUIR VALOR POR INDICE DO DICIONARIO DE DADOS
         // console.log(userRegistro)
-        // let index = userRegistro.findIndex(user => user.email === usuario.email)
-        // console.log("index", index)
+        let index = userRegistro.findIndex(user => user.email === usuario.email)
+        console.log("index", index)
 
-        // if (index !== -1) {
-        //     userRegistro[index] = usuario
-        // }
-        // localStorage.setItem(ITEM_DADOS_USUARIO, JSON.stringify(usuario));
-        // console.log("atualizado")
+        if (index !== -1) {
+            userRegistro[index] = usuario
+            
+
+            localStorage.setItem(ITEM_DADOS_USUARIO, JSON.stringify(userRegistro))
+        }
+        
     }
 
 
