@@ -433,6 +433,10 @@ div#leaderboard {
     box-shadow: 0 0 5px 0px black;
 }
 
+div#leaderboard {
+    overflow-x: auto;
+}
+
 div#singlegamePage p {
     margin-top: 0;
 }
