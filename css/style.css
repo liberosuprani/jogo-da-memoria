@@ -433,6 +433,10 @@ div#leaderboard {
     box-shadow: 0 0 5px 0px black;
 }
 
+div#configs {
+    padding-top: 30px;
+}
+
 div#leaderboard {
     overflow-x: auto;
 }
