@@ -66,7 +66,7 @@ let configuracao = {
     duracaoMaxima: DURACAO_MAXIMA_OMISSAO,
     altura: 5,
     largura: 6,
-    qtdJogadores : 1,
+    qtdJogadores: 1,
 }
 
 
@@ -109,7 +109,7 @@ function carregaPagina() {
 function carregaUsuariosLogados() {
     usuariosSecundarios = JSON.parse(localStorage.getItem(ITEM_DADOS_USUARIOS_SECUNDARIOS)) || [];
     usuarioLogado = JSON.parse(localStorage.getItem(ITEM_DADOS_USUARIOS_LOGADOS)) || [];
-    
+
     configuracao.qtdJogadores = 1 + usuariosSecundarios.length;
 
     let divJogadores = document.getElementById(NOME_DIV_JOGADORES);
@@ -117,19 +117,19 @@ function carregaUsuariosLogados() {
     jogadorPrincipal.id = `jogador-1`
     jogadorPrincipal.innerHTML = `${usuarioLogado.nome}`;
     divJogadores.append(jogadorPrincipal);
-    dadosMultiplayer.push({ 
+    dadosMultiplayer.push({
         jogador: usuarioLogado,
         pontos: 0,
     })
 
     if (usuariosSecundarios.length > 0) {
-        for (i = 0; i<usuariosSecundarios.length; i++) {
+        for (i = 0; i < usuariosSecundarios.length; i++) {
             let nomeJogador = document.createElement("p");
-            nomeJogador.id = `jogador-${i+2}`
-            nomeJogador.innerHTML = `${usuariosSecundarios[i].nome}`; 
+            nomeJogador.id = `jogador-${i + 2}`
+            nomeJogador.innerHTML = `${usuariosSecundarios[i].nome}`;
             divJogadores.append(nomeJogador);
 
-            dadosMultiplayer.push({ 
+            dadosMultiplayer.push({
                 jogador: usuariosSecundarios[i],
                 pontos: 0,
             })
@@ -157,6 +157,7 @@ function iniciaJogo() {
         }
     }
     getTema(configuracao.tema)
+    mudarFundoTabuleiro(configuracao.tema)
 
     //#TODO modos 
     // for (let i = 0; i < modos.length; i++) {
@@ -184,8 +185,31 @@ function iniciaJogo() {
     }
 }
 
+function mudarFundoTabuleiro(temaRadio) {
+    let divTabuleiro = document.getElementById("divTabuleiro");
+    let divCarta = document.getElementsByClassName('face');
+
+    let corTabuleiro = 'rgb(0,0,0)';
+
+    switch (temaRadio) {
+        case "esportes":
+            corTabuleiro = 'rgb(82, 7, 7)';
+            break;
+        case "animais":
+            corTabuleiro = 'rgb(7, 77, 82)';
+
+            break;
+        case "super-herois":
+            corTabuleiro = 'rgb(7, 49, 58)';
+
+            break;
+    }
+
+    divTabuleiro.style.backgroundColor = corTabuleiro;
+}
+
 function getTema(temaRadio) {
-    switch(temaRadio) {
+    switch (temaRadio) {
         case "esportes":
             colecaoEscolhida = listaDeCartasEsportes;
             break;
@@ -409,11 +433,11 @@ function configuraTabuleiro() {
         if (!isNaN(configuracao.largura)) {
             configuracao.largura = parseInt(configuracao.largura);
             let largura = configuracao.largura;
-            
+
             let altura = configuracao.altura = Math.floor(colecaoEscolhida.length * 2 / largura);
 
             if (largura >= 5 && largura <= 10) {
-                if (colecaoEscolhida.length * 2 % largura == 0 || largura*altura % 2 == 0 || largura == 2)
+                if (colecaoEscolhida.length * 2 % largura == 0 || largura * altura % 2 == 0 || largura == 2)
                     configuracao.altura = altura;
                 else
                     configuracao.altura = altura - 1;
@@ -449,8 +473,8 @@ function carregaTabuleiro(linhas = configuracao.altura, colunas = configuracao.l
             let divCartaContainer = document.createElement("div");
             divCartaContainer.classList.add("carta");
             divCartaContainer.id = `carta${linha}-${coluna}`;
-            
-            
+
+
             let imgCartaAtras = document.createElement("div");
             imgCartaAtras.id = "atras";
             imgCartaAtras.classList.add("face");
@@ -480,7 +504,7 @@ function retornaJogadorDaVez() {
     if (numJogadorDaVez == 1)
         return usuarioLogado;
 
-    return usuariosSecundarios[numJogadorDaVez-2];
+    return usuariosSecundarios[numJogadorDaVez - 2];
 }
 
 function cartaClicada() {
@@ -539,17 +563,17 @@ function cartaClicada() {
 
             if (acertou) {
                 console.log("ACERTOU!!!!!!!!");
-                
+
                 for (let cartaClicadaAtual of cartasClicadas.cartas) {
                     cartasAcertadas.push(cartaClicadaAtual);
                 }
                 cartasClicadas.quantidade = 0;
                 cartasClicadas.cartas = [];
 
-                if (cartasAcertadas.length == configuracao.largura*configuracao.altura) {
-                    cartasAcertadas[cartasAcertadas.length-1].classList.toggle("flip");
+                if (cartasAcertadas.length == configuracao.largura * configuracao.altura) {
+                    cartasAcertadas[cartasAcertadas.length - 1].classList.toggle("flip");
                     encerraJogo();
-                }   
+                }
 
                 if (configuracao.qtdJogadores == 1)
                     atualizaPontuacao(10);
@@ -572,12 +596,12 @@ function cartaClicada() {
                     console.log(2)
                     for (let i = 0; i < cartasClicadas.cartas.length; i++) {
                         cartasClicadas.cartas[i].classList.toggle("flip");
-                    } 
+                    }
                     cartasClicadas.quantidade = 0;
                     cartasClicadas.cartas = [];
                 }
                 reseta();
-            }  
+            }
         }
     }
 }
@@ -606,18 +630,18 @@ function pegarDadosUsuarioLogado() {
 
 function trataFazerRegistroPontuacao() {
     usuarioLogado = pegarDadosUsuarioLogado();
-    
-    let userEstatistica = new Estatistica(usuarioLogado.email,pontuacao, (cartasAcertadas.length) / 2, segundos);
+
+    let userEstatistica = new Estatistica(usuarioLogado.email, pontuacao, (cartasAcertadas.length) / 2, segundos);
 
     adicionaPontuacaoNoHistorico(userEstatistica);
     mostraHistoricoEstatistica();
 }
 
 function adicionaPontuacaoNoHistorico(userEstatistica) {
-    
-    if (pontuacoes.length == 10) 
+
+    if (pontuacoes.length == 10)
         pontuacoes.splice(10, 1);
-    
+
     pontuacoes.push(userEstatistica);
     gravaHistoricoPontuacao(pontuacoes);
 }
@@ -742,7 +766,7 @@ function atualizaScoresEmDados() {
             userRegistro[index] = usuario;
             localStorage.setItem(ITEM_DADOS_USUARIOS, JSON.stringify(userRegistro));
         }
-        
+
     }
 }
 
@@ -770,14 +794,14 @@ function gravaPontuacaoLogadoEmTodosOsJogadores(pontuacoesJogador) {
 
 function adicionaLocalStorageTodosOsJogadores() {
     let pontuacoesJogador = pegarLeaderBoard();
-    
+
     let pontuacaoTodosOsJogadores = pegarTodosOsJogadores();
 
-    console.log("antes: ",pontuacaoTodosOsJogadores);
+    console.log("antes: ", pontuacaoTodosOsJogadores);
     ultimoElemento = pontuacoesJogador[pontuacoesJogador.length - 1];
     pontuacaoTodosOsJogadores.push(ultimoElemento);
-    
-    console.log("depois: ",pontuacaoTodosOsJogadores);
+
+    console.log("depois: ", pontuacaoTodosOsJogadores);
 
     gravaPontuacaoLogadoEmTodosOsJogadores(pontuacaoTodosOsJogadores);
 }
