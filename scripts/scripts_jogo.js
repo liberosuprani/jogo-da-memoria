@@ -9,8 +9,8 @@ const BOTAO_INICIA_JOGO = 'iniciaJogo';
 const BOTAO_ENCERRA_JOGO = 'encerraJogo';
 const BOTAO_CONFIGURA_TABULEIRO = "configuraTabuleiro";
 
-const NOME_RADIO_DIFICULDADE = "dificuldade"
-const NOME_RADIO_MODOS = ""
+const NOME_RADIO_DIFICULDADE = "dificuldade";
+const NOME_RADIO_MODOS = "";
 
 const SPAN_TEMPO_PASSADO = 'segPassados';
 const SPAN_TEMPO_RESTANTE = 'segRestantes';
@@ -19,7 +19,7 @@ const SPAN_PONTUACAO_ATUAL = 'pontuacaoAtual';
 const DURACAO_MAXIMA_OMISSAO = 10;
 const DURACAO_MINIMA_OMISSAO = 10;
 
-const ITEM_ESTATISTICA = "leaderboard"
+const ITEM_ESTATISTICA = "leaderboard";
 const TODOS_OS_JOGADORES = "todosOsJogadores";
 
 

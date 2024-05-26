@@ -406,6 +406,7 @@ div#configs, div#leaderboard {
     width: 100%; 
     margin-bottom: 30px;
     padding: 30px;
+    padding-top: 10px;
     background: rgb(7, 69, 82);
     box-shadow: 0 0 5px 0px black;
 }
