@@ -47,6 +47,15 @@ function gravaDadosUser() {
 
     let email = formulario.elements[EMAIL_ID].value;
 
+    //regex serve para identificar cadeia de caracteres
+    let emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+    if (!emailRegex.test(email)) {
+        errorMsg.innerText = "Digite um email válido";
+        errorMsg.style.visibility = "visible";
+        return; 
+    }
+
     for (let i = 0; i < dados.length; i++) {
         if (email == dados[i].email) {
             usuarioJaExiste = true;
@@ -54,6 +63,7 @@ function gravaDadosUser() {
         }
     }
     if (usuarioJaExiste) {
+        errorMsg.innerText = "Usuário já existe";
         errorMsg.style.visibility = "visible";
     }
     else {
