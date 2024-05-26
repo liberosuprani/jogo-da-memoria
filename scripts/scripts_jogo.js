@@ -14,6 +14,7 @@ const NOME_RADIO_DIFICULDADE = "dificuldade";
 const NOME_RADIO_MODOS = "";
 
 const NOME_DIV_JOGADORES = "divJogadores";
+const NOME_RADIO_TEMAS = 'tema'
 
 const SPAN_TEMPO_PASSADO = 'segPassados';
 const SPAN_TEMPO_RESTANTE = 'segRestantes';
@@ -61,11 +62,14 @@ let cartasClicadas = {
 let configuracao = {
     dificuldade: "facil",
     modo: "normal",
+    tema: "esportes",
     duracaoMaxima: DURACAO_MAXIMA_OMISSAO,
     altura: 5,
     largura: 6,
     qtdJogadores : 1,
 }
+
+
 
 
 window.addEventListener("load", carregaPagina);
@@ -78,6 +82,9 @@ function carregaPagina() {
     botaoConfiguraTabuleiro = document.getElementById(BOTAO_CONFIGURA_TABULEIRO);
     botaoAdicionaJogador = document.getElementById(BOTAO_ADICIONA_JOGADOR);
     dificuldades = document.getElementsByName(NOME_RADIO_DIFICULDADE);
+    temas = document.getElementsByName(NOME_RADIO_TEMAS)
+
+    console.log(temas)
 
     botaoIniciaJogo.disabled = false;
     botaoEncerraJogo.disabled = true;
@@ -142,6 +149,15 @@ function iniciaJogo() {
             configuracao.dificuldade = dificuldades[i].value;
     }
 
+    for (let i = 0; i < temas.length; i++) {
+        temas[i].disabled = true;
+        if (temas[i].checked == true) {
+            configuracao.tema = temas[i].value;
+
+        }
+    }
+    getTema(configuracao.tema)
+
     //#TODO modos 
     // for (let i = 0; i < modos.length; i++) {
     //     modos[i].disabled = true;
@@ -168,6 +184,20 @@ function iniciaJogo() {
     }
 }
 
+function getTema(temaRadio) {
+    switch(temaRadio) {
+        case "esportes":
+            colecaoEscolhida = listaDeCartasEsportes;
+            break;
+        case "animais":
+            colecaoEscolhida = listaDeCartasAnimais;
+            break;
+        case "super-herois":
+            colecaoEscolhida = listaDeCartasSuperHerois;
+            break;
+    }
+}
+
 function encerraJogo() {
 
     encerraTabuleiro();
@@ -191,6 +221,8 @@ function encerraJogo() {
     for (let i = 0; i < dificuldades.length; i++)
         dificuldades[i].disabled = false;
 
+    for (let i = 0; i < temas.length; i++)
+        temas[i].disabled = false;
 
     console.log("tempo total de jogo: " + segundos);
 
@@ -282,15 +314,56 @@ let listaDeCartasEsportes = [
     new Carta(14, "Arco e flecha", "./img/colecoes/esportes/arcoeflecha.jpg"),
 ];
 
+let listaDeCartasAnimais = [
+    new Carta(0, "canguru", "./img/colecoes/animais/canguru.jpg"),
+    new Carta(1, "coruja", "./img/colecoes/animais/coruja.jpg"),
+    new Carta(2, "elefante", "./img/colecoes/animais/elefante.jpg"),
+    new Carta(3, "girafa", "./img/colecoes/animais/girafa.jpg"),
+    new Carta(4, "golfinho", "./img/colecoes/animais/golfinho.png"),
+    new Carta(5, "hipopotamo", "./img/colecoes/animais/hipopotamo.jpg"),
+    new Carta(6, "leao", "./img/colecoes/animais/leao.png"),
+    new Carta(7, "lobo", "./img/colecoes/animais/lobo.jpg"),
+    new Carta(8, "macaco", "./img/colecoes/animais/macaco.jpg"),
+    new Carta(9, "pinguim", "./img/colecoes/animais/pinguim.png"),
+    new Carta(10, "rinoceronte", "./img/colecoes/animais/rinoceronte.jpg"),
+    new Carta(11, "tigre", "./img/colecoes/animais/tigre.png"),
+    new Carta(12, "tubarao", "./img/colecoes/animais/tubarao.jpg"),
+    new Carta(13, "urso", "./img/colecoes/animais/urso.jpg"),
+    new Carta(14, "zebra", "./img/colecoes/animais/zebra.jpg"),
+]
+
+let listaDeCartasSuperHerois = [
+    new Carta(0, "homem aranha", "./img/colecoes/super herois/homem aranha.png"),
+    new Carta(1, "batman", "./img/colecoes/super herois/batman.jpg"),
+    new Carta(2, "mulher maravilha", "./img/colecoes/super herois/mulher maravilha.jpg"),
+    new Carta(3, "superman", "./img/colecoes/super herois/superman.jpg"),
+    new Carta(4, "capitao america", "./img/colecoes/super herois/capitao america.jpg"),
+    new Carta(5, "homem de ferro", "./img/colecoes/super herois/homem de ferro.png"),
+    new Carta(6, "hulk", "./img/colecoes/super herois/hulk.jpg"),
+    new Carta(7, "thor", "./img/colecoes/super herois/thor.png"),
+    new Carta(8, "pantera negra", "./img/colecoes/super herois/pantera negra.png"),
+    new Carta(9, "viuva negra", "./img/colecoes/super herois/viuva negra.jpg"),
+    new Carta(10, "flash", "./img/colecoes/super herois/flash.jpg"),
+    new Carta(11, "aquaman", "./img/colecoes/super herois/aquaman.jpg"),
+    new Carta(12, "lanterna verde", "./img/colecoes/super herois/lanterna verde.jpg"),
+    new Carta(13, "doutor estranho", "./img/colecoes/super herois/doutor estranho.png"),
+    new Carta(14, "goku", "./img/colecoes/super herois/goku.jpg"),
+]
+
+
+colecaoEscolhida = listaDeCartasEsportes;
+
+
 function embaralhaCartas(linhas = configuracao.altura, colunas = configuracao.largura) {
+    console.log(colecaoEscolhida)
     totalDeCartas = [];
-    if (linhas * colunas < listaDeCartasEsportes.length * 2) {
+    if (linhas * colunas < colecaoEscolhida.length * 2) {
         for (let i = 0; i < (linhas * colunas) / 2; i++)
-            totalDeCartas.push(listaDeCartasEsportes[i]);
+            totalDeCartas.push(colecaoEscolhida[i]);
         totalDeCartas = totalDeCartas.concat(totalDeCartas);
     }
     else {
-        totalDeCartas = listaDeCartasEsportes.concat(listaDeCartasEsportes);
+        totalDeCartas = colecaoEscolhida.concat(colecaoEscolhida);
     }
     for (let i = 0; i < totalDeCartas.length; i++) {
         // PEGA UMA POSICAO ALEATORIA 
@@ -337,10 +410,10 @@ function configuraTabuleiro() {
             configuracao.largura = parseInt(configuracao.largura);
             let largura = configuracao.largura;
             
-            let altura = configuracao.altura = Math.floor(listaDeCartasEsportes.length * 2 / largura);
+            let altura = configuracao.altura = Math.floor(colecaoEscolhida.length * 2 / largura);
 
             if (largura >= 5 && largura <= 10) {
-                if (listaDeCartasEsportes.length * 2 % largura == 0 || largura*altura % 2 == 0 || largura == 2)
+                if (colecaoEscolhida.length * 2 % largura == 0 || largura*altura % 2 == 0 || largura == 2)
                     configuracao.altura = altura;
                 else
                     configuracao.altura = altura - 1;
