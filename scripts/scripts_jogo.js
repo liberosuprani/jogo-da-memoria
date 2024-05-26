@@ -265,12 +265,14 @@ function configuraTabuleiro() {
         if (!isNaN(configuracao.largura)) {
             configuracao.largura = parseInt(configuracao.largura);
             let largura = configuracao.largura;
+            
+            let altura = configuracao.altura = Math.floor(listaDeCartasEsportes.length * 2 / largura);
 
             if (largura >= 5 && largura <= 10) {
-                if (listaDeCartasEsportes.length * 2 % largura == 0 || Math.floor(listaDeCartasEsportes.length * 2 / largura) % 2 == 0 || largura == 2)
-                    configuracao.altura = Math.floor(listaDeCartasEsportes.length * 2 / largura);
+                if (listaDeCartasEsportes.length * 2 % largura == 0 || largura*altura % 2 == 0 || largura == 2)
+                    configuracao.altura = altura;
                 else
-                    configuracao.altura = Math.floor(listaDeCartasEsportes.length * 2 / largura) - 1;
+                    configuracao.altura = altura - 1;
 
                 carregaTabuleiro();
                 break;
@@ -308,7 +310,6 @@ function carregaTabuleiro(linhas = configuracao.altura, colunas = configuracao.l
             let imgCartaAtras = document.createElement("div");
             imgCartaAtras.id = "atras";
             imgCartaAtras.classList.add("face");
-            imgCartaAtras.innerHTML = "Pênis";
 
             // CRIA UMA DIV PRA CARTA, CUJO ID É "cartaN-K", EM QUE N==Nª DA LINHA E K==Nª DA COLUNA
             let imgCartaFrente = document.createElement("img");
@@ -325,6 +326,11 @@ function carregaTabuleiro(linhas = configuracao.altura, colunas = configuracao.l
 }
 
 function cartaClicada() {
+
+    // acertou todas as cartas
+    if (cartasAcertadas.length == configuracao.largura*configuracao.altura)
+        encerraJogo();
+
 
     if (cartasAcertadas.includes(this)) {
         this.removeEventListener("click", cartaClicada);
@@ -477,8 +483,6 @@ function mostraHistoricoEstatistica() {
 
     let dadosUsuarioLogado = JSON.parse(localStorage.getItem(ITEM_DADOS_USUARIOS_LOGADOS));
 
-    
-
     let nome = dadosUsuarioLogado.nome;
 
     let numeroDeJogos = 1;
@@ -504,7 +508,7 @@ function toScores(numeroDeJogos, pontuacoes, dados) {
     atualizarNumeroDeJogos(dados, numeroDeJogos);
     atualizarTempoTotal(pontuacoes, dados);
     atualizarTempoPorJogo(dados, pontuacoes);
-    atualizaDadosScores()
+    atualizaDadosScores();
 }
 
 
