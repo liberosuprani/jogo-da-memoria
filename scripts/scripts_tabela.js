@@ -31,8 +31,10 @@ function mostrarTodosOsJogadores() {
     "<td>Tempo</th>"
     tabelaNova.appendChild(linhaTabela);
 
-    let todosOsJogadores = pegarTodosOsJogadores()
-
+    let todosOsJogadores = ordenarJogadores()
+    
+    
+    
 
     for (let jogo of todosOsJogadores) {
         linhaTabela = document.createElement("tr");
@@ -40,4 +42,21 @@ function mostrarTodosOsJogadores() {
 
         tabelaNova.appendChild(linhaTabela)
     }
+}
+
+
+function ordenarJogadores() {
+    let todosOsJogadores = pegarTodosOsJogadores()
+    todosOsJogadores.sort((a, b) => {
+        if (b.pont !== a.pont) {
+            return b.pont - a.pont; // Ordena por pontuação em ordem decrescente
+        } else if (b.cartasAcertadas !== a.cartasAcertadas) {
+            return b.cartasAcertadas - a.cartasAcertadas; // Desempata por cartas acertadas em ordem decrescente
+        } else {
+            return a.tempo - b.tempo; // Desempata por tempo em ordem crescente
+        }
+    });
+
+
+    return todosOsJogadores
 }

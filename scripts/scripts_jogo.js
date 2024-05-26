@@ -134,6 +134,7 @@ function encerraJogo() {
 
     console.log("tempo total de jogo: " + segundos);
     trataFazerRegistroPontuacao();
+    adicionaLocalStorageTodosOsJogadores();
 }
 
 
@@ -588,23 +589,21 @@ function pegarLeaderBoard() {
 }
 
 function gravaPontuacaoLogadoEmTodosOsJogadores(pontuacoesJogador) {
+    localStorage.removeItem(TODOS_OS_JOGADORES)
     localStorage.setItem(TODOS_OS_JOGADORES, JSON.stringify(pontuacoesJogador))
 }
 
 function adicionaLocalStorageTodosOsJogadores() {
     let pontuacoesJogador = pegarLeaderBoard()
-    //gravaPontuacaoLogadoEmTodosOsJogadores(pontuacoesJogador)
-    // for (let pontuacao of pontuacoesJogador) {
-    //     console.log(pontuacao)
-    // }
     
     let pontuacaoTodosOsJogadores = pegarTodosOsJogadores();
 
+    console.log("antes: ",pontuacaoTodosOsJogadores)
+    ultimoElemeto = pontuacoesJogador[pontuacoesJogador.length - 1]
+    pontuacaoTodosOsJogadores.push(ultimoElemeto)
+    
 
-    for (let i of pontuacoesJogador) {
-        pontuacaoTodosOsJogadores.push(i)
-    }
-    console.log(pontuacaoTodosOsJogadores);
+    console.log("depois: ",pontuacaoTodosOsJogadores)
 
     gravaPontuacaoLogadoEmTodosOsJogadores(pontuacaoTodosOsJogadores)
 }
