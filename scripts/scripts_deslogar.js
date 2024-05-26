@@ -1,5 +1,6 @@
 const BOTAO_DESLOGAR = "botaoDeslogar";
 
+
 let botaoDeslogar;
 
 window.addEventListener("load", principal);
@@ -26,6 +27,7 @@ function deslogar() {
     const ITEM_DADOS_USUARIOS_LOGADOS = "usuariosLogados";
 
     localStorage.removeItem(ITEM_DADOS_USUARIOS_LOGADOS);
+    localStorage.removeItem(ITEM_ESTATISTICA);
     botaoDeslogar.style.visibility = "hidden";
     
     window.location.href = "index.html";

@@ -412,15 +412,23 @@ const TABELA_ESTATISTICAS = 'tblEstatisticas';
 let pontuacoes = JSON.parse(localStorage.getItem(ITEM_ESTATISTICA)) || [];
 
 class Estatistica {
-    constructor(pont, cartasAcertadas, tempo) {
+    constructor(email ,pont, cartasAcertadas, tempo) {
+        this.email = email;
         this.pont = pont;
         this.cartasAcertadas = cartasAcertadas;
         this.tempo = tempo;
     }
 }
 
+function pegarDadosUsuarioLogado() {
+    let dadosUsuarioLogado = JSON.parse(localStorage.getItem(ITEM_DADOS_USUARIOS_LOGADOS));
+    return dadosUsuarioLogado
+}
+
 function trataFazerRegistroPontuacao() {
-    let userEstatistica = new Estatistica(pontuacao, (cartasAcertadas.length) / 2, segundos);
+    usuarioLogado = pegarDadosUsuarioLogado()
+    
+    let userEstatistica = new Estatistica(usuarioLogado.email,pontuacao, (cartasAcertadas.length) / 2, segundos);
 
     gravaPontuacaoNoHistorico(userEstatistica)
     mostraHistoricoEstatistica()
@@ -466,6 +474,8 @@ function mostraHistoricoEstatistica() {
     tabelaNova.appendChild(linhaTabela);
 
     let dadosUsuarioLogado = JSON.parse(localStorage.getItem(ITEM_DADOS_USUARIOS_LOGADOS));
+
+    
 
     let nome = dadosUsuarioLogado.nome;
 

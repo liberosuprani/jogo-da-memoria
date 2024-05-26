@@ -21,6 +21,7 @@ class User {
         this.idade = idade;
         this.scores = scores;
     }
+
 }
 
 window.addEventListener("load", principal);
