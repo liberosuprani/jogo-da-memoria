@@ -17,7 +17,7 @@ function principal() {
         botaoJogar.href = "login.html";
     }
     else {
-        botaoJogar.href = "game_modes.html";
+        botaoJogar.href = "jogo.html";
     }
     
 }

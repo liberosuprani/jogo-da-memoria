@@ -25,9 +25,10 @@ function principal() {
 function deslogar() {
     const ITEM_DADOS_USUARIOS_LOGADOS = "usuariosLogados";
     const ITEM_ESTATISTICA = "leaderboard";
-
+    
     localStorage.removeItem(ITEM_DADOS_USUARIOS_LOGADOS);
     localStorage.removeItem(ITEM_ESTATISTICA);
+    localStorage.removeItem(ITEM_DADOS_USUARIOS_SECUNDARIOS);
     botaoDeslogar.style.visibility = "hidden";
     
     window.location.href = "index.html";

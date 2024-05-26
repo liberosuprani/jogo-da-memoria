@@ -8,9 +8,12 @@ Ravi Mughal - 62504
 const BOTAO_INICIA_JOGO = 'iniciaJogo';
 const BOTAO_ENCERRA_JOGO = 'encerraJogo';
 const BOTAO_CONFIGURA_TABULEIRO = "configuraTabuleiro";
+const BOTAO_ADICIONA_JOGADOR = "adicionaJogador"
 
 const NOME_RADIO_DIFICULDADE = "dificuldade";
 const NOME_RADIO_MODOS = "";
+
+const NOME_DIV_JOGADORES = "divJogadores";
 
 const SPAN_TEMPO_PASSADO = 'segPassados';
 const SPAN_TEMPO_RESTANTE = 'segRestantes';
@@ -20,23 +23,31 @@ const DURACAO_MAXIMA_OMISSAO = 10;
 const DURACAO_MINIMA_OMISSAO = 10;
 
 const ITEM_ESTATISTICA = "leaderboard";
-const TODOS_OS_JOGADORES = "todosOsJogadores";
-
+const ITEM_TODOS_OS_JOGOS = "todosOsJogos";
+const ITEM_DADOS_USUARIOS = "dados";
+const ITEM_DADOS_MULTIPLAYER = "dadosMultiplayer";
 
 const ITEM_DADOS_USUARIOS_LOGADOS = "usuariosLogados";
-
+const ITEM_DADOS_USUARIOS_SECUNDARIOS = "usuariosSecundarios";
 
 // VARIÁVEIS
 let botaoIniciaJogo;
 let botaoEncerraJogo;
 let botaoConfiguraTabuleiro;
+let botaoAdicionaJogador;
+let numJogadorDaVez = 1;
 let dificuldades;
 let modos;
+let usuarioLogado;
 
 let timerTempoJogo;
 let timerPontuacaoJogo;
 let pontuacao = 0;
 let segundos = 0;
+
+let usuariosSecundarios = [];
+
+let dadosMultiplayer = [];
 
 let totalDeCartas = [];
 let matrizTabuleiro = [];
@@ -47,13 +58,13 @@ let cartasClicadas = {
     cartas: [],
 };
 
-
 let configuracao = {
     dificuldade: "facil",
     modo: "normal",
     duracaoMaxima: DURACAO_MAXIMA_OMISSAO,
     altura: 5,
     largura: 6,
+    qtdJogadores : 1,
 }
 
 
@@ -65,25 +76,65 @@ function carregaPagina() {
     botaoIniciaJogo = document.getElementById(BOTAO_INICIA_JOGO);
     botaoEncerraJogo = document.getElementById(BOTAO_ENCERRA_JOGO);
     botaoConfiguraTabuleiro = document.getElementById(BOTAO_CONFIGURA_TABULEIRO);
+    botaoAdicionaJogador = document.getElementById(BOTAO_ADICIONA_JOGADOR);
     dificuldades = document.getElementsByName(NOME_RADIO_DIFICULDADE);
 
     botaoIniciaJogo.disabled = false;
     botaoEncerraJogo.disabled = true;
     botaoConfiguraTabuleiro.disabled = false;
+    botaoAdicionaJogador.disabled = false;
 
     for (let i = 0; i < dificuldades.length; i++)
         dificuldades[i].disabled = false;
 
-
+    carregaUsuariosLogados();
     carregaTabuleiro();
-    mostraHistoricoEstatistica();
+
+    if (configuracao.qtdJogadores == 1)
+        mostraHistoricoEstatistica();
+    else {
+        mostraHistoricoEstatisticaMultiplayer();
+        dadosMultiplayer = [];
+    }
     defineEventListeners();
+}
+
+function carregaUsuariosLogados() {
+    usuariosSecundarios = JSON.parse(localStorage.getItem(ITEM_DADOS_USUARIOS_SECUNDARIOS)) || [];
+    usuarioLogado = JSON.parse(localStorage.getItem(ITEM_DADOS_USUARIOS_LOGADOS)) || [];
+    
+    configuracao.qtdJogadores = 1 + usuariosSecundarios.length;
+
+    let divJogadores = document.getElementById(NOME_DIV_JOGADORES);
+    let jogadorPrincipal = document.createElement("p");
+    jogadorPrincipal.id = `jogador-1`
+    jogadorPrincipal.innerHTML = `${usuarioLogado.nome}`;
+    divJogadores.append(jogadorPrincipal);
+    dadosMultiplayer.push({ 
+        jogador: usuarioLogado,
+        pontos: 0,
+    })
+
+    if (usuariosSecundarios.length > 0) {
+        for (i = 0; i<usuariosSecundarios.length; i++) {
+            let nomeJogador = document.createElement("p");
+            nomeJogador.id = `jogador-${i+2}`
+            nomeJogador.innerHTML = `${usuariosSecundarios[i].nome}`; 
+            divJogadores.append(nomeJogador);
+
+            dadosMultiplayer.push({ 
+                jogador: usuariosSecundarios[i],
+                pontos: 0,
+            })
+        }
+    }
 }
 
 function iniciaJogo() {
     botaoIniciaJogo.disabled = true;
     botaoEncerraJogo.disabled = false;
     botaoConfiguraTabuleiro.disabled = true;
+    botaoAdicionaJogador.disabled = true;
 
     for (let i = 0; i < dificuldades.length; i++) {
         dificuldades[i].disabled = true;
@@ -105,9 +156,16 @@ function iniciaJogo() {
 
     carregaTabuleiro();
     iniciaTabuleiro();
-
     iniciaTimerTempo();
-    iniciaTimerPontuacao();
+
+    if (configuracao.qtdJogadores == 1) {
+        cartasAcertadas = [];
+        iniciaTimerPontuacao();
+    }
+    else {
+        numJogadorDaVez = 1;
+        cartasAcertadas = [];
+    }
 }
 
 function encerraJogo() {
@@ -135,15 +193,26 @@ function encerraJogo() {
 
 
     console.log("tempo total de jogo: " + segundos);
-    trataFazerRegistroPontuacao();
-    adicionaLocalStorageTodosOsJogadores();
-}
 
+    if (configuracao.qtdJogadores == 1) {
+        trataFazerRegistroPontuacao();
+        adicionaLocalStorageTodosOsJogadores();
+    }
+    else {
+        mostraHistoricoEstatisticaMultiplayer();
+    }
+}
 
 function defineEventListeners() {
     botaoIniciaJogo.addEventListener("click", iniciaJogo);
     botaoEncerraJogo.addEventListener("click", encerraJogo);
     botaoConfiguraTabuleiro.addEventListener("click", configuraTabuleiro);
+    botaoAdicionaJogador.addEventListener("click", adicionaJogador);
+}
+
+function adicionaJogador() {
+    if (usuariosSecundarios.length <= 2)
+        window.location.href = "login.html";
 }
 
 function iniciaTimerTempo() {
@@ -327,6 +396,20 @@ function carregaTabuleiro(linhas = configuracao.altura, colunas = configuracao.l
     }
 }
 
+function passaAVez() {
+    if (numJogadorDaVez == configuracao.qtdJogadores)
+        numJogadorDaVez = 1;
+    else
+        numJogadorDaVez += 1;
+}
+
+function retornaJogadorDaVez() {
+    if (numJogadorDaVez == 1)
+        return usuarioLogado;
+
+    return usuariosSecundarios[numJogadorDaVez-2];
+}
+
 function cartaClicada() {
 
     if (cartasAcertadas.includes(this)) {
@@ -387,7 +470,6 @@ function cartaClicada() {
                 for (let cartaClicadaAtual of cartasClicadas.cartas) {
                     cartasAcertadas.push(cartaClicadaAtual);
                 }
-                atualizaPontuacao(10);
                 cartasClicadas.quantidade = 0;
                 cartasClicadas.cartas = [];
 
@@ -395,8 +477,22 @@ function cartaClicada() {
                     cartasAcertadas[cartasAcertadas.length-1].classList.toggle("flip");
                     encerraJogo();
                 }   
+
+                if (configuracao.qtdJogadores == 1)
+                    atualizaPontuacao(10);
+                else {
+                    let jogadorDaVez = retornaJogadorDaVez();
+
+                    for (let dado of dadosMultiplayer) {
+                        if (jogadorDaVez.email == dado.jogador.email)
+                            dado.pontos += 10;
+                    }
+                }
             }
             else {
+                if (configuracao.qtdJogadores > 1)
+                    passaAVez();
+
                 const reseta = async () => {
                     console.log(1);
                     await sleep(800);
@@ -434,26 +530,51 @@ function pegarDadosUsuarioLogado() {
 }
 
 
+
 function trataFazerRegistroPontuacao() {
-    usuarioLogado = pegarDadosUsuarioLogado()
+    usuarioLogado = pegarDadosUsuarioLogado();
     
     let userEstatistica = new Estatistica(usuarioLogado.email,pontuacao, (cartasAcertadas.length) / 2, segundos);
 
-    gravaPontuacaoNoHistorico(userEstatistica)
-    mostraHistoricoEstatistica()
+    adicionaPontuacaoNoHistorico(userEstatistica);
+    mostraHistoricoEstatistica();
 }
 
-function gravaPontuacaoNoHistorico(userEstatistica) {
+function adicionaPontuacaoNoHistorico(userEstatistica) {
     
     if (pontuacoes.length == 10) 
         pontuacoes.splice(10, 1);
     
     pontuacoes.push(userEstatistica);
-    gravaHistoricoPontuacao(pontuacoes)
+    gravaHistoricoPontuacao(pontuacoes);
 }
 
 function gravaHistoricoPontuacao(pontuacoes) {
-    localStorage.setItem(ITEM_ESTATISTICA, JSON.stringify(pontuacoes))
+    localStorage.setItem(ITEM_ESTATISTICA, JSON.stringify(pontuacoes));
+}
+
+function mostraHistoricoEstatisticaMultiplayer() {
+    let divLeaderboard = document.getElementById("leaderboard");
+
+    let tabelaNova = document.createElement("table");
+    tabelaNova.setAttribute("id", TABELA_ESTATISTICAS);
+    divLeaderboard.append(tabelaNova);
+
+    let linhaTabela = document.createElement("tr");
+
+    linhaTabela.innerHTML = "<th>#</th>" +
+        "<th>Nome</th>" +
+        "<th>Pontuação</th>"
+    tabelaNova.appendChild(linhaTabela);
+
+    let dadosUsuariosLogados = dadosMultiplayer;
+
+    for (let dado of dadosUsuariosLogados) {
+        linhaTabela = document.createElement("tr");
+        linhaTabela.innerHTML = "<td>" + dado.jogador.nome + "</td>" + "<td>" + dado.pontos + "</td>";
+
+        tabelaNova.appendChild(linhaTabela)
+    }
 }
 
 function mostraHistoricoEstatistica() {
@@ -479,7 +600,6 @@ function mostraHistoricoEstatistica() {
     let nome = dadosUsuarioLogado.nome;
 
     let numeroDeJogos = 1;
-    let tempoPorJogo = [];
     for (let pontuacao of pontuacoes) {
         linhaTabela = document.createElement("tr");
         linhaTabela.innerHTML = "<td>" + numeroDeJogos + "</td>" + "<td>" + nome + "</td>" + "<td>" + pontuacao.pont + "</td>" + "<td>" + pontuacao.cartasAcertadas + "</td>" + "<td>" + pontuacao.tempo + "</td>"
@@ -493,40 +613,64 @@ function mostraHistoricoEstatistica() {
     // somarTemposObjeto(pontuacoes)
 }
 
-function toScores(numeroDeJogos, pontuacoes, dados) {
+function toScores(numeroDeJogos, pontuacoes, dadosUsuarioLogado) {
     // definir para o objeto User o numero de jogos, tempo total jogado e tempo de cada jogo no dicionário scores
     // numeroDeJogos: número total de jogos
     // pontuacoes: objeto em local storage de leaderBoard com estatisticas de pontuacao, cartas acertadas e tempo do jogo 
     // dados: objeto do tipo User de ITEM_DADOS_USUARIOS_LOGADOS 
-    atualizarNumeroDeJogos(dados, numeroDeJogos);
-    atualizarTempoTotal(pontuacoes, dados);
-    atualizarTempoPorJogo(dados, pontuacoes);
-    atualizaDadosScores();
+    atualizarNumeroDeJogos(dadosUsuarioLogado, numeroDeJogos);
+    atualizarTempoTotal(pontuacoes, dadosUsuarioLogado);
+    atualizarTempoPorJogo(dadosUsuarioLogado, pontuacoes);
+    atualizaScoresEmDados();
 }
 
+function atualizarNumeroDeJogos(dadosUsuarioLogado, numeroDeJogos) {
+    dadosUsuarioLogado.scores.jogos = numeroDeJogos;
+    localStorage.setItem(ITEM_DADOS_USUARIOS_LOGADOS, JSON.stringify(dadosUsuarioLogado));
 
-function atualizarTempoPorJogo(dados, pontuacoes) {
+}
+
+function atualizarTempoTotal(pontuacoes, dadosUsuarioLogado) {
+    tempoTotal = somarTemposObjeto(pontuacoes)
+
+    dadosUsuarioLogado.scores.tempoTotal = tempoTotal
+    localStorage.setItem(ITEM_DADOS_USUARIOS_LOGADOS, JSON.stringify(dadosUsuarioLogado))
+}
+
+function atualizarTempoPorJogo(dadosUsuarioLogado, pontuacoes) {
     temposDosJogos = []
     for (let jogo of pontuacoes) {
         temposDosJogos.push(jogo.tempo)
     }
 
-    dados.scores.tempoPorJogo = temposDosJogos
+    dadosUsuarioLogado.scores.tempoPorJogo = temposDosJogos
 
-    localStorage.setItem(ITEM_DADOS_USUARIOS_LOGADOS, JSON.stringify(dados))
+    localStorage.setItem(ITEM_DADOS_USUARIOS_LOGADOS, JSON.stringify(dadosUsuarioLogado))
 }
 
-function atualizarNumeroDeJogos(dados, numeroDeJogos) {
-    dados.scores.jogos = numeroDeJogos;
-    localStorage.setItem(ITEM_DADOS_USUARIOS_LOGADOS, JSON.stringify(dados));
+function atualizaScoresEmDados() {
+    let userRegistro = JSON.parse(localStorage.getItem(ITEM_DADOS_USUARIOS));
 
-}
+    let userLogado = JSON.parse(localStorage.getItem(ITEM_DADOS_USUARIOS_LOGADOS));
 
-function atualizarTempoTotal(pontuacoes, dados) {
-    tempoTotal = somarTemposObjeto(pontuacoes)
+    let usuario;
+    for (let user of userRegistro) {
+        if (user.email == userLogado.email) {
+            user = userLogado;
+            usuario = userLogado;
+        }
+    }
 
-    dados.scores.tempoTotal = tempoTotal
-    localStorage.setItem(ITEM_DADOS_USUARIOS_LOGADOS, JSON.stringify(dados))
+    if (usuario) {
+        let index = userRegistro.findIndex(user => user.email === usuario.email);
+        console.log("index", index)
+
+        if (index !== -1) {
+            userRegistro[index] = usuario;
+            localStorage.setItem(ITEM_DADOS_USUARIOS, JSON.stringify(userRegistro));
+        }
+        
+    }
 }
 
 function somarTemposObjeto(objeto) {
@@ -538,42 +682,8 @@ function somarTemposObjeto(objeto) {
     return total
 }
 
-const ITEM_DADOS_USUARIO = "dados";
-
-
-
-function atualizaDadosScores() {
-    let userRegistro = JSON.parse(localStorage.getItem(ITEM_DADOS_USUARIO));
-
-    let userEstatistica = JSON.parse(localStorage.getItem(ITEM_DADOS_USUARIOS_LOGADOS));
-
-    let usuario;
-    for (let user of userRegistro) {
-        if (user.email == userEstatistica.email) {
-            user = userEstatistica;
-            usuario = user;
-        }
-    }
-
-    if (usuario) {
-        //RESOLVER 
-        // SUBSTITUIR VALOR POR INDICE DO DICIONARIO DE DADOS
-        // console.log(userRegistro)
-        let index = userRegistro.findIndex(user => user.email === usuario.email)
-        console.log("index", index)
-
-        if (index !== -1) {
-            userRegistro[index] = usuario
-            
-
-            localStorage.setItem(ITEM_DADOS_USUARIO, JSON.stringify(userRegistro))
-        }
-        
-    }
-}
-
 function pegarTodosOsJogadores() {
-    return JSON.parse(localStorage.getItem(TODOS_OS_JOGADORES)) || [];
+    return JSON.parse(localStorage.getItem(ITEM_TODOS_OS_JOGOS)) || [];
 }
 
 function pegarLeaderBoard() {
@@ -581,21 +691,20 @@ function pegarLeaderBoard() {
 }
 
 function gravaPontuacaoLogadoEmTodosOsJogadores(pontuacoesJogador) {
-    localStorage.removeItem(TODOS_OS_JOGADORES)
-    localStorage.setItem(TODOS_OS_JOGADORES, JSON.stringify(pontuacoesJogador))
+    localStorage.removeItem(ITEM_TODOS_OS_JOGOS);
+    localStorage.setItem(ITEM_TODOS_OS_JOGOS, JSON.stringify(pontuacoesJogador));
 }
 
 function adicionaLocalStorageTodosOsJogadores() {
-    let pontuacoesJogador = pegarLeaderBoard()
+    let pontuacoesJogador = pegarLeaderBoard();
     
     let pontuacaoTodosOsJogadores = pegarTodosOsJogadores();
 
-    console.log("antes: ",pontuacaoTodosOsJogadores)
-    ultimoElemeto = pontuacoesJogador[pontuacoesJogador.length - 1]
-    pontuacaoTodosOsJogadores.push(ultimoElemeto)
+    console.log("antes: ",pontuacaoTodosOsJogadores);
+    ultimoElemento = pontuacoesJogador[pontuacoesJogador.length - 1];
+    pontuacaoTodosOsJogadores.push(ultimoElemento);
     
+    console.log("depois: ",pontuacaoTodosOsJogadores);
 
-    console.log("depois: ",pontuacaoTodosOsJogadores)
-
-    gravaPontuacaoLogadoEmTodosOsJogadores(pontuacaoTodosOsJogadores)
+    gravaPontuacaoLogadoEmTodosOsJogadores(pontuacaoTodosOsJogadores);
 }

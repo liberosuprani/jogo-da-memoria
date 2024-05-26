@@ -1,4 +1,4 @@
-const TODOS_OS_JOGADORES = 'todosOsJogadores';
+const TODOS_OS_JOGADORES = 'todosOsJogos';
 const TABELA_ESTATISTICAS = 'tblEstatisticas';
 
 
@@ -14,8 +14,6 @@ function pegarTodosOsJogadores() {
 
 
 function mostrarTodosOsJogadores() {
-    let tabelaAntiga = document.getElementById(TABELA_ESTATISTICAS);
-    
     let divLeaderboard = document.getElementById("leaderboard")
 
     let tabelaNova = document.createElement('table')
@@ -31,12 +29,15 @@ function mostrarTodosOsJogadores() {
     "<td>Tempo</th>"
     tabelaNova.appendChild(linhaTabela);
 
-    let todosOsJogadores = ordenarJogadores()
+    let todosOsJogos = ordenarJogadores()
     
-    
-    
+
+
     let posicao = 1;
-    for (let jogo of todosOsJogadores) {
+    for (let jogo of todosOsJogos) {
+
+        
+
         linhaTabela = document.createElement("tr");
         linhaTabela.innerHTML = "<td>" + posicao + "</td>" + "<td>" + jogo.email + "</td>" + "<td>" + jogo.pont + "</td>" + "<td>" + jogo.cartasAcertadas + "</td>" + "<td>" + jogo.tempo + "</td>"
 
@@ -50,8 +51,8 @@ function mostrarTodosOsJogadores() {
 
 
 function ordenarJogadores() {
-    let todosOsJogadores = pegarTodosOsJogadores()
-    todosOsJogadores.sort((a, b) => {
+    let todosOsJogos = pegarTodosOsJogadores()
+    todosOsJogos.sort((a, b) => {
         if (b.pont !== a.pont) {
             return b.pont - a.pont; // Ordena por pontuação em ordem decrescente
         } else if (b.cartasAcertadas !== a.cartasAcertadas) {
@@ -62,5 +63,5 @@ function ordenarJogadores() {
     });
 
 
-    return todosOsJogadores
+    return todosOsJogos
 }
