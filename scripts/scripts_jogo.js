@@ -11,7 +11,6 @@ const BOTAO_CONFIGURA_TABULEIRO = "configuraTabuleiro";
 const BOTAO_ADICIONA_JOGADOR = "adicionaJogador"
 
 const NOME_RADIO_DIFICULDADE = "dificuldade";
-const NOME_RADIO_MODOS = "";
 
 const NOME_DIV_JOGADORES = "divJogadores";
 const NOME_RADIO_TEMAS = 'tema';
@@ -38,7 +37,6 @@ let botaoConfiguraTabuleiro;
 let botaoAdicionaJogador;
 let numJogadorDaVez = 1;
 let dificuldades;
-let modos;
 let usuarioLogado;
 
 let timerTempoJogo;
@@ -62,7 +60,6 @@ let cartasClicadas = {
 
 let configuracao = {
     dificuldade: "facil",
-    modo: "normal",
     tema: "esportes",
     duracaoMaxima: DURACAO_MAXIMA_OMISSAO,
     altura: 5,
@@ -157,13 +154,6 @@ function iniciaJogo() {
     getTema(configuracao.tema);
     mudarFundoTabuleiro(configuracao.tema);
 
-    //#TODO modos 
-    // for (let i = 0; i < modos.length; i++) {
-    //     modos[i].disabled = true;
-    //     if (modos[i].checked == true)
-    //         configuracao.modo = modos[i].value;
-    // }
-
     cartasAcertadas = [];
     acertos = 0;
     cartasClicadas.cartas = [];
@@ -182,11 +172,11 @@ function iniciaJogo() {
         cartasAcertadas = [];
     }
 }
-let backgroundHTML = document.getElementById("backgroundIMG");
-
-var backgroundImage = "./img/imagens para o fundo/aldeia_easy.jpg"
 
 function mudarFundoTabuleiro(temaRadio) {
+    let backgroundHTML = document.getElementById("backgroundIMG");
+    console.log(backgroundHTML);
+
     let divTabuleiro = document.getElementById("divTabuleiro");
     let divCarta = document.getElementsByClassName('face');
 
@@ -194,15 +184,13 @@ function mudarFundoTabuleiro(temaRadio) {
 
     switch (temaRadio) {
         case "esportes":
-            corTabuleiro = 'rgb(82, 7, 7)';
+            backgroundHTML.src = "./img/imagens para o fundo/estadio_esportes.jpg";
             break;
         case "animais":
-            corTabuleiro = 'rgb(7, 77, 82)';
-
+            backgroundHTML.src = "./img/imagens para o fundo/floresta_easy.jpg";
             break;
         case "super-herois":
-            corTabuleiro = 'rgb(7, 49, 58)';
-
+            backgroundHTML.src = "./img/imagens para o fundo/fundo_batman.jpg";
             break;
     }
 

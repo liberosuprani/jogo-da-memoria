@@ -50,7 +50,8 @@ O que foi implementado pelo Ravi foi:
 �     registo JS;
 �     gravar e associar as estatisticas dos jogadores; 
 �     temporizador;
-�     associar o tabuleiro ao tema.
+�     associar o tabuleiro ao tema;
+�     associar o tema ao fundo.
 
 
 
@@ -80,7 +81,7 @@ Requesitos adicionais:
 
       Os requesitos adicionais que foram adicionados foram o modo multiplayer,
 vários temas de cartas, diferente número de cartas, largura do tabuleiro pode     
-ser escolhida pelo jogador, diferentes cores de tabuleiro e modo contra o tempo.
+ser escolhida pelo jogador, diferentes cores de tabuleiro e fundos.
 
 
 Funcionamento do site:  
