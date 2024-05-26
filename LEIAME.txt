@@ -51,7 +51,8 @@ O que foi implementado pelo Ravi foi:
 �     gravar e associar as estatisticas dos jogadores; 
 �     temporizador;
 �     associar o tabuleiro ao tema;
-�     associar o tema ao fundo.
+�     associar o tema ao fundo;
+�     Verificar email válido. 
 
 
 
@@ -87,8 +88,7 @@ ser escolhida pelo jogador, diferentes cores de tabuleiro e fundos.
 Funcionamento do site:  
 
       O site funciona sem qualquer tipo de problema nos 
-browsers testados (Microsoft Edge, Chrome, Opera Gx e 
-FireFox) e em qualquer tipo de dispositivo (computador ou 
+browsers testados (Microsoft Edge, Chrome, Opera Gx) e em qualquer tipo de dispositivo (computador ou 
 telemóvel/tablet) ajustando o texto, as imagens/vídeos e 
 subtituido o navbar original por um no estilo hamburguer. 
 

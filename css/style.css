@@ -120,6 +120,30 @@ select {
     z-index: 1;
 }
 
+@media only screen and (min-width: 950px) {
+    
+
+    #singlegamePage {
+        flex-direction: row;
+    }
+} 
+
+@media only screen and (max-width: 949px) {
+   
+    #configs, #leaderboard {
+        max-width: 75% !important;
+    }
+
+    #singlegamePage {
+        flex-direction: column;
+    }
+
+    #gameSection {
+        max-width: 85% !important;
+        margin: auto;
+    }
+}
+
 @media only screen and (min-width: 650px) {
     #navbar {
         align-items: center;
@@ -140,12 +164,6 @@ select {
     #navList2 {
         display: none;
     }
-
-    #singlegamePage {
-        flex-direction: row;
-    }
-
-
 
 }
 
@@ -169,22 +187,13 @@ select {
         display: none;
     }
 
-    #singlegamePage {
-        flex-direction: column;
-    }
+    
 
     .backgroundImage {
         display: none;
     }
 
-    #configs, #leaderboard {
-        max-width: 75% !important;
-    }
-
-    #gameSection {
-        max-width: 85% !important;
-        margin: auto;
-    }
+    
 
 
 }
@@ -410,8 +419,6 @@ section#gameSection {
     align-items: center;
     padding-top: 0;
 }
-
-
 
 div#tempoPontuacao {
     display: flex;

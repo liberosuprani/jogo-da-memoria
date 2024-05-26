@@ -1,3 +1,9 @@
+/* Grupo nº28 PL23
+Duarte Alberto - 62235
+Libero Suprani - 62220
+Ravi Mughal - 62504 
+*/ 
+
 const BOTAO_JOGAR = "botaoJogar";
 
 const ITEM_DADOS_USUARIOS_LOGADOS = "usuariosLogados";

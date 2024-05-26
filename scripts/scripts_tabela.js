@@ -1,3 +1,9 @@
+/* Grupo nº28 PL23
+Duarte Alberto - 62235
+Libero Suprani - 62220
+Ravi Mughal - 62504 
+*/
+
 const TODOS_OS_JOGADORES = 'todosOsJogos';
 const TABELA_ESTATISTICAS = 'tblEstatisticas';
 
@@ -31,15 +37,10 @@ function mostrarTodosOsJogadores() {
 
     let todosOsJogos = ordenarJogadores()
     
-
-
     let posicao = 1;
     for (let jogo of todosOsJogos) {
-
-        
-
         linhaTabela = document.createElement("tr");
-        linhaTabela.innerHTML = "<td>" + posicao + "</td>" + "<td>" + jogo.email + "</td>" + "<td>" + jogo.pont + "</td>" + "<td>" + jogo.cartasAcertadas + "</td>" + "<td>" + jogo.tempo + "</td>"
+        linhaTabela.innerHTML = "<td>" + posicao + "</td>" + "<td>" + jogo.nome + "</td>" + "<td>" + jogo.pont + "</td>" + "<td>" + jogo.cartasAcertadas + "</td>" + "<td>" + jogo.tempo + "</td>"
 
         tabelaNova.appendChild(linhaTabela)
         if (posicao >= 10) {

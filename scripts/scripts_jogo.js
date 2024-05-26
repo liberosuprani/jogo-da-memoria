@@ -180,8 +180,6 @@ function mudarFundoTabuleiro(temaRadio) {
     let divTabuleiro = document.getElementById("divTabuleiro");
     let divCarta = document.getElementsByClassName('face');
 
-    let corTabuleiro = 'rgb(0,0,0)';
-
     switch (temaRadio) {
         case "esportes":
             backgroundHTML.src = "./img/imagens para o fundo/estadio_esportes.jpg";
@@ -190,11 +188,9 @@ function mudarFundoTabuleiro(temaRadio) {
             backgroundHTML.src = "./img/imagens para o fundo/floresta_easy.jpg";
             break;
         case "super-herois":
-            backgroundHTML.src = "./img/imagens para o fundo/fundo_batman.jpg";
+            backgroundHTML.src = "./img/imagens para o fundo/fundo_batman.png";
             break;
     }
-
-    divTabuleiro.style.backgroundColor = corTabuleiro;
 }
 
 function getTema(temaRadio) {
@@ -623,8 +619,8 @@ const TABELA_ESTATISTICAS = 'tblEstatisticas';
 let pontuacoes = JSON.parse(localStorage.getItem(ITEM_ESTATISTICA)) || [];
 
 class Estatistica {
-    constructor(email, pont, cartasAcertadas, tempo) {
-        this.email = email;
+    constructor(nome, pont, cartasAcertadas, tempo) {
+        this.nome = nome;
         this.pont = pont;
         this.cartasAcertadas = cartasAcertadas;
         this.tempo = tempo;
@@ -638,7 +634,7 @@ function pegarDadosUsuarioLogado() {
 function trataFazerRegistroPontuacao() {
     usuarioLogado = pegarDadosUsuarioLogado();
 
-    let userEstatistica = new Estatistica(usuarioLogado.email, pontuacao, (cartasAcertadas.length) / 2, segundos);
+    let userEstatistica = new Estatistica(usuarioLogado.nome, pontuacao, (cartasAcertadas.length) / 2, segundos);
 
     adicionaPontuacaoNoHistorico(userEstatistica);
     mostraHistoricoEstatistica();
