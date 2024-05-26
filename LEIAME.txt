@@ -1,40 +1,56 @@
-Introdu��o �s Tecnologias Web reporte de projeto do grupo N�28 PL23
-Os membros s�o:
+Introdução às Tecnologias Web reporte de projeto do grupo Nº28 PL23
+Os membros são:
 
 Libero Suprani - 62220
-Duarte Alberto � 62235 
-Ravi Mughal � 62504
+Duarte Alberto - 62235 
+Ravi Mughal - 62504
 
 
-Este projeto foi feito 35% pelo Libero, 35% pelo Ravi e 30% pelo Duarte
+Este projeto foi feito 37% pelo Libero, 36% pelo Ravi e 27% pelo Duarte
 
 
 O que foi implementado pelo Libero foi:
 
 �	Navbar;
-
 �	Login;
-
-�	Ficha T�cnica,
+�	Ficha Técnica,
 �	Index;
 �	Home button;
-�	Footer.
+�	Footer;
+�     shuffle das cartas;
+�     login JS;
+�     registo JS;
+�     logout JS;
+�     Multiplayer;
+�     tabuleiro.
+
 
 O que foi implementado pelo Duarte foi:
 
-�	Configura��es;
-�	Curiosidades e hist�ria;
+�	Configurações;
+�	Curiosidades e história;
 �	Regras;
 �	Desenhos dos membros e mascote;
-�	Media.
+�	Media;
+�     coleções de cartas;
+�     tabuleiro;
+�     animação;
+�     TOP10.
+
+
 O que foi implementado pelo Ravi foi:
 
-�	MobileNavbar, inclu�do o c�digo em Javascript;
+�	MobileNavbar, incluíndo o código em Javascript;
 �	Registo;
-�	O c�digo button.css;
-�	Pontua��o;
+�	O código button.css;
+�	Pontuação;
 �	Game Modes.
-�	Google Fonts.
+�	Google Fonts;
+�     login JS;
+�     registo JS;
+�     gravar e associar as estatisticas dos jogadores; 
+�     temporizador;
+�     associar o tabuleiro ao tema.
 
 
 
@@ -45,20 +61,35 @@ O que foi implementado pelo Ravi foi:
 
 O que foi implementado por todos: 
 
-      O c�digo no style.css foi criado e alterado por todos os 
+      O código no style.css foi criado e alterado por todos os 
 membros do grupo para o site chegar a um estrutura e design 
 desejada. Os fundos foram escolhidos em conjunto e cada um 
-implementou na p�gina que estava respons�vel.
-      
-      
+implementou na página que estava responsável. 
+      O código na pasta scripts apesar de ter sido destribuido como
+em cima indicado, todos os membros ajudaram a resolver os bugs e as duvidas uns dos outros. 
+As funcionalidades gerais do jogo como acabar quando todos os pares 
+forem encontrados e as suas dificuldades foram implementadas pouco
+a pouco por todos.
 
-Funcionamento do site  
+Requesitos essenciais:
+
+      Todos os requesitos essenciais foram alcançados.
+
+      
+Requesitos adicionais:
+
+      Os requesitos adicionais que foram adicionados foram o modo multiplayer,
+vários temas de cartas, diferente número de cartas, largura do tabuleiro pode     
+ser escolhida pelo jogador, diferentes cores de tabuleiro e modo contra o tempo.
+
+
+Funcionamento do site:  
 
       O site funciona sem qualquer tipo de problema nos 
 browsers testados (Microsoft Edge, Chrome, Opera Gx e 
 FireFox) e em qualquer tipo de dispositivo (computador ou 
-telem�vel/tablet) ajustando o texto, as imagens/v�deos e 
-subtituido o navbar original por um no estilo hamb�rguer. 
+telemóvel/tablet) ajustando o texto, as imagens/vídeos e 
+subtituido o navbar original por um no estilo hamburguer. 
 
 
 Atenção: 
