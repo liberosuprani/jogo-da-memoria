@@ -20,6 +20,7 @@ const DURACAO_MAXIMA_OMISSAO = 10;
 const DURACAO_MINIMA_OMISSAO = 10;
 
 const ITEM_ESTATISTICA = "leaderboard"
+const TODOS_OS_JOGADORES = "todosOsJogadores";
 
 
 const ITEM_DADOS_USUARIOS_LOGADOS = "usuariosLogados";
@@ -421,9 +422,9 @@ class Estatistica {
 }
 
 function pegarDadosUsuarioLogado() {
-    let dadosUsuarioLogado = JSON.parse(localStorage.getItem(ITEM_DADOS_USUARIOS_LOGADOS));
-    return dadosUsuarioLogado
+    return JSON.parse(localStorage.getItem(ITEM_DADOS_USUARIOS_LOGADOS));
 }
+
 
 function trataFazerRegistroPontuacao() {
     usuarioLogado = pegarDadosUsuarioLogado()
@@ -578,4 +579,32 @@ function atualizaDadosScores() {
 }
 
 
+function pegarTodosOsJogadores() {
+    return JSON.parse(localStorage.getItem(TODOS_OS_JOGADORES)) || [];
+}
 
+function pegarLeaderBoard() {
+    return JSON.parse(localStorage.getItem(ITEM_ESTATISTICA)) || [];
+}
+
+function gravaPontuacaoLogadoEmTodosOsJogadores(pontuacoesJogador) {
+    localStorage.setItem(TODOS_OS_JOGADORES, JSON.stringify(pontuacoesJogador))
+}
+
+function adicionaLocalStorageTodosOsJogadores() {
+    let pontuacoesJogador = pegarLeaderBoard()
+    //gravaPontuacaoLogadoEmTodosOsJogadores(pontuacoesJogador)
+    // for (let pontuacao of pontuacoesJogador) {
+    //     console.log(pontuacao)
+    // }
+    
+    let pontuacaoTodosOsJogadores = pegarTodosOsJogadores();
+
+
+    for (let i of pontuacoesJogador) {
+        pontuacaoTodosOsJogadores.push(i)
+    }
+    console.log(pontuacaoTodosOsJogadores);
+
+    gravaPontuacaoLogadoEmTodosOsJogadores(pontuacaoTodosOsJogadores)
+}
