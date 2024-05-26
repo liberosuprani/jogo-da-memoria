@@ -327,11 +327,6 @@ function carregaTabuleiro(linhas = configuracao.altura, colunas = configuracao.l
 
 function cartaClicada() {
 
-    // acertou todas as cartas
-    if (cartasAcertadas.length == configuracao.largura*configuracao.altura)
-        encerraJogo();
-
-
     if (cartasAcertadas.includes(this)) {
         this.removeEventListener("click", cartaClicada);
         this.removeEventListener("click", toggleFlip);
@@ -393,6 +388,11 @@ function cartaClicada() {
                 atualizaPontuacao(10);
                 cartasClicadas.quantidade = 0;
                 cartasClicadas.cartas = [];
+
+                if (cartasAcertadas.length == configuracao.largura*configuracao.altura) {
+                    cartasAcertadas[cartasAcertadas.length-1].classList.toggle("flip");
+                    encerraJogo();
+                }   
             }
             else {
                 const reseta = async () => {
@@ -406,8 +406,7 @@ function cartaClicada() {
                     cartasClicadas.cartas = [];
                 }
                 reseta();
-            }
-            
+            }  
         }
     }
 }
