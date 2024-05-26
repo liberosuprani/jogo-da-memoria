@@ -209,7 +209,6 @@ let listaDeCartasEsportes = [
     new Carta(14, "Arco e flecha", "./img/colecoes/esportes/arcoeflecha.jpg"),
 ];
 
-
 function embaralhaCartas(linhas = configuracao.altura, colunas = configuracao.largura) {
     totalDeCartas = [];
     if (linhas * colunas < listaDeCartasEsportes.length * 2) {
@@ -234,18 +233,23 @@ function embaralhaCartas(linhas = configuracao.altura, colunas = configuracao.la
 function iniciaTabuleiro() {
     for (let linha = 0; linha < matrizTabuleiro.length; linha++) {
         for (let coluna = 0; coluna < matrizTabuleiro[linha].length; coluna++) {
-            let imgCarta = document.getElementById(`carta${linha}-${coluna}`);
-            // console.log(imgCarta);
-            imgCarta.addEventListener("click", cartaClicada);
+            let carta = document.getElementById(`carta${linha}-${coluna}`);
+            carta.addEventListener("click", cartaClicada);
+            carta.addEventListener("click", toggleFlip);
         }
     }
+}
+
+function toggleFlip() {
+    this.classList.toggle("flip");
 }
 
 function encerraTabuleiro() {
     for (let linha = 0; linha < matrizTabuleiro.length; linha++) {
         for (let coluna = 0; coluna < matrizTabuleiro[linha].length; coluna++) {
-            let imgCarta = document.getElementById(`carta${linha}-${coluna}`);
-            imgCarta.removeEventListener("click", cartaClicada);
+            let carta = document.getElementById(`carta${linha}-${coluna}`);
+            carta.removeEventListener("click", cartaClicada);
+            carta.removeEventListener("click", toggleFlip);
         }
     }
 }
@@ -295,46 +299,58 @@ function carregaTabuleiro(linhas = configuracao.altura, colunas = configuracao.l
             matrizTabuleiro[linha].push(totalDeCartas[posicaoLista]);
 
             let divCartaContainer = document.createElement("div");
+            divCartaContainer.classList.add("carta");
+            divCartaContainer.id = `carta${linha}-${coluna}`;
             
             
-            // CRIA UMA DIV PRA CARTA, CUJO ID É "cartaN-K", EM QUE N==Nª DA LINHA E K==Nª DA COLUNA
-            let imgCarta = document.createElement("img");
-            imgCarta.id = `carta${linha}-${coluna}`;
-            divTabuleiro.append(imgCarta);
-            imgCarta.classList.add("carta");
+            let imgCartaAtras = document.createElement("div");
+            imgCartaAtras.id = "atras";
+            imgCartaAtras.classList.add("face");
+            imgCartaAtras.innerHTML = "Pênis";
 
-            // POR ENQUANTO, SÓ PARA MOSTRAR O NOME E ID DO OBJETO CARTA NA DIV (#TODO)
-            imgCarta.src = totalDeCartas[posicaoLista].image;
+            // CRIA UMA DIV PRA CARTA, CUJO ID É "cartaN-K", EM QUE N==Nª DA LINHA E K==Nª DA COLUNA
+            let imgCartaFrente = document.createElement("img");
+            imgCartaFrente.id = "frente";
+            imgCartaFrente.classList.add("face");
+            imgCartaFrente.src = totalDeCartas[posicaoLista].image;
+
+            divCartaContainer.append(imgCartaAtras);
+            divCartaContainer.append(imgCartaFrente);
+
+            divTabuleiro.append(divCartaContainer);
         }
     }
 }
 
+function cartaClicada() {
 
-function cartaClicada(event) {
-
-    if (cartasAcertadas.includes(event.target)) {
+    if (cartasAcertadas.includes(this)) {
+        this.removeEventListener("click", cartaClicada);
+        this.removeEventListener("click", toggleFlip);
         console.log("CARTAS JA FORAM ACERTADAS");
         cartasClicadas.quantidade = 0;
         cartasClicadas.cartas = [];
     }
+
     // MESMA CARTA CLICADA MAIS DE UMA VEZ
-    else if (cartasClicadas.cartas.length > 0 && event.target == cartasClicadas.cartas[cartasClicadas.cartas.length - 1]) {
-        cartasClicadas.cartas[0].style.border = "";
+    else if (cartasClicadas.cartas.length > 0 && this == cartasClicadas.cartas[cartasClicadas.cartas.length - 1]) {
+        // cartasClicadas.cartas[0].style.border = "";
         console.log("MESMA CARTA CLICADA NOVAMENTE");
         cartasClicadas.quantidade = 0;
         cartasClicadas.cartas = [];
     }
     else {
         cartasClicadas.quantidade += 1;
-        cartasClicadas.cartas.push(event.target);
-        event.target.style.border = "solid red 2px";
+        cartasClicadas.cartas.push(this);
+
+        // this.style.border = "solid red 2px";
 
         // CASO SEJA A SEGUNDA CARTA A SER CLICADA
         if (cartasClicadas.quantidade == 2) {
             let acertou = true;
             let cartasClicadasObjetos = [];
 
-            // PERCORRE A LISTA DE CARTAS CLICADAS (EM FORMATO DE EVENT.TARGET)
+            // PERCORRE A LISTA DE CARTAS CLICADAS (EM FORMATO DE this)
             for (let cartaClicada of cartasClicadas.cartas) {
                 let idAtual = cartaClicada.id;
 
@@ -355,26 +371,40 @@ function cartaClicada(event) {
             for (let cartaClicadaObj of cartasClicadasObjetos) {
                 if (cartaClicadaObj.id != primeiroId) {
                     acertou = false;
-                    for (let cartaClicada of cartasClicadas.cartas)
-                        cartaClicada.style.border = "";
+                    // for (let cartaClicada of cartasClicadas.cartas)
+                    //     cartaClicada.style.border = "";
                 }
             }
 
             if (acertou) {
                 console.log("ACERTOU!!!!!!!!");
-                for (let cartaClicadaAtual of cartasClicadas.cartas)
+                
+                for (let cartaClicadaAtual of cartasClicadas.cartas) {
                     cartasAcertadas.push(cartaClicadaAtual);
-
+                }
                 atualizaPontuacao(10);
+                cartasClicadas.quantidade = 0;
+                cartasClicadas.cartas = [];
             }
             else {
-                console.log("ERROU!!!!!!!!");
+                const reseta = async () => {
+                    console.log(1);
+                    await sleep(800);
+                    console.log(2)
+                    for (let i = 0; i < cartasClicadas.cartas.length; i++) {
+                        cartasClicadas.cartas[i].classList.toggle("flip");
+                    } 
+                    cartasClicadas.quantidade = 0;
+                    cartasClicadas.cartas = [];
+                }
+                reseta();
             }
-            cartasClicadas.quantidade = 0;
-            cartasClicadas.cartas = [];
+            
         }
     }
 }
+
+const sleep = (ms = 0) => new Promise(resolve => setTimeout(resolve, ms));
 
 // -------------------------------- ESTATISTICAS ---------------------------------------
 
@@ -397,7 +427,19 @@ function trataFazerRegistroPontuacao() {
 }
 
 function gravaPontuacaoNoHistorico(userEstatistica) {
+    
+    if (pontuacoes.length == 10) {
+        let menor = 0;
+
+        for (let i = 1; i < pontuacoes.length; i++) {
+            if (pontuacoes[i] < menor)
+                menor = i
+        }
+        pontuacoes.splice(menor, 1);
+    }
+
     pontuacoes.push(userEstatistica);
+
     gravaHistoricoPontuacao(pontuacoes)
 }
 

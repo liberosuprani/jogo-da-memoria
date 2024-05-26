@@ -320,17 +320,42 @@ footer ul li {
     background: rgb(7, 69, 82);
 }
 
-
-
 .carta {
-    background-color: rgb(61, 67, 237);
-    text-align: center;
     width: 60px;
     height:calc(60px / 2 * 3) ;
-    border-radius: 5px;
-    position: relative;
+    
+    perspective: 1000px;
     transform-style: preserve-3d;
-    transition: all 0.2s ease-in-out;
+    transition: 0.8s;
+}
+
+.flip {
+    transform: rotateY(180deg);
+}
+
+
+#atras {
+    background-color: rgb(51, 113, 122);
+
+    transform: rotateY(0deg);
+    backface-visibility: hidden;
+    position: absolute;
+}
+
+#frente {
+    transform: rotateY(180deg);
+    backface-visibility: hidden;
+    position: absolute;
+}
+
+.face {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    
+    height: 100%;
+    width: 100%;;
+    border-radius: 5px;    
 }
 
 #errorMsg {
